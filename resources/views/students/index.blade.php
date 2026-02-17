@@ -6,8 +6,9 @@
 <style>
 /* Wrapper */
 .page-wrapper{
+    margin-top: 20px;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 5 auto;
 }
 
 /* Header */
@@ -147,6 +148,35 @@ tbody tr:hover{
 .btn-delete:hover{
     background:#fecaca;
 }
+/* Overlay covering the whole screen */
+#spinnerOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: none; /* hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Spinner design */
+.spinner {
+    border: 6px solid #f3f3f3; /* Light gray */
+    border-top: 6px solid #1e3a8a; /* Primary blue color */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+/* Spin animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 /* Responsive */
 @media(max-width:992px){
@@ -173,7 +203,12 @@ tbody tr:hover{
     <!-- Header -->
     <div class="page-header">
         <h2>Student Management</h2>
-        <button class="btn-primary" onclick="addStudent()">+ Add Student</button>
+        <button class="btn btn-primary" onclick="addStudent()">+ Add Student</button>
+    </div>
+    
+    <!-- Spinner overlay -->
+    <div id="spinnerOverlay">
+        <div class="spinner"></div>
     </div>
 
     <!-- Filters -->
@@ -263,16 +298,19 @@ document.addEventListener("DOMContentLoaded", function(){
 
 });
 
-function addStudent(){
-     alert("Add new Student");
+function addStudent() {
+    // Show spinner
+   // document.getElementById('spinnerOverlay').style.display = 'flex';
+      // Show spinner for 3 seconds even if redirect is canceled
+    window.location.href = "{{ route('students.create') }}";
 }
 
 function viewStudent(){
     alert("View Student Details");
 }
 
-function editStudent(){
-    alert("Redirect to Edit Page");
+function editStudent(studentId) {
+    //window.location.href = route('students.edit', { student: studentId });
 }
 
 function deleteStudent(btn){

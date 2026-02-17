@@ -12,7 +12,7 @@ class StudentController extends Controller
      
      //student Create Form: 
      public function create(){
-        return view(''); //Need to assign the Student Create Form.
+        return view('students.create');//Need to assign the Student Create Form.
      }
 
     //Storing the Student Information: 
@@ -28,6 +28,7 @@ class StudentController extends Controller
     //Information View Form for Student
     public function show(){
         //Information about Student Profile.
+        return view('students.show');
     }
     
     //Student profile update.

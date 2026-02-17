@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,9 +16,7 @@ Route::get('/change-password', function () {
 
 
 /* Students */
-Route::get('/students', function () {
-    return view('students.index');
-})->name('students.index');
+Route::resource('students',StudentController::class);
 
 Route::get('/students/alumni', function () {
     return 'Alumni Students';

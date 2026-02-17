@@ -143,7 +143,7 @@
 /* MAIN */
 .main{
     margin-left:200px;
-    margin-top:45px;
+    margin-top:15px;
     padding:28px;
     transition:.3s;
 }

@@ -1,0 +1,260 @@
+@extends('layout.sidebar')
+
+@section('title','Alumni')
+
+@push('styles')
+<style>
+/* Wrapper */
+.page-wrapper{
+    margin-top: 20px;
+    max-width: 900px;
+    margin: 5 auto;
+}
+
+/* Header */
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.page-header h2{
+    font-size:18px;
+    font-weight:600;
+    color:#1f2937;
+}
+
+/* Primary Button */
+.btn-primary{
+    background: var(--primary);
+    border:none;
+    padding:7px 14px;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:12px;
+    transition:.25s;
+}
+.btn-primary:hover{
+    background:#1e40af;
+}
+
+/* Filters */
+.filter-box{
+    background:#fff;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.04);
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:10px;
+}
+
+.filter-box input,
+.filter-box select{
+    padding:7px 9px;
+    border-radius:6px;
+    border:1px solid #d1d5db;
+    font-size:12px;
+    transition:.2s;
+}
+
+.filter-box input:focus,
+.filter-box select:focus{
+    border-color: var(--primary);
+    outline:none;
+}
+
+/* Table */
+.table-box{
+    background:#fff;
+    padding:8px;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:11px;
+}
+
+thead{
+    background:#d9d5ebe1;
+}
+
+th{
+    font-size:12px;
+    font-weight:600;
+    color:#000000;
+    padding:9px 8px;
+    text-align: center;
+}
+
+td{
+    padding:6px 6px;
+    text-align: center;
+}
+
+tbody tr{
+    border-bottom:1px solid #eef2f7;
+    transition:.2s;
+}
+
+tbody tr:hover{
+    background:#f9fafb;
+}
+
+/* Actions */
+.actions{
+    white-space:nowrap;
+}
+
+.actions button{
+    border:none;
+    padding:2px 6px;
+    border-radius:5px;
+    font-size:11px;
+    margin-right:3px;
+    cursor:pointer;
+    font-weight:500;
+    transition:.2s;
+}
+
+/* Button colors */
+.btn-view{
+    background:#e0f2fe;
+    color:#0369a1;
+}
+.btn-view:hover{
+    background:#bae6fd;
+}
+
+.btn-edit{
+    background:#fef9c3;
+    color:#854d0e;
+}
+.btn-edit:hover{
+    background:#fde68a;
+}
+
+.btn-delete{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+.btn-delete:hover{
+    background:#fecaca;
+}
+
+/* Responsive */
+@media(max-width:992px){
+    .filter-box{grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:600px){
+    .filter-box{grid-template-columns:1fr;}
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+}
+
+</style>
+@endpush
+
+
+@section('content')
+
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <div class="page-header">
+        <h2>Alumni Students</h2>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-box">
+        <input type="text" id="searchInput" placeholder="Search by Name or ID">
+
+        <select>
+            <option>All Sessions</option>
+            <option>Spring</option>
+            <option>Summer</option>
+        </select>
+        <input type="text" placeholder="Passed Year">
+    </div>
+
+    <!-- Table -->
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>Academic ID</th>
+                    <th>Name</th>
+                    <th>Passed Year</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th width="140">Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="studentTable">
+                <tr>
+                    <td>2024-001</td>
+                    <td>John Doe</td>
+                    <td>Summer-2026</td>
+                    <td>john@example.com</td>
+                    <td>01700000000</td>
+                    <td class="actions">
+                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>0992220005101006</td>
+                    <td>Shafayeth Ahmed Chowdhury</td>
+                    <td>Spring-2026</td>
+                    <td>sacchy1234@gmail.com</td>
+                    <td>01329490229</td>
+                    <td class="actions">
+                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@endsection
+
+
+@push('scripts')
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    /* Search */
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+        let value = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#studentTable tr");
+
+        rows.forEach(row=>{
+            row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
+        });
+    });
+
+});
+
+function deleteStudent(btn){
+    if(confirm("Delete this student?")){
+        btn.closest("tr").remove();
+    }
+}
+
+</script>
+@endpush

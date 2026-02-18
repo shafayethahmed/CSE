@@ -37,8 +37,7 @@ class UserController extends Controller
 
      //student Create Form: 
      public function create(){
-        return("Student Create Form");
-        //return view('students.create');//Need to assign the Student Create Form.
+       return view('users.create');
      }
 
     //Storing the Student Information: 

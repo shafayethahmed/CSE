@@ -195,14 +195,15 @@
     <!-- Students -->
     @php
         $studentsActive = request()->routeIs('students.*') ? 'active' : '';
+        $alumniActive = request()->routeIs('alumni.*') ? 'active' : '';
     @endphp
     <button class="dropdown-btn {{ $studentsActive }}">
         <span><i class="fas fa-user-graduate"></i> Students</span>
         <i class="fas fa-chevron-down"></i>
     </button>
-    <div class="dropdown-container" style="{{ $studentsActive ? 'display:block;' : '' }}">
-        <a href="{{ route('students.index') }}" class="{{ request()->routeIs('students.index') ? 'active' : '' }}">All Students</a>
-        <a href="{{ route('students.alumni') }}" class="{{ request()->routeIs('students.alumni') ? 'active' : '' }}">Alumni</a>
+    <div class="dropdown-container" style="{{ $studentsActive || $alumniActive ? 'display:block;' : '' }}">
+        <a href="{{ route('students.index') }}" class="{{ request()->routeIs('students.index') ? 'active' : '' }}">General Students</a>
+        <a href="{{ route('alumni.index') }}" class="{{ request()->routeIs('alumni.index') ? 'active' : '' }}">Alumni Students</a>
     </div>
 
     <!-- Faculty & Notices -->

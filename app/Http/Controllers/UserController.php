@@ -47,7 +47,7 @@ class UserController extends Controller
 
     //Edit form display for student:
     public function edit(){
-        return view(''); //Need to assign the Student Edit Form.
+        return view('users.edit'); //Need to assign the Student Edit Form.
     }
 
     //Information View Form for Student

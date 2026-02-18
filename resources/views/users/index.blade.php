@@ -193,6 +193,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Mobile</th>
                         <th>Role</th>
                         <th>Status</th>
                         <th width="160">Action</th>
@@ -204,10 +205,10 @@
                         <td>1</td>
                         <td>Shafayeth Ahmed</td>
                         <td>dev.shafayeth@gmail.com</td>
+                        <td>01329490229</td>
                         <td>Admin</td>
                         <td>Active</td>
                         <td class="actions">
-                            <button class="btn-view">View</button>
                             <button class="btn-edit">Edit</button>
                             <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
                         </td>
@@ -217,10 +218,10 @@
                         <td>2</td>
                         <td>Rahim Khan</td>
                         <td>rahim@example.com</td>
+                        <td>01329490229</td>
                         <td>Staff</td>
                         <td>Inactive</td>
                         <td class="actions">
-                            <button class="btn-view">View</button>
                             <button class="btn-edit">Edit</button>
                             <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
                         </td>

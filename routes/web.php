@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,8 @@ Route::get('/change-password', function () {
 
 /* Students */
 Route::resource('students',StudentController::class);
+Route::resource('users',UserController::class);
+
 
 Route::get('/students/alumni', function () {
     return 'Alumni Students';
@@ -59,10 +62,7 @@ Route::get('/batches/distribution', function () {
 })->name('batches.distribution');
 
 
-/* Users */
-Route::get('/users', function () {
-    return 'Users & Roles';
-})->name('users.index');
+
 
 
 /* Logout (Dummy for UI) */

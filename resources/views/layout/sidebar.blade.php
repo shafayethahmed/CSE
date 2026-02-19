@@ -208,7 +208,7 @@
 
     <!-- Faculty & Notices -->
     <a href="{{ route('faculty.index') }}" class="{{ request()->routeIs('faculty.*') ? 'active' : '' }}">
-        <i class="fas fa-chalkboard-teacher"></i> Faculty & Staff
+        <i class="fas fa-chalkboard-teacher"></i> Faculty 
     </a>
 
     <a href="{{ route('notices.index') }}" class="{{ request()->routeIs('notices.*') ? 'active' : '' }}">

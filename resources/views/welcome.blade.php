@@ -11,7 +11,8 @@
 <style>
 body{
     min-height:100vh;
-   background: linear-gradient(rgba(4,5,36,.65), rgba(4,5,36,.65)), url("{{ asset('images/RTM-AKTU-CAMPUS.jpeg') }}") no-repeat center/cover;
+    background: linear-gradient(rgba(4,5,36,.65), rgba(4,5,36,.65)),
+    url("{{ asset('images/RTM-AKTU-CAMPUS.jpeg') }}") no-repeat center/cover;
 
     display:flex;
     flex-direction:column;
@@ -21,11 +22,11 @@ body{
 
 .login-container{
     max-width:420px;
-    width:40%;
+    width:100%;
     margin:auto;
     background:#fff;
     border-radius:14px;
-    padding:28px;
+    padding:15px;
     text-align:center;
     box-shadow:0 15px 40px rgba(0,0,0,.35);
 }
@@ -36,6 +37,7 @@ body{
 }
 
 h6{font-size:15px;margin-bottom:0}
+
 #login-text{
     font-size:11px;
     color:#c40000;
@@ -50,9 +52,7 @@ h6{font-size:15px;margin-bottom:0}
 
 .btn-primary:hover{background:#020318}
 
-#linkpassword{
-    font-size:12px;
-}
+#linkpassword{font-size:12px}
 
 footer{
     text-align:center;
@@ -65,12 +65,29 @@ footer{
     opacity:.85;
 }
 
-/* Mobile tweaks */
-@media(max-width:576px){
-    .login-container{
-        padding:22px;
-    }
+/* Toggle buttons */
+.login-toggle{
+    display:flex;
+    margin-bottom:18px;
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid #ddd;
 }
+
+.login-toggle button{
+    flex:1;
+    padding:8px;
+    border:none;
+    background:#f7f7f7;
+    font-size:13px;
+}
+
+.login-toggle .active{
+    background:#040524;
+    color:#fff;
+}
+
+.hidden{display:none;}
 </style>
 </head>
 
@@ -87,7 +104,14 @@ footer{
 
     <p id="login-text">Please provide your information to login.</p>
 
-    <form>
+    <!-- LOGIN SWITCH -->
+    <div class="login-toggle">
+        <button id="userBtn" class="active">User Login</button>
+        <button id="facultyBtn">Faculty Login</button>
+    </div>
+
+    <!-- USER LOGIN -->
+    <form id="userLogin">
         <div class="mb-3">
             <input type="email" class="form-control" placeholder="Email" required>
         </div>
@@ -103,6 +127,19 @@ footer{
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
+    <!-- FACULTY LOGIN -->
+    <form id="facultyLogin" class="hidden">
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Faculty ID" required>
+        </div>
+
+        <div class="mb-3">
+            <input type="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Faculty Login</button>
+    </form>
+
 </div>
 
 <footer>
@@ -110,7 +147,7 @@ footer{
 </footer>
 
 <!-- FORGOT PASSWORD MODAL -->
-<div class="modal fade" id="forgotModal" tabindex="-1" style="height: auto;">
+<div class="modal fade" id="forgotModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
@@ -137,5 +174,28 @@ footer{
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const userBtn = document.getElementById('userBtn');
+const facultyBtn = document.getElementById('facultyBtn');
+
+const userForm = document.getElementById('userLogin');
+const facultyForm = document.getElementById('facultyLogin');
+
+userBtn.onclick = () => {
+    userBtn.classList.add('active');
+    facultyBtn.classList.remove('active');
+    userForm.classList.remove('hidden');
+    facultyForm.classList.add('hidden');
+};
+
+facultyBtn.onclick = () => {
+    facultyBtn.classList.add('active');
+    userBtn.classList.remove('active');
+    facultyForm.classList.remove('hidden');
+    userForm.classList.add('hidden');
+};
+</script>
+
 </body>
 </html>

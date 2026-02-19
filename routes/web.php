@@ -4,6 +4,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\FacultyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,17 +26,10 @@ Route::get('alumni/',[AlumniController::class, 'index'])->name('alumni.index');
 // Route for Users
 Route::resource('users',UserController::class);
 
-
-Route::get('/students/alumni', function () {
-    return 'Alumni Students';
-})->name('students.alumni');
-
-
 /* Faculty */
-Route::get('/faculty', function () {
-    return 'Faculty & Staff';
-})->name('faculty.index');
+Route::get('/faculty/search', [FacultyController::class, 'search'])->name('faculty.search');
 
+Route::resource('faculty', FacultyController::class);
 
 /* Notices */
 Route::get('/notices', function () {
@@ -44,7 +38,6 @@ Route::get('/notices', function () {
 
 
 /* Courses */
-
 Route::get('/courses/',[CourseController::class, 'index'])->name('courses.index');
 Route::get('courses/course-create',[CourseController::class ,'create'])->name('courses.create');
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');

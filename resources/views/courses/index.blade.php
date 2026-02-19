@@ -233,7 +233,7 @@ tbody tr:hover{
                     <td>3</td>
                     <td>3-2</td>
                     <td class="actions">
-                        <button class="btn-edit" onclick="editStudent()">Edit</button>
+                        <button class="btn-edit" onclick="editCourse()">Edit</button>
                         <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
                     </td>
                 </tr>
@@ -272,8 +272,8 @@ function viewStudent(){
     alert("View Student Details");
 }
 
-function editStudent(studentId) {
-    //window.location.href = route('students.edit', { student: studentId });
+function editCourse(courseId) {
+    //window.location.href = route('courses.edit', { course: courseId });
 }
 
 function deleteStudent(btn){

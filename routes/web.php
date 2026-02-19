@@ -47,6 +47,7 @@ Route::get('/notices', function () {
 
 Route::get('/courses/',[CourseController::class, 'index'])->name('courses.index');
 Route::get('courses/course-create',[CourseController::class ,'create'])->name('courses.create');
+Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
 
 Route::get('/courses/curriculum', function () {
     return 'Curriculum';

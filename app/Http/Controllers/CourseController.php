@@ -22,14 +22,11 @@ class CourseController extends Controller
 
     //Edit form display for student:
     public function edit(){
-        return view(''); //Need to assign the Student Edit Form.
+        // return view('courses.edit);
+        return view('Course Edit Ui Designed Need the Backedn Implementation.'); //Need to assign the Student Edit Form.
+         
     }
 
-    //Information View Form for Student
-    public function show(){
-        //Information about Student Profile.
-        return view('students.show');
-    }
     
     //Student profile update.
     public function update(){

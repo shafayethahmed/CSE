@@ -224,9 +224,9 @@
         <i class="fas fa-chevron-down"></i>
     </button>
     <div class="dropdown-container" style="{{ $coursesActive ? 'display:block;' : '' }}">
-        <a href="{{ route('courses.subjects') }}" class="{{ request()->routeIs('courses.subjects') ? 'active' : '' }}">Subjects</a>
+        <a href="{{ route('courses.index') }}" class="{{ request()->routeIs('courses.index') ? 'active' : '' }}">Course</a>
         <a href="{{ route('courses.curriculum') }}" class="{{ request()->routeIs('courses.curriculum') ? 'active' : '' }}">Curriculum</a>
-        <a href="{{ route('courses.assign.teacher') }}" class="{{ request()->routeIs('courses.assign.teacher') ? 'active' : '' }}">Assign Teacher</a>
+        <a href="{{ route('courses.teacher') }}" class="{{ request()->routeIs('courses.teacher') ? 'active' : '' }}">Course Teacher</a>
     </div>
 
     <!-- Batches -->

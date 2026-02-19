@@ -3,6 +3,7 @@
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,17 +44,16 @@ Route::get('/notices', function () {
 
 
 /* Courses */
-Route::get('/courses/subjects', function () {
-    return 'Subjects';
-})->name('courses.subjects');
+
+Route::get('/courses/',[CourseController::class, 'index'])->name('courses.index');
 
 Route::get('/courses/curriculum', function () {
     return 'Curriculum';
 })->name('courses.curriculum');
 
-Route::get('/courses/assign-teacher', function () {
+Route::get('/courses/teacher', function () {
     return 'Assign Teacher';
-})->name('courses.assign.teacher');
+})->name('courses.teacher');
 
 
 /* Batches */

@@ -36,4 +36,9 @@ class CourseController extends Controller
     public function viewcurriculam(){
         return view('courses.course-curriculam');
     }
+    
+    //Course Teacher Info:
+      public function viewCourseTeacher(){
+        return view('courses.course-teacher');
+      }
 }

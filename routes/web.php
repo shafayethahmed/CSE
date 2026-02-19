@@ -49,11 +49,7 @@ Route::get('/courses/',[CourseController::class, 'index'])->name('courses.index'
 Route::get('courses/course-create',[CourseController::class ,'create'])->name('courses.create');
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
 Route::get('/courses/course-curriculam',[CourseController::class, 'viewcurriculam'])->name('courses.curriculum');
-
-
-Route::get('/courses/teacher', function () {
-    return 'Assign Teacher';
-})->name('courses.teacher');
+Route::get('/courses/course-teacher',[CourseController::class, 'viewCourseTeacher'])->name('courses.teacher');
 
 
 /* Batches */

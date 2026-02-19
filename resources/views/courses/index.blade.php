@@ -203,7 +203,7 @@ tbody tr:hover{
     <!-- Header -->
     <div class="page-header">
         <h2>Course Management</h2>
-        <button class="btn btn-primary" onclick="addStudent()">+ Add Course</button>
+        <button class="btn btn-primary" onclick="addCourse()">+ Add Course</button>
     </div>
 
     <!-- Filters -->
@@ -233,7 +233,6 @@ tbody tr:hover{
                     <td>3</td>
                     <td>3-2</td>
                     <td class="actions">
-                        <button class="btn-view" onclick="viewStudent()">View</button>
                         <button class="btn-edit" onclick="editStudent()">Edit</button>
                         <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
                     </td>
@@ -264,11 +263,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
 });
 
-function addStudent() {
+function addCourse() {
     // Show spinner
-   // document.getElementById('spinnerOverlay').style.display = 'flex';
-      // Show spinner for 3 seconds even if redirect is canceled
-    window.location.href = "{{ route('students.create') }}";
+    window.location.href = "{{ route('courses.create') }}";
 }
 
 function viewStudent(){

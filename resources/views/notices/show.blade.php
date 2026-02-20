@@ -71,7 +71,7 @@ N.B: No student will be allowed to sit for the Make-Up Examination without an Ad
     margin-right: 12px;
 }
 
-.notice-header-text h2 {
+.notice-header-text h3 {
     margin: 0;
     font-size: 20px;
     font-weight: bold;
@@ -175,9 +175,10 @@ function downloadPDF() {
         <div class="notice-header">
             <img src="{{ asset('images/RTM-Logo.jpg') }}">
             <div class="notice-header-text">
-                <h2>RTM Al-Kabir Technical University (RTM-AKTU)</h2>
-                <p>E-mail: info@rtm-aktu.edu.bd</p>
-                <p>Web: www.rtm-aktu.edu.bd</p>
+                <h3>RTM Al-Kabir Technical University (RTM-AKTU)</h3>
+                <h4 style="text-align: center;" ><i >Department Of Computer Science & Engineering</i></h4>
+                <p style="text-align: center;">E-mail: info@rtm-aktu.edu.bd</p>
+                <p style="text-align: center;">Web: www.rtm-aktu.edu.bd</p>
             </div>
         </div>
 

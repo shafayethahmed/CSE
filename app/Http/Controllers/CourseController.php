@@ -41,4 +41,9 @@ class CourseController extends Controller
       public function viewCourseTeacher(){
         return view('courses.course-teacher');
       }
+    
+    //Course Teacher Assign:
+    public function viewAssignCourseTeacher(){
+      return view('courses.course-teacher-assign');
+    }
 }

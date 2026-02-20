@@ -235,7 +235,7 @@ tbody tr:hover{
                     <td>Data Structure</td>
                     <td>Samiul Alim</td>
                     <td class="actions">
-                        <button class="btn-edit" onclick="editCourseTeacher()">Edit</button>
+                        <button class="btn-edit" onclick=" assignCourseTeacher()">Edit</button>
                     </td>
                 </tr>
             </tbody>
@@ -264,8 +264,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
 });
 
-function editCourseTeacher(courseId) {
-    //window.location.href = route('courses.edit', { course: courseId });
+function assignCourseTeacher() {
+    window.location.href = "{{ route('assign-course-teacher.create') }}";
 }
 
 

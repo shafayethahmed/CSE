@@ -6,6 +6,7 @@ use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\NoticeController;
+use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,9 +46,12 @@ Route::get('/courses/course-teacher',[CourseController::class, 'viewCourseTeache
 Route::get('/courses/course-teacher/assign',[CourseController::class, 'viewAssignCourseTeacher'])->name('assign-course-teacher.create');
 
 /* Batches */
-Route::get('/batches/assign', function () {
-    return 'Assign Batch';
-})->name('batches.assign');
+Route::get('/batches/supervisor', function () {
+    return view('supervisor.index');
+})->name('batches.supervisor');
+Route::get('/batch/assign-supervisor',function(){
+   return view('supervisor.create');
+})->name('supervisor.assign');
 
 Route::get('/batches/distribution', function () {
     return 'Batch Distribution';

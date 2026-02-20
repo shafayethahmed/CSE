@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\NoticeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,9 +33,7 @@ Route::get('/faculty/search', [FacultyController::class, 'search'])->name('facul
 Route::resource('faculty', FacultyController::class);
 
 /* Notices */
-Route::get('/notices', function () {
-    return 'Notices';
-})->name('notices.index');
+Route::resource('notices', NoticeController::class);
 
 
 /* Courses */

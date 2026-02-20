@@ -165,7 +165,7 @@
 <div class="topbar">
     <div class="left">
         <i class="fas fa-bars menu-btn" onclick="toggleSidebar()"></i>
-        <div class="brand">CSE Department ERP</div>
+        <div class="brand">Department of CSE,RTM-AKTU</div>
     </div>
 
     <div class="user-box">

@@ -159,7 +159,8 @@ button:hover {
                     <option value="">Choose role</option>
                     <option value="user">User</option>
                     <option value="staff">Staff</option>
-                    <option value="department-head">Department-Head</option>
+                    <option value="department-head">Department Head</option>
+                    <option value="super-admin">Super Admin</option>
                 </select>
                 <div class="error" id="roleError">Please select a role</div>
                 @error('role')<div class="error">{{ $message }}</div>@enderror

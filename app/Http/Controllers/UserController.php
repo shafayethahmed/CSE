@@ -11,13 +11,31 @@ class UserController extends Controller
 {
       
      //user index
-      public function index(Request $request){
-        
-          $users = User::all('*');
-          return view('users.index',compact('users'));
-      }
+    public function index(Request $request)
+{
+    $users = User::query();
 
-     //student Create Form: 
+    if($request->search){
+        $users->where(function($q) use ($request){
+            $q->where('name','like','%'.$request->search.'%')
+              ->orWhere('email','like','%'.$request->search.'%')
+              ->orWhere('mobile','like','%'.$request->search.'%');
+        });
+    }
+
+    if($request->role){
+        $users->where('role',$request->role);
+    }
+
+$users = $users->latest()->paginate(15)->withQueryString();
+
+    if($request->ajax()){
+        return view('users.partials.table', compact('users'))->render();
+    }
+
+    return view('users.index', compact('users'));
+}
+     //User Create Form: 
      public function create(){
        return view('users.create');
      }
@@ -29,7 +47,7 @@ class UserController extends Controller
             'name'   => 'required|string',
             'email'  => 'required|email|unique:users,email',
             'mobile' => 'required|regex:/^01[3-9]\d{8}$/|unique:users,mobile',
-            'role'   => 'required|in:staff,user,department-head',
+            'role'   => 'required|in:staff,user,department-head,super-admin',
         ]);
 
         // Validated Data insertion to the Table: 

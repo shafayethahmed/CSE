@@ -201,31 +201,24 @@
                 </thead>
 
                 <tbody id="userTable">
+                    @forelse ( $users as $user )
                     <tr>
-                        <td>1</td>
-                        <td>Shafayeth Ahmed</td>
-                        <td>dev.shafayeth@gmail.com</td>
-                        <td>01329490229</td>
-                        <td>Admin</td>
-                        <td>Active</td>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ ucWords($user->name) }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->mobile }}</td>
+                        <td>{{ ucWords($user->role) }}</td>
+                        <td>{{ ucfirst($user->status)}}</td>
                         <td class="actions">
                             <button class="btn-edit">Edit</button>
                             <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>Rahim Khan</td>
-                        <td>rahim@example.com</td>
-                        <td>01329490229</td>
-                        <td>Staff</td>
-                        <td>Inactive</td>
-                        <td class="actions">
-                            <button class="btn-edit">Edit</button>
-                            <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                        </td>
-                    </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">No users found</td>
+                        </tr>
+                    @endforelse
                 </tbody>
 
             </table>

@@ -1,71 +1,70 @@
 @extends('layout.sidebar')
 
-@section('title','Add New User')
+@section('title', 'Edit User')
 
 @push('styles')
 <style>
 /* Card Container */
 .card {
-    background: #ffffff;
-    padding: 20px 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    background: #d2eafa; /* Light card background */
+    padding: 10px 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     max-width: 900px;
-    margin: 10px auto;
+    margin: 20px auto;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
     transition: all 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 /* Titles */
 .card h2 {
+    width: 100%;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     font-weight: 700;
     color: #1e3a8a;
-    font-size: 24px;
 }
 
 .card .subtitle {
+    width: 100%;
     text-align: center;
     font-size: 14px;
     color: #6b7280;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 /* Form Layout */
-.form-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+.form-left, .form-right {
+    flex: 1;
+    min-width: 250px;
 }
 
 .form-group {
-    flex: 1;
-    min-width: 250px;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 18px;
 }
 
 label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    display: block;
     color: #374151;
 }
 
 input, select {
     width: 100%;
-    padding: 6px 14px;
-    border-radius: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
     border: 1px solid #d1d5db;
     background-color: #f9fafb;
-    font-size: 13px;
+    font-size: 12px;
     outline: none;
     transition: all 0.2s ease-in-out;
 }
@@ -73,25 +72,23 @@ input, select {
 input:focus, select:focus {
     border-color: #3b82f6;
     background-color: #fff;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Buttons */
-button.submit-btn {
-    align-self: center;
-    padding: 10px 20px;
+button {
+    padding: 12px 22px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     background: #3b82f6;
     color: white;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
     margin-top: 10px;
+    transition: all 0.3s ease;
 }
 
-button.submit-btn:hover {
+button:hover {
     background: #2563eb;
     transform: translateY(-2px);
 }
@@ -105,7 +102,7 @@ button.submit-btn:hover {
 }
 
 .success-message {
-    margin-top: 15px;
+    margin-top: 12px;
     text-align: center;
     font-size: 14px;
     color: #10b981;
@@ -115,138 +112,69 @@ button.submit-btn:hover {
 /* Responsive for mobile */
 @media(max-width: 768px){
     .card {
-        padding: 25px 20px;
-        margin: 20px auto;
-    }
-    
-    .form-row {
         flex-direction: column;
+        max-width: 100%;
+        margin: 10px auto;
     }
 }
 </style>
 @endpush
 
 @section('content')
-<div class="card-wrapper">
-    <div class="card">
-        <h2>Edit User</h2>
-        <p class="subtitle">Update user details below</p>
+<div class="card">
 
-        <form id="editUserForm" method="POST" action="#">
-            @csrf
-            @method('PUT')
+    <h2>Add New User</h2>
+    <p class="subtitle">Enter user details below</p>
 
-            <!-- Row 1: Name + Email -->
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" name="name" id="name" value="John Doe" placeholder="Enter full name">
-                    <div class="error" id="nameError">Please enter full name</div>
-                </div>
+    <form id="userForm" method="POST" action="{{ route('users.store') }}" style="width:100%; display:flex; flex-wrap:wrap; gap:25px;">
+        @csrf
 
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" name="email" id="email" value="johndoe@example.com" placeholder="Enter email address">
-                    <div class="error" id="emailError">Please enter valid email</div>
-                </div>
+        <div class="form-left">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="name" id="name" placeholder="Enter full name" >
+                <div class="error" id="nameError">Please enter full name</div>
+                @error('name')<div class="error">{{ $message }}</div>@enderror
             </div>
 
-            <!-- Row 2: Mobile + Role -->
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Mobile Number</label>
-                    <input type="tel" name="mobile" id="mobile" value="0123456789" placeholder="Enter mobile number">
-                    <div class="error" id="mobileError">Please enter valid mobile number</div>
-                </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" id="email" placeholder="Enter email address">
+                <div class="error" id="emailError">Please enter valid email</div>
+                @error('email')<div class="error">{{ $message }}</div>@enderror
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label>Select Role</label>
-                    <select name="role" id="role">
-                        <option value="">Choose role</option>
-                        <option value="User" selected>User</option>
-                        <option value="Staff">Staff</option>
-                    </select>
-                    <div class="error" id="roleError">Please select a role</div>
-                </div>
+        <div class="form-right">
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="tel" name="mobile" id="mobile" placeholder="Enter 10-digit mobile number" >
+                <div class="error" id="mobileError">Please enter valid 10-digit mobile number</div>
+                @error('mobile')<div class="error">{{ $message }}</div>@enderror
             </div>
 
-            <!-- Row 3: Status -->
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Status</label>
-                    <select name="status" id="status">
-                        <option value="">Select status</option>
-                        <option value="Active" selected>Active</option>
-                        <option value="Inactive">Inactive</option>
-                    </select>
-                    <div class="error" id="statusError">Please select status</div>
+            <div class="form-group">
+                <label>Select Role</label>
+                <select name="role" id="role">
+                    <option value="">Choose role</option>
+                    <option value="user">User</option>
+                    <option value="staff">Staff</option>
+                    <option value="department-head">Department-Head</option>
+                </select>
+                <div class="error" id="roleError">Please select a role</div>
+                @error('role')<div class="error">{{ $message }}</div>@enderror
+            </div>
+
+            <button type="submit">Submit</button>
+
+            @if(session('success'))
+                <div class="success-message" id="successMessage">
+                    {{ session('success') }}
                 </div>
-            </div>
-
-            <button type="submit" class="submit-btn">Update</button>
-
-            <div class="success-message" id="successMessage">
-                User updated successfully!
-            </div>
-        </form>
-    </div>
+            @endif
+        </div>
+    </form>
 </div>
 @endsection
 
-@push('scripts')
-<script>
-const form = document.getElementById("editUserForm");
 
-form.addEventListener("submit", function(e) {
-    let isValid = true;
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const mobile = document.getElementById("mobile").value.trim();
-    const role = document.getElementById("role").value;
-    const status = document.getElementById("status").value;
-
-    const nameError = document.getElementById("nameError");
-    const emailError = document.getElementById("emailError");
-    const mobileError = document.getElementById("mobileError");
-    const roleError = document.getElementById("roleError");
-    const statusError = document.getElementById("statusError");
-
-    nameError.style.display = "none";
-    emailError.style.display = "none";
-    mobileError.style.display = "none";
-    roleError.style.display = "none";
-    statusError.style.display = "none";
-
-    if (name === "") {
-        nameError.style.display = "block";
-        isValid = false;
-    }
-
-    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
-    if (!email.match(emailPattern)) {
-        emailError.style.display = "block";
-        isValid = false;
-    }
-
-    if (mobile.length < 10) {
-        mobileError.style.display = "block";
-        isValid = false;
-    }
-
-    if (role === "") {
-        roleError.style.display = "block";
-        isValid = false;
-    }
-
-    if (status === "") {
-        statusError.style.display = "block";
-        isValid = false;
-    }
-
-    if (!isValid) {
-        e.preventDefault();
-    }
-});
-</script>
-@endpush

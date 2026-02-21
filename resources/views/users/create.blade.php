@@ -172,6 +172,11 @@ button:hover {
                     {{ session('success') }}
                 </div>
             @endif
+               @if(session('success'))
+                <div class="success-message" id="successMessage">
+                    {{ session('success') }}
+                </div>
+            @endif
         </div>
     </form>
 </div>

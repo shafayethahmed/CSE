@@ -132,10 +132,9 @@ button.submit-btn:hover {
         <h2>Edit User</h2>
         <p class="subtitle">Update user details below</p>
 
-        <form id="editUserForm" method="POST" action="#">
-            @csrf
-            @method('PUT')
-
+        <form action="{{ route('users.update', $user->id) }}" method="POST">
+                @csrf
+                @method('PUT')
             <!-- Row 1: Name + Email -->
             <div class="form-row">
                 <div class="form-group">
@@ -162,7 +161,7 @@ button.submit-btn:hover {
                 <div class="form-group">
                     <label>Select Role</label>
                     <select name="role" id="role">
-                        <option value="{{ $user->role }}" selected disabled style="color:darkblue;">{{ str_replace('-',' ', ucwords($user->role)) }}</option>
+                        <option value="{{ $user->role }}" selected  style="color:darkblue;">{{ str_replace('-',' ', ucwords($user->role)) }}</option>
                         <option value="user" >User</option>
                         <option value="staff">Staff</option>
                         <option value="department-head">Department Head</option>     
@@ -195,60 +194,3 @@ button.submit-btn:hover {
 </div>
 @endsection
 
-@push('scripts')
-<script>
-const form = document.getElementById("editUserForm");
-
-form.addEventListener("submit", function(e) {
-    let isValid = true;
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const mobile = document.getElementById("mobile").value.trim();
-    const role = document.getElementById("role").value;
-    const status = document.getElementById("status").value;
-
-    const nameError = document.getElementById("nameError");
-    const emailError = document.getElementById("emailError");
-    const mobileError = document.getElementById("mobileError");
-    const roleError = document.getElementById("roleError");
-    const statusError = document.getElementById("statusError");
-
-    nameError.style.display = "none";
-    emailError.style.display = "none";
-    mobileError.style.display = "none";
-    roleError.style.display = "none";
-    statusError.style.display = "none";
-
-    if (name === "") {
-        nameError.style.display = "block";
-        isValid = false;
-    }
-
-    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
-    if (!email.match(emailPattern)) {
-        emailError.style.display = "block";
-        isValid = false;
-    }
-
-    if (mobile.length < 10) {
-        mobileError.style.display = "block";
-        isValid = false;
-    }
-
-    if (role === "") {
-        roleError.style.display = "block";
-        isValid = false;
-    }
-
-    if (status === "") {
-        statusError.style.display = "block";
-        isValid = false;
-    }
-
-    if (!isValid) {
-        e.preventDefault();
-    }
-});
-</script>
-@endpush

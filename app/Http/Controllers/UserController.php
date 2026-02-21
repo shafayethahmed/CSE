@@ -65,21 +65,32 @@ $users = $users->latest()->paginate(15)->withQueryString();
         }
     } 
 
-    //Edit form display for student:
+    //Edit form display for User:
     public function edit(User $user){
         return view('users.edit',compact('user')); //Need to assign the Student Edit Form.
     }
+     
+    // Sotre User Data Update:
+   public function update(Request $request, $id)
+{
+    $user = User::findOrFail($id);
 
-    //Information View Form for Student
-    public function show(){
-        //Information about Student Profile.
-        return view('');
-    }
-    
-    //Student profile update.
-    public function update(){
-        //Update Process logic need to implement here.
-    }
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'mobile' => $request->mobile,
+        'role' => $request->role,
+        'status' => $request->status,
+    ]);
 
+    return redirect()->route('users.index')->with('success', 'User Updated Successfully!');
+}
+
+//User Delete :
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted successfully!');
+    }
 
 }

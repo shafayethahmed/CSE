@@ -69,6 +69,20 @@
 .btn-delete:hover{
     background:#fca5a5;
 }
+/* Toast */
+.toast-msg{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:8px 12px;
+    border-radius:6px;
+    color:#fff;
+    z-index:9999;
+    font-size: 12px;
+    animation:slideFade .4s ease forwards;
+}
+.toast-success{ background:#28a745; }
+.toast-error{ background:#dc3545; }
 
 @media(max-width:768px){ .filter-box{ grid-template-columns:1fr; } }
 </style>
@@ -76,6 +90,16 @@
 
 @section('content')
 <div class="page-wrapper">
+
+     
+{{-- Toast --}}
+@if(session('success'))
+<div class="toast-msg toast-success">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+<div class="toast-msg toast-error">{{ session('error') }}</div>
+@endif
+
 
     <div class="page-header">
         <h2>User Management</h2>
@@ -134,5 +158,9 @@ $(document).ready(function(){
     $('#searchUser').on('keyup', fetchUsers);
     $('#roleFilter').on('change', fetchUsers);
 });
+setTimeout(() => {
+    document.querySelectorAll('.toast-msg').forEach(t => t.remove());
+}, 3000);
+
 </script>
 @endpush

@@ -318,6 +318,9 @@ function deleteStudent(btn){
         btn.closest("tr").remove();
     }
 }
+setTimeout(() => {
+    document.querySelectorAll('.toast-msg').forEach(t => t.remove());
+}, 3000);
 
 </script>
 @endpush

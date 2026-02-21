@@ -140,13 +140,13 @@ button.submit-btn:hover {
             <div class="form-row">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="name" id="name" value="John Doe" placeholder="Enter full name">
+                    <input type="text" name="name" id="name" value="{{ $user->name }}" placeholder="Enter full name">
                     <div class="error" id="nameError">Please enter full name</div>
                 </div>
 
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" name="email" id="email" value="johndoe@example.com" placeholder="Enter email address">
+                    <input type="email" name="email" id="email" value="{{ $user->email }}" placeholder="Enter email address">
                     <div class="error" id="emailError">Please enter valid email</div>
                 </div>
             </div>
@@ -155,19 +155,21 @@ button.submit-btn:hover {
             <div class="form-row">
                 <div class="form-group">
                     <label>Mobile Number</label>
-                    <input type="tel" name="mobile" id="mobile" value="0123456789" placeholder="Enter mobile number">
+                    <input type="tel" name="mobile" id="mobile" value="{{ $user->mobile }}" placeholder="Enter mobile number">
                     <div class="error" id="mobileError">Please enter valid mobile number</div>
                 </div>
-
+                @if ($user->role !== 'super-admin') {{-- This conditon Applied for prevent the Super Admin --}}
                 <div class="form-group">
                     <label>Select Role</label>
                     <select name="role" id="role">
-                        <option value="">Choose role</option>
-                        <option value="User" selected>User</option>
-                        <option value="Staff">Staff</option>
-                    </select>
+                        <option value="{{ $user->role }}" selected disabled style="color:darkblue;">{{ str_replace('-',' ', ucwords($user->role)) }}</option>
+                        <option value="user" >User</option>
+                        <option value="staff">Staff</option>
+                        <option value="department-head">Department Head</option>     
+                  </select>
                     <div class="error" id="roleError">Please select a role</div>
                 </div>
+                 @endif
             </div>
 
             <!-- Row 3: Status -->
@@ -176,8 +178,8 @@ button.submit-btn:hover {
                     <label>Status</label>
                     <select name="status" id="status">
                         <option value="">Select status</option>
-                        <option value="Active" selected>Active</option>
-                        <option value="Inactive">Inactive</option>
+                        <option value="active" selected>Active</option>
+                        <option value="inactive">Inactive</option>
                     </select>
                     <div class="error" id="statusError">Please select status</div>
                 </div>

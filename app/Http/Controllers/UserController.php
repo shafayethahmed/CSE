@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-      
      //user index
     public function index(Request $request)
 {
@@ -67,8 +66,8 @@ $users = $users->latest()->paginate(15)->withQueryString();
     } 
 
     //Edit form display for student:
-    public function edit(){
-        return view('users.edit'); //Need to assign the Student Edit Form.
+    public function edit(User $user){
+        return view('users.edit',compact('user')); //Need to assign the Student Edit Form.
     }
 
     //Information View Form for Student

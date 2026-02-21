@@ -111,13 +111,19 @@ footer{
     </div>
 
     <!-- USER LOGIN -->
-    <form id="userLogin">
+    @if(session('failed'))
+   <div id="flashMsg" class="flash-message" style="text-align: center; font-size:12px; color:red">
+        {{ session('failed') }}
+    </div>
+    @endif
+    <form id="userLogin" method="POST" action="{{ route('general.login') }}">
+        @csrf
         <div class="mb-3">
-            <input type="email" class="form-control" placeholder="Email" required>
+            <input type="email" class="form-control" placeholder="Email" name="email" required>
         </div>
 
         <div class="mb-3">
-            <input type="password" class="form-control" placeholder="Password" required>
+            <input type="password" class="form-control" placeholder="Password" name="password" required>
         </div>
 
         <div class="mb-3 d-flex justify-content-between align-items-center" id="linkpassword">
@@ -128,7 +134,7 @@ footer{
     </form>
 
     <!-- FACULTY LOGIN -->
-    <form id="facultyLogin" class="hidden">
+    <form id="facultyLogin" class="hidden" >
         <div class="mb-3">
             <input type="text" class="form-control" placeholder="Faculty ID" required>
         </div>

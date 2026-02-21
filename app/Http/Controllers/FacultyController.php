@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FacultyController extends Controller
@@ -17,43 +18,21 @@ class FacultyController extends Controller
      
      //Searched Data 
     public function search(Request $request)
-{
-     // Mock users (for testing)
-    $users = [
-        [
-            'id' => 101,
-            'name' => 'Dr. Rahim Uddin',
-            'email' => 'rahim@university.edu'
-        ],
-        [
-            'id' => 102,
-            'name' => 'Shafayeth Ahmed',
-            'email' => 'shafayeth@gmail.com'
-        ],
-        [
-            'id' => 103,
-            'name' => 'Farhana Akter',
-            'email' => 'farhana@gmail.com'
-        ]
-    ];
-
-    $search =$request->searchval;
-    $user = null;
-
-    // Search logic
-    if ($search) {
-        foreach ($users as $u) {
-            if ($u['id'] == $search || $u['email'] == $search) {
-                $user = (object) $u; // convert to object like Eloquent
-                break;
+    {
+        // Initialize variable as null first
+        $user = null;
+        // Search logic
+        $search = $request->searchval;
+        // Perform search
+            if ($search) {
+                $user = User::where('email', $search)->first();
             }
+        if (!$user) {
+            return redirect()->back()->with('error', 'User email not found!');
         }
+            // Return blade with result
+            return view('faculty.create', compact('user'));
     }
-
-    // Return blade with result
-    return view('faculty.create', compact('user'));
-
-}
 
     //Storing the Student Information: 
     public function store(){

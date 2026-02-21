@@ -3,15 +3,32 @@
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\NoticeController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/login', function () {
+//     return view('welcome');
+// });
+
+// Login Information (General Login)
+Route::get('/',function(){
+  return view('login');
 });
+Route::get('/login',function(){
+  return view('login');
+})->name('login');
+
+
+//Control & Execute logic for general login & faculty login.
+Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
+
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');

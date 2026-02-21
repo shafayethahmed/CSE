@@ -147,8 +147,8 @@ button.btn-secondary:hover {
             <form method="GET" action="{{ route('faculty.search') }}">
                 <div class="row-grid">
                     <div>
-                        <label class="label">Search by ID or Email</label>
-                        <input type="text" name="searchval" class="form-control" placeholder="Enter Faculty ID or Email">
+                        <label class="label">Search by Email</label>
+                        <input type="email" name="searchval" class="form-control" placeholder="Enter Faculty ID or Email">
                     </div>
                     <div style="display:flex; align-items:end;">
                         <button class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
@@ -156,11 +156,17 @@ button.btn-secondary:hover {
                 </div>
             </form>
 
-            {{-- Show user info if found --}}
+          
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @else
+                {{-- Show user info if found --}}
             @isset($user)
             <div class="user-info">
                 <strong>User Found:</strong>
-                <p>Name: {{ $user->name }}<br>Email: {{ $user->email }}<br>ID: {{ $user->id }}</p>
+                <p>Name: {{ $user->name }}<br>Email: {{ $user->email }}<br>ID: {{ $user->id }}<br>Status:{{ $user->status }} </p>
             </div>
 
             {{-- Assign Faculty Form --}}
@@ -182,8 +188,8 @@ button.btn-secondary:hover {
                         </select>
                     </div>
                     <div>
-                        <label class="label">Department</label>
-                        <input type="text" name="department" class="form-control" placeholder="e.g. CSE">
+                        <label class="label">Credit Limit</label>
+                        <input type="number" name="department" class="form-control" placeholder="e.g. 36.0" min="20" >
                     </div>
                 </div>
 
@@ -214,7 +220,7 @@ button.btn-secondary:hover {
 
             </form>
             @endisset
-
+            @endif
         </div>
 
     </div>

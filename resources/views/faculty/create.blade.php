@@ -130,7 +130,6 @@ button.btn-secondary:hover {
 </style>
 @endpush
 
-
 @section('content')
 <div class="assign-wrapper">
 
@@ -156,13 +155,13 @@ button.btn-secondary:hover {
                 </div>
             </form>
 
-          
             @if (session('error'))
                 <div class="alert alert-danger">
                     {{ session('error') }}
                 </div>
-            @else
-                {{-- Show user info if found --}}
+            @endif
+
+            {{-- Show user info if found --}}
             @isset($user)
             <div class="user-info">
                 <strong>User Found:</strong>
@@ -170,28 +169,21 @@ button.btn-secondary:hover {
             </div>
 
             {{-- Assign Faculty Form --}}
-            <form method="POST" action="{{ route('faculty.store') }}">
+            <form id="assignFacultyForm" method="POST" action="{{ route('faculty.store') }}">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ $user->id }}">
                 <input type="hidden" name="user_name" value="{{ $user->name }}">
                 <input type="hidden" name="user_email" value="{{ $user->email }}">
 
-                {{-- Designation & Department --}}
+                {{-- Designation & Credit Limit --}}
                 <div class="row-grid">
                     <div>
-                        <label class="label">Designation</label>
-                        <select name="designation" class="form-select" required>
-                            <option value="">Select</option>
-                            <option>Lecturer</option>
-                            <option>Assistant Professor</option>
-                            <option>Associate Professor</option>
-                            <option>Professor</option>
-                            <option>Department Head</option>
-                        </select>
+                        <label class="label">Credit Limit</label>
+                        <input type="number" name="credit_limit" class="form-control" placeholder="Min 18 | Max 30" min="18" max="30">
                     </div>
                     <div>
-                        <label class="label">Credit Limit</label>
-                        <input type="number" name="credit_limit" class="form-control" placeholder="e.g. Min 18.0 | Max 30.0" min="18" max="30">
+                        <label class="label">Designation</label>
+                        <input type="text" name="designation" class="form-control" placeholder="e.g. Department-Head,Lecturer....">
                     </div>
                 </div>
 
@@ -220,11 +212,59 @@ button.btn-secondary:hover {
 
             </form>
             @endisset
-            @endif
         </div>
 
     </div>
 
 </div>
-
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Remove searchval from URL after 3 seconds
+    if(window.location.search.includes('searchval=')){
+        setTimeout(() => {
+            const cleanURL = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, cleanURL);
+        }, 3000);
+    }
+
+    // AJAX Submit for Assign Faculty form
+    const form = document.querySelector("#assignFacultyForm");
+    if(form){
+        form.addEventListener("submit", function(e){
+            e.preventDefault(); // Prevent full page reload
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success){
+                    alert("Faculty assigned successfully!");
+                    form.reset(); // Clear form
+                    const userInfo = document.querySelector(".user-info");
+                    if(userInfo) userInfo.remove();
+                    window.location.href = "{{ route('faculty.index') }}";
+                }else{
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Something went wrong!");
+            });
+        });
+    }
+
+});
+</script>
+@endpush

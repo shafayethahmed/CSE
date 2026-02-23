@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Faculty extends Model
 {
-      protected $table = 'faculty';
+      protected $table = 'faculties';
 
     protected $fillable = [
         'faculty_id',
@@ -28,6 +29,7 @@ class Faculty extends Model
     protected $hidden = [
         'password',
     ];
+   
 
    
 }

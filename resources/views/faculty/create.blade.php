@@ -201,7 +201,6 @@ button.btn-secondary:hover {
                     <div class="row-grid">
                         <div><label class="label">Degree</label><input type="text" name="bachelor_degree" class="form-control" placeholder="BSc in CSE"></div>
                         <div><label class="label">University</label><input type="text" name="bachelor_university" class="form-control" placeholder="e.g. SUST"></div>
-                        <div><label class="label">Department</label><input type="text" name="bachelor_department" class="form-control"></div>
                         <div><label class="label">CGPA</label><input type="text" name="bachelor_cgpa" class="form-control"></div>
                     </div>
                 </div>
@@ -211,7 +210,6 @@ button.btn-secondary:hover {
                     <div class="row-grid">
                         <div><label class="label">Degree</label><input type="text" name="masters_degree" class="form-control" placeholder="MSc in CSE"></div>
                         <div><label class="label">University</label><input type="text" name="masters_university" class="form-control"></div>
-                        <div><label class="label">Department</label><input type="text" name="masters_department" class="form-control"></div>
                         <div><label class="label">CGPA</label><input type="text" name="masters_cgpa" class="form-control"></div>
                     </div>
                 </div>

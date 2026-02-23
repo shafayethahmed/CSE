@@ -166,7 +166,7 @@ button.btn-secondary:hover {
             @isset($user)
             <div class="user-info">
                 <strong>User Found:</strong>
-                <p>Name: {{ $user->name }}<br>Email: {{ $user->email }}<br>ID: {{ $user->id }}<br>Status:{{ $user->status }} </p>
+                <p>Name: {{ $user->name }}<br>Email: {{ $user->email }}<br>ID: {{ $user->id }}<br>Status: {{ ucfirst($user->status)}} </p>
             </div>
 
             {{-- Assign Faculty Form --}}
@@ -189,7 +189,7 @@ button.btn-secondary:hover {
                     </div>
                     <div>
                         <label class="label">Credit Limit</label>
-                        <input type="number" name="department" class="form-control" placeholder="e.g. 36.0" min="20" >
+                        <input type="number" name="department" class="form-control" placeholder="e.g. Min 18.0 | Max 30.0" min="18" max="30">
                     </div>
                 </div>
 

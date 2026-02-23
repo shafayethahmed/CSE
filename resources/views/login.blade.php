@@ -135,6 +135,7 @@ footer{
 
     <!-- FACULTY LOGIN -->
     <form id="facultyLogin" class="hidden" >
+        @csrf
         <div class="mb-3">
             <input type="text" class="form-control" placeholder="Faculty ID" required>
         </div>

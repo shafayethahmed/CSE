@@ -17,22 +17,31 @@ class FacultyController extends Controller
      }
      
      //Searched Data 
-    public function search(Request $request)
-    {
-        // Initialize variable as null first
-        $user = null;
-        // Search logic
-        $search = $request->searchval;
-        // Perform search
-            if ($search) {
-                $user = User::where('email', $search)->first();
-            }
-        if (!$user) {
-            return redirect()->back()->with('error', 'User email not found!');
-        }
-            // Return blade with result
-            return view('faculty.create', compact('user'));
+   public function search(Request $request)
+{
+    // Validate input
+    $request->validate([
+        'searchval' => 'required|email'
+    ]);
+
+    $search = $request->searchval;
+
+    // Search user
+    $user = User::where('email', $search)->first();
+
+    // Check user exists
+    if (!$user) {
+        return redirect()->back()->with('error', 'User email not found!');
     }
+
+    // Check inactive
+    if ($user->status === "inactive") {
+        return redirect()->back()->with('error', 'User is Inactive.');
+    }
+
+    // Return view
+    return view('faculty.create', compact('user'));
+}
 
     //Storing the Student Information: 
     public function store(){

@@ -46,6 +46,7 @@ class FacultyController extends Controller
     //Storing the Student Information: 
     public function store(){
         //Process Student data for insert.
+        
     } 
 
     //Edit form display for student:

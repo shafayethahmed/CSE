@@ -173,6 +173,8 @@ button.btn-secondary:hover {
             <form method="POST" action="{{ route('faculty.store') }}">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ $user->id }}">
+                <input type="hidden" name="user_name" value="{{ $user->name }}">
+                <input type="hidden" name="user_email" value="{{ $user->email }}">
 
                 {{-- Designation & Department --}}
                 <div class="row-grid">
@@ -189,7 +191,7 @@ button.btn-secondary:hover {
                     </div>
                     <div>
                         <label class="label">Credit Limit</label>
-                        <input type="number" name="department" class="form-control" placeholder="e.g. Min 18.0 | Max 30.0" min="18" max="30">
+                        <input type="number" name="credit_limit" class="form-control" placeholder="e.g. Min 18.0 | Max 30.0" min="18" max="30">
                     </div>
                 </div>
 

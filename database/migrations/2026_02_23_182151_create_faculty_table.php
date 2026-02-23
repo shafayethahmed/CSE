@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('master_university')->nullable();
             $table->string('master_cgpa')->nullable();
             $table->enum('faculty_status',['active','inactive'])->default('active');
+            $table->enum('role',['lecturer','department-head'])->default('lecturer');
             $table->string('password');
             $table->timestamps();
         });

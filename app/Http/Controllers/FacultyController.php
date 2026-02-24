@@ -147,5 +147,9 @@ class FacultyController extends Controller
         //Update Process logic need to implement here.
     }
 
-
+    //Destroy the faculty: 
+    public function destroy(Faculty $faculty){
+        $faculty->delete();
+        return redirect()->route('faculty.index')->with('success', 'Faculty deleted successfully!');
+    }
 }

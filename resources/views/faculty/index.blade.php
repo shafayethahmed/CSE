@@ -120,29 +120,20 @@
 .btn-edit{background:#fef9c3;color:#854d0e;}
 .btn-delete{background:#fee2e2;color:#b91c1c;}
 
-/* SPINNER */
-#spinnerOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+/* Toast */
+.toast-msg{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:8px 12px;
+    border-radius:6px;
+    color:#fff;
+    z-index:9999;
+    font-size: 12px;
+    animation:slideFade .4s ease forwards;
 }
-
-.spinner {
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #1e3a8a;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
+.toast-success{ background:#28a745; }
+.toast-error{ background:#dc3545; }
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -158,6 +149,13 @@
 @section('content')
 
 <div class="page-wrapper">
+    {{-- Toast --}}
+@if(session('success'))
+<div class="toast-msg toast-success">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+<div class="toast-msg toast-error">{{ session('error') }}</div>
+@endif
 
     <div class="page-header">
         <h2>Faculty Management</h2>
@@ -193,7 +191,7 @@ function addUser(){
 // AJAX Search + Filter
 $(document).ready(function(){
 
-    // 🔄 Fetch Data
+    //  Fetch Data
     function fetchFaculty(url = null){
 
         let search = $('#searchFaculty').val();
@@ -222,17 +220,17 @@ $(document).ready(function(){
         });
     }
 
-    // 🔍 Search
+    // Search
     $('#searchFaculty').on('keyup', function(){
         fetchFaculty();
     });
 
-    // 🎯 Filter
+    // Filter
     $('#statusFilter').on('change', function(){
         fetchFaculty();
     });
 
-    // 📄 Pagination
+    // Pagination
     $(document).on('click', '.pagination a', function(e){
         e.preventDefault();
         let url = $(this).attr('href');

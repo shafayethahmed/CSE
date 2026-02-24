@@ -19,7 +19,7 @@
             <td>{{ $faculty->name }}</td>
             <td>{{ $faculty->email }}</td>
             <td>{{str_replace('-',' ', ucwords($faculty->designation))}}</td>
-            <td>{{ $faculty->faculty_status }}</td>
+            <td>{{ ucwords($faculty->faculty_status) }}</td>
             <td class="text-center action-btns">
                 <a href="{{ route('faculty.show', $faculty->id) }}" class="btn btn-sm btn-view"><i class="fa fa-eye"></i></a>
                 <a href="{{ route('faculty.edit', $faculty->id) }}" class="btn btn-sm btn-edit"><i class="fa fa-pen"></i></a>

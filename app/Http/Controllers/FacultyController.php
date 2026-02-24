@@ -10,10 +10,29 @@ use Illuminate\Support\Facades\Hash;
 
 class FacultyController extends Controller
 {
-        public function index(){
-         return view('faculty.index');
-      }
-     
+       public function index(Request $request)
+            {
+                $faculties = Faculty::query();
+
+                if ($request->search) {
+                    $faculties->where(function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->search . '%')
+                        ->orWhere('email', 'like', '%' . $request->search . '%');
+                    });
+                }
+
+                if ($request->filter) {
+                    $faculties->where('faculty_status', $request->filter);
+                }
+
+                $faculties = $faculties->latest()->paginate(15)->withQueryString();
+
+                if ($request->ajax()) {
+                    return view('faculty.partials.table', compact('faculties'))->render();
+                }
+
+                return view('faculty.index', compact('faculties'));
+            }
      //student Create Form: 
      public function create(){
        return view('faculty.create');

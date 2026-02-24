@@ -164,99 +164,85 @@
         <button class="btn-primary" onclick="addUser()">+ Assign Faculty</button>
     </div>
 
-    <div id="spinnerOverlay">
-        <div class="spinner"></div>
-    </div>
-
-    <div class="filter-box">
-        <input type="text" id="searchUser" placeholder="Search by Name or Email">
-
-        <select>
-            <option>Status</option>
-            <option>Active</option>
-            <option>Inactive</option>
+   <div class="filter-box">
+    <input type="text" id="searchFaculty" placeholder="Search by Name or Email">
+        <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
         </select>
-    </div>
-
+   </div>
     <div class="table-box">
         <div class="table-responsive">
-            <table class="user-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Designation</th>
-                        <th>Mobile</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th width="160">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody id="userTable">
-                    <tr>
-                        <td>1</td>
-                        <td>Shafayeth Ahmed</td>
-                        <td>Lecturer</td>
-                        <td>01329490229</td>
-                        <td>dev.shafayeth@gmail.com</td>
-                        <td>Active</td>
-                        <td class="actions">
-                             <button class="btn-view">View</button>
-                            <button class="btn-edit">Edit</button>
-                            <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>Rahim Khan</td>
-                        <td>rahim@example.com</td>
-                        <td>01329490229</td>
-                        <td>Staff</td>
-                        <td>Inactive</td>
-                        <td class="actions">
-                             <button class="btn-view">View</button>
-                            <button class="btn-edit">Edit</button>
-                            <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
+             <div id="facultyTable">
+                @include('faculty.partials.table', ['faculties' => $faculties])
+            </div>
         </div>
     </div>
 
 </div>
 
 @endsection
-
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
-/* SEARCH LIKE STUDENT MODULE */
-document.addEventListener("DOMContentLoaded", function(){
-
-    document.getElementById("searchUser").addEventListener("keyup", function() {
-        let value = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#userTable tr");
-
-        rows.forEach(row=>{
-            row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
-        });
-    });
-
-});
-
 function addUser(){
     window.location.href = "{{ route('faculty.create') }}";
 }
 
-function deleteRow(btn){
-    if(confirm("Delete this Faculty Member?")){
-        btn.closest("tr").remove();
+// AJAX Search + Filter
+$(document).ready(function(){
+
+    // 🔄 Fetch Data
+    function fetchFaculty(url = null){
+
+        let search = $('#searchFaculty').val();
+        let filter = $('#statusFilter').val();
+
+        $.ajax({
+            url: url ?? "{{ route('faculty.index') }}",
+            type: "GET",
+            data: { search: search, filter: filter },
+
+            beforeSend: function(){
+                $('#spinnerOverlay').fadeIn();
+            },
+
+            success: function(data){
+                $('#facultyTable').html(data);
+            },
+
+            complete: function(){
+                $('#spinnerOverlay').fadeOut();
+            },
+
+            error: function(){
+                alert('Something went wrong!');
+            }
+        });
     }
-}
+
+    // 🔍 Search
+    $('#searchFaculty').on('keyup', function(){
+        fetchFaculty();
+    });
+
+    // 🎯 Filter
+    $('#statusFilter').on('change', function(){
+        fetchFaculty();
+    });
+
+    // 📄 Pagination
+    $(document).on('click', '.pagination a', function(e){
+        e.preventDefault();
+        let url = $(this).attr('href');
+        fetchFaculty(url);
+    });
+
+});
+setTimeout(() => {
+    document.querySelectorAll('.toast-msg').forEach(t => t.remove());
+}, 3000);
 
 </script>
 @endpush

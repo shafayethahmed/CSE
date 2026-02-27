@@ -49,5 +49,9 @@ class Faculty extends Authenticatable
             $this->attributes['password'] = bcrypt($value);
         }
     }
-
+   //faculty Need to logged in by faculty Id:
+   public function getAuthIdentifierName()
+   {
+    return 'faculty_id';
+   }
 }

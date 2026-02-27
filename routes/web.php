@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\FacultyAuthController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,7 @@ Route::get('/login',function(){
 
 //Control & Execute logic for general login & faculty login.
 Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
-
+Route::post('faculty/login', [FacultyAuthController::class,'faculyLogin'])->name('faculty.login');
 
 
 

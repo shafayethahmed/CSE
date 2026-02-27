@@ -134,14 +134,14 @@ footer{
     </form>
 
     <!-- FACULTY LOGIN -->
-    <form id="facultyLogin" class="hidden" >
+    <form id="facultyLogin" class="hidden"  method="POST" action="{{ route('faculty.login') }}">
         @csrf
         <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Faculty ID" required>
+            <input type="text" name="faculty_id"  class="form-control" placeholder="Faculty ID" required>
         </div>
 
         <div class="mb-3">
-            <input type="password" class="form-control" placeholder="Password" required>
+            <input type="password" name="password"  class="form-control" placeholder="Password" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Faculty Login</button>

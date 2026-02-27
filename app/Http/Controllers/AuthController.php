@@ -9,7 +9,7 @@ class AuthController extends Controller
 {   
     public function generalLogin(Request $request){
      //This is the Login Information.
-       print($request->email);
+       $request->email;
        $request->password;
        $credential = $request->validate([
         'email' => 'required|email',

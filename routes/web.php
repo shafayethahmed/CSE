@@ -27,18 +27,11 @@ Route::get('/login',function(){
 //Control & Execute logic for general login & faculty login and logout.
 Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
 Route::post('faculty/login', [FacultyAuthController::class,'facultyLogin'])->name('faculty.login');
+
+Route::middleware(['checkUserRole','auth'])->group(function(){
 Route::post('logout',[AuthController::class, 'logoutUserOrFaculty'])->name('logout');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
-Route::get('/change-password', function () {
-    return view('change-password');
-})->name('password.change');
-
-
+Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
+Route::get('/change-password', function () { return view('change-password');})->name('password.change');
 /* Students */
 Route::resource('students',StudentController::class);
 // Alumni Student 
@@ -76,10 +69,5 @@ Route::get('/batches/distribution', function () {
 })->name('batches.distribution');
 
 
-
-
-
-/* Logout (Dummy for UI) */
-Route::get('/logout', function () {
-    return redirect()->route('dashboard');
-})->name('logout');
+});
+?>

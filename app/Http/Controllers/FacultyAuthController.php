@@ -20,6 +20,6 @@ class FacultyAuthController extends Controller
           $request->session()->regenerate();
           return "This Is From FaCulty Dashboard";
        }
-         return redirect()->route('login')->with('failed','Wrong Email or Password.');
+         return redirect()-> back()->with('failed','Wrong Email or Password.');
     }
  }

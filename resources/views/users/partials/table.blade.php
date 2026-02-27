@@ -3,11 +3,15 @@
 <table class="user-table">
     <thead>
         <tr>
-            <th>#</th><th>Name</th><th>Email</th><th>Mobile</th><th>Role</th><th>Status</th><th>Action</th>
+            <th>#</th><th>Name</th><th>Email</th><th>Mobile</th><th>Role</th><th>Status</th>
+              @if (Auth::user()->role === 'staff' || Auth::user()->role === 'super-admin')
+                             <th>Action</th>
+                @endif
         </tr>
     </thead>
     <tbody>
-        @forelse($users as $user)
+        @if (Auth::user()->role === 'super-admin' || Auth::user()->role === 'staff' )
+             @forelse($users as $user)
         <tr>
             <td>{{ $user->id }}</td>
             <td>{{ ucwords($user->name) }}</td>
@@ -16,17 +20,25 @@
             <td>{{ str_replace('-',' ', ucwords($user->role)) }}</td>
             <td>{{ ucfirst($user->status) }}</td>
             <td class="text-center action-btns">
-                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-edit"><i class="fa fa-pen"></i></a>
-                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                 @if (Auth::user()->role === 'staff' || Auth::user()->role === 'super-admin')
+                               <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-edit"><i class="fa fa-pen"></i></a>
+
+                @endif
+               @if (Auth::user()->role === 'super-admin')
+               <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-sm btn-delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
                 </form>
+               @endif
+               
+                
             </td>
         </tr>
         @empty
         <tr><td colspan="7">No users found</td></tr>
         @endforelse
+        @endif
     </tbody>
 </table>
 {{-- !-- Pagination --> --}}

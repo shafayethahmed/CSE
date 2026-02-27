@@ -122,7 +122,7 @@ button:hover {
 
 @section('content')
 <div class="card">
-
+    @if (Auth::user()->role === 'super-admin')
     <h2>Add New User</h2>
     <p class="subtitle">Enter user details below</p>
 
@@ -179,6 +179,7 @@ button:hover {
             @endif
         </div>
     </form>
+     @endif
 </div>
 @endsection
 

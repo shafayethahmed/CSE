@@ -128,6 +128,7 @@ button.submit-btn:hover {
 
 @section('content')
 <div class="card-wrapper">
+    @if (Auth::user()->role === 'super-admin' || Auth::user()->role === "staff")
     <div class="card">
         <h2>Edit User</h2>
         <p class="subtitle">Update user details below</p>
@@ -157,7 +158,7 @@ button.submit-btn:hover {
                     <input type="tel" name="mobile" id="mobile" value="{{ $user->mobile }}" placeholder="Enter mobile number">
                     <div class="error" id="mobileError">Please enter valid mobile number</div>
                 </div>
-                @if ($user->role !== 'super-admin') {{-- This conditon Applied for prevent the Super Admin --}}
+                @if (Auth::user()->role === 'super-admin') {{-- This conditon Applied for prevent the Super Admin --}}
                 <div class="form-group">
                     <label>Select Role</label>
                     <select name="role" id="role">
@@ -191,6 +192,7 @@ button.submit-btn:hover {
             </div>
         </form>
     </div>
+    @endif
 </div>
 @endsection
 

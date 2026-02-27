@@ -1,5 +1,4 @@
 @extends('layout.sidebar')
-
 @section('title','Users & Roles')
 
 @push('styles')
@@ -100,11 +99,14 @@
 <div class="toast-msg toast-error">{{ session('error') }}</div>
 @endif
 
-
     <div class="page-header">
         <h2>User Management</h2>
+        @if (Auth::user()->role === 'super-admin')
         <button class="btn-primary" onclick="addUser()">+ Add User</button>
+        @endif
     </div>
+
+    
     <!-- Filters -->
     <div class="filter-box">
         <input type="text" id="searchUser" placeholder="Search by Name or Email">

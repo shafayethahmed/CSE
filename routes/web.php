@@ -26,7 +26,7 @@ Route::get('/login',function(){
 
 //Control & Execute logic for general login & faculty login.
 Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
-Route::post('faculty/login', [FacultyAuthController::class,'faculyLogin'])->name('faculty.login');
+Route::post('faculty/login', [FacultyAuthController::class,'facultyLogin'])->name('faculty.login');
 
 
 

@@ -171,7 +171,7 @@
     <div class="user-box">
         <div class="info">
             <strong>{{ Auth::user()->name ?? 'Admin' }}</strong><br>
-            <small>{{ Auth::user()->role ?? 'Super Admin' }}</small>
+            <smalln style="color: darkblue; font-size:12px;">{{ Ucwords(Auth::user()->role ?? 'Super Admin') }}</small>
         </div>
         <i class="fas fa-user-circle fa-2x text-primary"></i>
     </div>

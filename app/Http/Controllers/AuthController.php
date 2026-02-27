@@ -17,10 +17,21 @@ class AuthController extends Controller
        ]);
 
        if(Auth::attempt($credential)){
-          $request->session()->regenerate();
-          return redirect()->route('dashboard');
+        $userInfo = Auth::user(); // get logged-in user area
+        // Check if user is active
+            if ($userInfo->status === "active") {
+                 $request->session()->regenerate();
+                  return redirect()->route('dashboard');
+            } else {
+                Auth::logout(); // log out inactive user
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->back()->with('failed', 'User account is currently inactive.');
+            }
+        
        }
          return redirect()->route('login')->with('failed','Wrong Email or Password.');
     }
 
 }
+

@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\App;
+
+
+
 return [
 
     /*
@@ -35,10 +39,15 @@ return [
     |
     */
 
-    'guards' => [
+   'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+
+        'faculty' => [
+            'driver' => 'session',
+            'provider' => 'faculties',
         ],
     ],
 
@@ -62,7 +71,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => env('AUTH_MODEL', \App\Models\User::class),
+        ],
+
+        'faculties' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\Faculty::class,
         ],
 
         // 'users' => [

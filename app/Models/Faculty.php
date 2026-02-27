@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Faculty extends Model
+class Faculty extends Authenticatable
 {
-      protected $table = 'faculties';
+    use Notifiable;
+
+    protected $table = 'faculties';
+
+    // Guard name (for multiple authentication)
+    protected $guard = 'faculty';
 
     protected $fillable = [
         'faculty_id',
@@ -28,8 +33,21 @@ class Faculty extends Model
 
     protected $hidden = [
         'password',
+        'remember_token',
     ];
-   
 
-   
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * Automatically hash password when saving
+     */
+    public function setPasswordAttribute($value)
+    {
+        if (!empty($value)) {
+            $this->attributes['password'] = bcrypt($value);
+        }
+    }
+
 }

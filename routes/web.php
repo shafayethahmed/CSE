@@ -24,10 +24,10 @@ Route::get('/login',function(){
 })->name('login');
 
 
-//Control & Execute logic for general login & faculty login.
+//Control & Execute logic for general login & faculty login and logout.
 Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
 Route::post('faculty/login', [FacultyAuthController::class,'facultyLogin'])->name('faculty.login');
-
+Route::post('logout',[AuthController::class, 'logoutUserOrFaculty'])->name('logout');
 
 
 Route::get('/dashboard', function () {

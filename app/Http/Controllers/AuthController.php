@@ -33,5 +33,25 @@ class AuthController extends Controller
          return redirect()->route('login')->with('failed','Wrong Email or Password.');
     }
 
+      public function logoutUserOrFaculty(Request $request)
+      {
+          // Logout default user
+          if (Auth::check()) {
+              Auth::logout();
+          }
+
+          // Logout faculty
+          if (Auth::guard('faculty')->check()) {
+              Auth::guard('faculty')->logout();
+          }
+
+          // Invalidate session and regenerate CSRF token
+          $request->session()->invalidate();
+          $request->session()->regenerateToken();
+
+          // Redirect to login page
+          return redirect('/login');
+      }
+
 }
 

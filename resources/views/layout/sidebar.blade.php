@@ -253,7 +253,7 @@
     <!-- Logout -->
     <form method="POST" action="{{ route('logout') }}">
         @csrf
-        <button style="background:none;border:none;color:inherit;width:100%;text-align:left;padding:8px 10px;">
+        <button style="background:none;border:none;color:white;width:100%;text-align:left;padding:8px 10px;">
             <i class="fas fa-sign-out-alt"></i> Logout
         </button>
     </form>

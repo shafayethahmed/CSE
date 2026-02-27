@@ -1,3 +1,7 @@
+@php
+    $allowedRoles = ['staff', 'super-admin','user','department-head'];
+@endphp
+@if (in_array(Auth::user()->role, $allowedRoles))
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -245,10 +249,12 @@
     </div>
 
     <div class="menu-section">Administration</div>
+      @if (Auth::user()->role === 'super-admin' || Auth::user()->role === 'staff'  )
 
     <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
         <i class="fas fa-users"></i> Users & Roles
     </a>
+     @endif
 
     <!-- Logout -->
     <form method="POST" action="{{ route('logout') }}">
@@ -284,3 +290,4 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 
 </body>
 </html>
+@endif

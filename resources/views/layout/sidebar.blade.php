@@ -150,6 +150,9 @@
 .main.full{
     margin-left:0;
 }
+.fa-user{
+    color: blue;
+}
 
 /* MOBILE */
 @media(max-width:768px){
@@ -173,7 +176,7 @@
             <strong>{{ Auth::user()->name ?? 'Admin' }}</strong><br>
             <smalln style="color: darkblue; font-size:12px;">{{ Ucwords(Auth::user()->role ?? 'Super Admin') }}</small>
         </div>
-        <i class="fas fa-user-circle fa-2x text-primary"></i>
+        <i class="fa fa-user fa-lg" aria-hidden="true"></i>
     </div>
 </div>
 

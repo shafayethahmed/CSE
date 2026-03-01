@@ -1,7 +1,11 @@
+{{-- Faculty Create by the use  --}}
+        @php
+            $accessRoleForFacultyPage = ['super-admin','staff']
+        @endphp
+    @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
+   
 @extends('layout.sidebar')
-
 @section('title','Faculty')
-
 @push('styles')
 <style>
 .page-wrapper{
@@ -249,3 +253,4 @@ setTimeout(() => {
 
 </script>
 @endpush
+ @endif

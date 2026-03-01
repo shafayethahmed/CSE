@@ -89,8 +89,6 @@
 
 @section('content')
 <div class="page-wrapper">
-
-     
 {{-- Toast --}}
 @if(session('success'))
 <div class="toast-msg toast-success">{{ session('success') }}</div>

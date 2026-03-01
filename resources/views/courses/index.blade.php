@@ -8,7 +8,7 @@
 .page-wrapper{
     margin-top: 20px;
     max-width: 900px;
-    margin: 5 auto;
+    margin: 10 auto;
 }
 
 /* Header */
@@ -148,35 +148,23 @@ tbody tr:hover{
 .btn-delete:hover{
     background:#fecaca;
 }
-/* Overlay covering the whole screen */
-#spinnerOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    display: none; /* hidden by default */
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+/* Toast */
+.toast-msg{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:8px 12px;
+    border-radius:6px;
+    color:#fff;
+    z-index:9999;
+    font-size: 12px;
+    animation:slideFade .4s ease forwards;
 }
+.toast-success{ background:#28a745; }
+.toast-error{ background:#dc3545; }
+ 
 
-/* Spinner design */
-.spinner {
-    border: 6px solid #f3f3f3; /* Light gray */
-    border-top: 6px solid #1e3a8a; /* Primary blue color */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-}
-
-/* Spin animation */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+  
 
 /* Responsive */
 @media(max-width:992px){
@@ -197,9 +185,16 @@ tbody tr:hover{
 
 
 @section('content')
+{{-- Toast --}}
+@if(session('success'))
+<div class="toast-msg toast-success">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+<div class="toast-msg toast-error">{{ session('error') }}</div>
+@endif
 
 <div class="page-wrapper">
-
+  
     <!-- Header -->
     <div class="page-header">
         <h2>Course Management</h2>
@@ -281,6 +276,8 @@ function deleteStudent(btn){
         btn.closest("tr").remove();
     }
 }
-
+setTimeout(() => {
+    document.querySelectorAll('.toast-msg').forEach(t => t.remove());
+}, 3000);
 </script>
 @endpush

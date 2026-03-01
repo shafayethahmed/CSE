@@ -6,8 +6,15 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 class CourseController extends Controller
 {
-      public function index(){
-          return view('courses.index');  //Index Page Display.
+      public function index(Request $request){
+           $query = Course::query();
+             if($request->search){
+                $value = trim($request->search);
+                $query->where('course_code','like',"%$value%")
+                ->orWhere('course_title','like',"%$value%");
+             }
+           $courses = $query->orderBy('id', 'desc')->paginate(1)->withQueryString();
+          return view('courses.index',compact('courses'));  //Index Page Display.
       }
      
      //Course Create Form: 

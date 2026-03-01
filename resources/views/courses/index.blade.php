@@ -1,5 +1,5 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 @extends('layout.sidebar')
-
 @section('title','Courses')
 
 @push('styles')
@@ -200,84 +200,93 @@ tbody tr:hover{
         <h2>Course Management</h2>
         <button class="btn btn-primary" onclick="addCourse()">+ Add Course</button>
     </div>
-
-    <!-- Filters -->
-    <div class="filter-box">
-        <input type="text" id="searchInput" placeholder="Search by Course Code or Title...">
-    </div>
-
-    <!-- Table -->
-    <div class="table-box">
-        <table>
-            <thead>
-                <tr>
-                    <th>SL</th>
-                    <th>Course Code</th>
-                    <th>Course Title</th>
-                    <th>Course Credit</th>
-                    <th>Offered Semester</th>
-                    <th width="140">Action</th>
-                </tr>
-            </thead>
-
-            <tbody id="studentTable">
-                <tr>
-                    <td>1</td>
-                    <td>CSE-4201</td>
-                    <td>Data Structure</td>
-                    <td>3</td>
-                    <td>3-2</td>
-                    <td class="actions">
-                        <button class="btn-edit" onclick="editCourse()">Edit</button>
-                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+     <!-- Filters -->
+    <form method="get">
+           <div class="filter-box">
+                <input type="text" name="search" placeholder="Search by Course Code or Title..." id="courseSearch">
+            </div>
+    </form>
+   
+            <div class="table-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Course Code</th>
+                        <th>Course Title</th>
+                        <th>Course Credit</th>
+                        <th>Course Type</th>
+                        <th>Offered Semester</th>
+                        <th width="140">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse ($courses as $course)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $course->course_code }}</td>
+                        <td>{{ $course->course_title }}</td>
+                        <td>{{ $course->course_credit }}</td>
+                        <td>{{ ucWords($course->course_type) }}</td>
+                        <td>{{ $course->semester }}</td>
+                        <td class="actions">
+                            <button class="btn-edit" onclick="editCourse({{ $course->id }})">Edit</button>
+                            <button class="btn-delete" onclick="deleteCourse({{ $course->id }})">Delete</button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center">Course Not Found</td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-3" style="font-size: 0.85rem;">
+        {{ $courses->links('pagination::bootstrap-5') }}
+     </div>
 </div>
-
 @endsection
-
-
 @push('scripts')
 <script>
+let searchTimeout;
 
-document.addEventListener("DOMContentLoaded", function(){
+const searchInput = document.getElementById('courseSearch');
 
-    /* Search */
-    document.getElementById("searchInput").addEventListener("keyup", function() {
-        let value = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#studentTable tr");
+searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
 
-        rows.forEach(row=>{
-            row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
-        });
-    });
+    const query = this.value.trim();
 
+    if (!query) return;
+
+    searchTimeout = setTimeout(() => {
+        fetch(`{{ route('courses.index') }}?search=${encodeURIComponent(query)}`)
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newTbody = doc.querySelector('tbody');
+                const tableBody = document.querySelector('table tbody');
+                
+                if (newTbody && tableBody) {
+                    tableBody.innerHTML = newTbody.innerHTML;
+                }
+                
+                // Search box stays visible, just clear input value after 4s
+                setTimeout(() => {
+                    searchInput.value = '';
+                }, 9000);
+            })
+            .catch(err => console.error('Search error:', err));
+    }, 500);
 });
-
-function addCourse() {
-    // Show spinner
-    window.location.href = "{{ route('courses.create') }}";
-}
-
-function viewStudent(){
-    alert("View Student Details");
-}
-
-function editCourse(courseId) {
-    //window.location.href = route('courses.edit', { course: courseId });
-}
-
-function deleteStudent(btn){
-    if(confirm("Delete this student?")){
-        btn.closest("tr").remove();
-    }
-}
 setTimeout(() => {
     document.querySelectorAll('.toast-msg').forEach(t => t.remove());
 }, 3000);
+
 </script>
 @endpush
+
+

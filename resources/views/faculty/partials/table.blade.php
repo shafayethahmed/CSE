@@ -1,3 +1,7 @@
+{{-- Decleare Array value check for Actions Sees based on role--}}
+@php
+    $facultyActionPrivillageRole = ['super-admin','staff','department-head'];
+@endphp
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
 <table class="user-table">
@@ -8,7 +12,9 @@
             <th>Email</th>
             <th>Designation</th>
             <th>Status</th>
-            <th>Actions</th>
+            @if (in_array(Auth::user()->role,$facultyActionPrivillageRole))
+                <th>Actions</th>
+            @endif
         </tr>
     </thead>
 
@@ -20,15 +26,21 @@
             <td>{{ $faculty->email }}</td>
             <td>{{str_replace('-',' ', ucwords($faculty->designation))}}</td>
             <td>{{ ucwords($faculty->faculty_status) }}</td>
+             @if (in_array(Auth::user()->role,$facultyActionPrivillageRole))
             <td class="text-center action-btns">
+                {{-- Catagorywise Action dsitribution --}}
                 <a href="{{ route('faculty.show', $faculty->id) }}" class="btn btn-sm btn-view"><i class="fa fa-eye"></i></a>
                 <a href="{{ route('faculty.edit', $faculty->id) }}" class="btn btn-sm btn-edit"><i class="fa fa-pen"></i></a>
+                @if(Auth::user()->role === 'super-admin')
+                {{-- Delete is Restricted Only For Admin --}}
                 <form action="{{ route('faculty.destroy', $faculty->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-sm btn-delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
                 </form>
+                @endif  
             </td>
+            @endif
         </tr>
         @empty
         <tr>

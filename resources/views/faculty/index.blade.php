@@ -1,6 +1,6 @@
 {{-- Faculty Page Restriction  --}}
         @php
-            $accessRoleForFacultyPage = ['super-admin','staff']
+            $accessRoleForFacultyPage = ['super-admin','staff','user','department-head']
         @endphp
     @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
    

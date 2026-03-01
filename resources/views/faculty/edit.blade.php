@@ -1,25 +1,5 @@
 @php
 // Mock Faculty Data
-$faculty = (object)[
-    'id' => 101,
-    'faculty_id' => 'F101',
-    'name' => 'Dr. Rahim Uddin',
-    'email' => 'rahim@university.edu',
-    'phone' => '+880 1234 567890',
-    'credit_limit' => 18,
-    'credit_taken' => 17,
-    'status' => 'Active',
-
-    'bachelor_degree' => 'BSc in CSE',
-    'bachelor_university' => 'SUST',
-    'bachelor_department' => 'CSE',
-    'bachelor_cgpa' => '3.75',
-
-    'master_degree' => 'MSc in CSE',
-    'master_university' => 'SUST',
-    'master_department' => 'CSE',
-    'master_cgpa' => '3.90'
-];
 
 // Mock Assigned Courses
 $assignedCourses = [
@@ -27,7 +7,11 @@ $assignedCourses = [
     (object)[ 'code' => 'CSE-202', 'title' => 'Algorithms', 'credit' => 3.0 ],
     (object)[ 'code' => 'CSE-305', 'title' => 'Database Systems', 'credit' => 3.0 ]
 ];
+// Checking the Faculty Page Access Role:
+// $accessRoleForFacultyEditPage = ['super-admin','staff','department-head'];
 @endphp
+{{-- Encrypted Page For Dedicated Role --}}
+@if (Auth::user()->role)
 @extends('layout.sidebar')
 
 @section('title','Edit Faculty Profile')
@@ -263,3 +247,4 @@ $assignedCourses = [
     </form>
 </div>
 @endsection
+@endif

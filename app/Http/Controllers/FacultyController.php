@@ -131,7 +131,8 @@ class FacultyController extends Controller
 }
 
     //Edit form display for student:
-    public function edit(){
+    public function edit( Faculty $faculty){
+        return view('faculty.edit',compact('faculty'));
         // return view(''); //Need to assign the Student Edit Form.
         //Edit Form is Ready just need to assign with logic.
     }

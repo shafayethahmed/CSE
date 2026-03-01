@@ -152,30 +152,38 @@
                 <div class="form-row">
                     <div>
                         <label class="form-label">Credit Hours</label>
-                        <input type="number"
-                               name="credit"
-                               step="0.5"
-                               min="1"
-                               max="4"
-                               class="form-control"
-                               placeholder="e.g. 3.0"
-                               required>
+                          <select name="semester" class="form-select" required>
+                            <option value="">Select Credit</option>
+                            @foreach(['1.0','1.5','2.0','2.5','3.0','3.5','4.0','4.5','5.0'] as $cre)
+                            <option value="{{ $cre }}" {{ old('semester')==$cre ? 'selected' : '' }}>{{ $cre }}</option>
+                        @endforeach
+                        </select>
                     </div>
                         
                     <div>
                         <label class="form-label">Semester</label>
                         <select name="semester" class="form-select" required>
                             <option value="">Select Semester</option>
-                            <option value="1-1">1st Year - 1st Semester</option>
-                            <option value="1-2">1st Year - 2nd Semester</option>
-                            <option value="2-1">2nd Year - 1st Semester</option>
-                            <option value="2-2">2nd Year - 2nd Semester</option>
-                            <option value="3-1">3rd Year - 1st Semester</option>
-                            <option value="3-2">3rd Year - 2nd Semester</option>
-                            <option value="4-1">4th Year - 1st Semester</option>
-                            <option value="4-2">4th Year - 2nd Semester</option>
+                            @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'] as $sem)
+                            <option value="{{ $sem }}" {{ old('semester')==$sem ? 'selected' : '' }}>{{ $sem }}</option>
+                        @endforeach
                         </select>
                     </div>
+                </div>
+
+
+                 {{-- Row 3 --}}
+                <div class="form-row">
+                    <div>
+                        <label class="form-label">Course Type</label>
+                          <select name="semester" class="form-select" required>
+                            <option value="">Select Type</option>
+                            @foreach(['theory','lab','project'] as $type)
+                            <option value="{{ $type }}" {{ old('semester')==$type ? 'selected' : '' }}>{{ ucfirst($type) }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                        
                 </div>
 
                 {{-- Buttons --}}

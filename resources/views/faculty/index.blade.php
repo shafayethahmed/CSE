@@ -1,4 +1,4 @@
-{{-- Faculty Create by the use  --}}
+{{-- Faculty Page Restriction  --}}
         @php
             $accessRoleForFacultyPage = ['super-admin','staff']
         @endphp
@@ -52,11 +52,11 @@
 
 .filter-box input,
 .filter-box select{
-    padding:6px 8px; /* 🔥 tighter */
+    padding:6px 8px; /*  tighter */
     border-radius:6px;
     border:1px solid #d1d5db;
-    font-size:12px; /* 🔥 smaller font */
-    height:30px; /* 🔥 fixed compact height */
+    font-size:12px; /*  smaller font */
+    height:30px; /*  fixed compact height */
 }
 
 .filter-box input:focus,
@@ -90,14 +90,14 @@
 }
 
 .user-table th{
-    padding:8px 8px;  /* 🔥 reduced */
+    padding:8px 8px;  
     text-align:center;
     font-weight:600;
     font-size:12px;
 }
 
 .user-table td{
-    padding:6px 6px;  /* 🔥 tighter rows */
+    padding:6px 6px;  
     text-align:center;
 }
 
@@ -114,7 +114,7 @@
 /* Actions */
 .actions button{
     border:none;
-    padding:3px 6px; /* 🔥 smaller */
+    padding:3px 6px; 
     border-radius:5px;
     font-size:11px;
     margin-right:3px;

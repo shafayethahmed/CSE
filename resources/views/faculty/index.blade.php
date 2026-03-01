@@ -155,12 +155,17 @@
 @endif
 @if(session('error'))
 <div class="toast-msg toast-error">{{ session('error') }}</div>
-@endif
-
+@endif 
+{{-- Faculty Create by the use  --}}
+        @php
+            $accessRoleForAssignFaculty = ['super-admin','staff']
+        @endphp
+    @if (in_array(Auth::user()->role ,$accessRoleForAssignFaculty))
     <div class="page-header">
         <h2>Faculty Management</h2>
         <button class="btn-primary" onclick="addUser()">+ Assign Faculty</button>
     </div>
+    @endif
 
    <div class="filter-box">
     <input type="text" id="searchFaculty" placeholder="Search by Name or Email">

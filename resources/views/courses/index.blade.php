@@ -6,8 +6,7 @@
 <style>
 /* Wrapper */
 .page-wrapper{
-    margin-top: 20px;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 10 auto;
 }
 
@@ -16,7 +15,7 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:18px;
+    margin-bottom: 18px;
 }
 
 .page-header h2{
@@ -48,9 +47,6 @@
     border-radius:10px;
     margin-bottom:18px;
     box-shadow:0 8px 20px rgba(0,0,0,0.04);
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap:10px;
 }
 
 .filter-box input,
@@ -60,6 +56,7 @@
     border:1px solid #d1d5db;
     font-size:12px;
     transition:.2s;
+    width: 100%;
 }
 
 .filter-box input:focus,
@@ -83,20 +80,21 @@ table{
 }
 
 thead{
-    background:#d9d5ebe1;
+    background:#061164e1;
 }
 
 th{
-    font-size:12px;
+    font-size:10px;
     font-weight:600;
-    color:#000000;
-    padding:9px 8px;
+    color:white;
+    padding:9px 10px;
     text-align: center;
 }
 
 td{
     padding:6px 6px;
     text-align: center;
+     font-size:13px;
 }
 
 tbody tr{
@@ -162,9 +160,6 @@ tbody tr:hover{
 }
 .toast-success{ background:#28a745; }
 .toast-error{ background:#dc3545; }
- 
-
-  
 
 /* Responsive */
 @media(max-width:992px){
@@ -183,7 +178,6 @@ tbody tr:hover{
 </style>
 @endpush
 
-
 @section('content')
 {{-- Toast --}}
 @if(session('success'))
@@ -194,62 +188,61 @@ tbody tr:hover{
 @endif
 
 <div class="page-wrapper">
-  
-    <!-- Header -->
+    
+    <!-- Header with Search & Button -->
     <div class="page-header">
         <h2>Course Management</h2>
-        <button class="btn btn-primary" onclick="addCourse()">+ Add Course</button>
-    </div>
-     <!-- Filters -->
-    <form method="get">
-           <div class="filter-box">
-                <input type="text" name="search" placeholder="Search by Course Code or Title..." id="courseSearch">
-            </div>
-    </form>
-   
-            <div class="table-box">
-            <table>
-                <thead>
-                    <tr>
-                        <th>SL</th>
-                        <th>Course Code</th>
-                        <th>Course Title</th>
-                        <th>Course Credit</th>
-                        <th>Course Type</th>
-                        <th>Offered Semester</th>
-                        <th width="140">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @forelse ($courses as $course)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $course->course_code }}</td>
-                        <td>{{ $course->course_title }}</td>
-                        <td>{{ $course->course_credit }}</td>
-                        <td>{{ ucWords($course->course_type) }}</td>
-                        <td>{{ $course->semester }}</td>
-                        <td class="actions">
-                            <button class="btn-edit" onclick="editCourse({{ $course->id }})">Edit</button>
-                            <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="7" class="text-center">Course Not Found</td>
-                    </tr>
-                @endforelse
-                </tbody>
-            </table>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <form method="get" style="margin: 0;">
+                <input type="text" name="search" placeholder="Search by Course Code or Title..." id="courseSearch" style="width: 250px; border-radius:10px;">
+            </form>
+            <button class="btn btn-primary" onclick="addCourse()">+ Add Course</button>
         </div>
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-3" style="font-size: 0.85rem;">
-        {{ $courses->links('pagination::bootstrap-5') }}
-     </div>
+    </div>
+    
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>SL</th>
+                    <th>Course Code</th>
+                    <th>Course Title</th>
+                    <th>Course Credit</th>
+                    <th>Course Type</th>
+                    <th>Offered Semester</th>
+                    <th width="140">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @forelse ($courses as $course)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $course->course_code }}</td>
+                    <td>{{ $course->course_title }}</td>
+                    <td>{{ $course->course_credit }}</td>
+                    <td>{{ ucWords($course->course_type) }}</td>
+                    <td>{{ $course->semester }}</td>
+                    <td class="actions">
+                        <button class="btn-edit" onclick="editCourse({{ $course->id }})">Edit</button>
+                        <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center">Course Not Found</td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-3" style="font-size: 0.85rem;">
+    {{ $courses->links('pagination::bootstrap-5') }}
+ </div>
 </div>
 @endsection
 @push('scripts')
@@ -290,7 +283,6 @@ setTimeout(() => {
     document.querySelectorAll('.toast-msg').forEach(t => t.remove());
 }, 3000);
 
-
 //Add Course Script: 
 function addCourse(){
     window.location.href = "{{ route('courses.create') }}";
@@ -300,6 +292,4 @@ function addCourse(){
     window.location.href = "{{ route('courses.edit',':id') }}".replace(':id',courseId);
  }
 </script>
-@endpush
-
-
+@endpush>

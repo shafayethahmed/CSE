@@ -179,7 +179,7 @@
                         <label class="form-label">Course Type</label>
                           <select name="course_type" class="form-select" required>
                             <option value="">Select Type</option>
-                            @foreach(['theory','lab','project'] as $type)
+                            @foreach(['theory','sessional','project'] as $type)
                             <option value="{{ $type }}" {{ old('course_type')==$type ? 'selected' : '' }}>{{ ucfirst($type) }}</option>
                         @endforeach
                         </select>

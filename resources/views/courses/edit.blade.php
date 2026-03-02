@@ -181,7 +181,7 @@
                         <select name="course_type" class="form-select" required>
                                 <option value="">Select Type</option>
                                 <option value="theory" {{ $course->course_type == 'theory' ? 'selected' : '' }}>Theory</option>
-                                <option value="lab" {{ $course->course_type== 'lab' ? 'selected' : '' }}>Lab</option>
+                                <option value="sessional" {{ $course->course_type== 'sessional' ? 'selected' : '' }}>Sessional</option>
                                 <option value="project" {{ $course->course_type == 'project' ? 'selected' : '' }}>Project</option>
                         </select>
                      </div>

@@ -16,7 +16,6 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:18px;
 }
 
 .page-header h2{
@@ -46,7 +45,6 @@
     background:#fff;
     padding:14px;
     border-radius:10px;
-    margin-bottom:18px;
     box-shadow:0 8px 20px rgba(0,0,0,0.04);
     display:grid;
     grid-template-columns: repeat(4, 1fr);
@@ -205,20 +203,26 @@ tbody tr:hover{
         <h2>Course Curriculam</h2>
     </div>
 
-    <!-- Filters -->
+    <form method="get" action="">
     <div class="filter-box">
-        <select>
-            <option>1-1</option><option>1-2</option>
-            <option>2-1</option><option>2-2</option>
-            <option>3-1</option><option>3-2</option>
-            <option>4-1</option><option>4-2</option>
+        <select name="semester" onchange="this.form.submit()">
+            <option value="1-1" {{ request('semester') == '1-1' ? 'selected' : '' }}>1-1</option>
+            <option value="1-2" {{ request('semester') == '1-2' ? 'selected' : '' }}>1-2</option>
+            <option value="2-1" {{ request('semester') == '2-1' ? 'selected' : '' }}>2-1</option>
+            <option value="2-2" {{ request('semester') == '2-2' ? 'selected' : '' }}>2-2</option>
+            <option value="3-1" {{ request('semester') == '3-1' ? 'selected' : '' }}>3-1</option>
+            <option value="3-2" {{ request('semester') == '3-2' ? 'selected' : '' }}>3-2</option>
+            <option value="4-1" {{ request('semester') == '4-1' ? 'selected' : '' }}>4-1</option>
+            <option value="4-2" {{ request('semester') == '4-2' ? 'selected' : '' }}>4-2</option>
         </select>
-       <div style="overflow: hidden; margin-top: 10px;">
+        <div style="overflow: hidden; margin-top: 10px;">
             <small style="float:right;">
-                Total Credit: 12
+                Total Credit: {{ $semesterWiseCourseCredit ?? 'N/A' }}
             </small>
         </div>
     </div>
+</form>
+
       
     <!-- Table -->
     <div class="table-box">
@@ -232,11 +236,13 @@ tbody tr:hover{
             </thead>
 
             <tbody id="studentTable">
+                @foreach ( $semesterWiseCourse as $sem)
                 <tr>
-                    <td>CSE-4201</td>
-                    <td>Data Structure</td>
-                    <td>3</td>
+                    <td>{{ $sem->course_code }}</td>
+                    <td>{{ $sem->course_title }}</td>
+                    <td>{{ $sem->course_credit }}</td>
                 </tr>
+                 @endforeach
             </tbody>
         </table>
     </div>

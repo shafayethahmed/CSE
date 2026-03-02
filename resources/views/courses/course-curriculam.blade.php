@@ -95,6 +95,7 @@ th{
 td{
     padding:6px 6px;
     text-align: center;
+    font-size:13px;
 }
 
 tbody tr{
@@ -146,36 +147,6 @@ tbody tr:hover{
 .btn-delete:hover{
     background:#fecaca;
 }
-/* Overlay covering the whole screen */
-#spinnerOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    display: none; /* hidden by default */
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-/* Spinner design */
-.spinner {
-    border: 6px solid #f3f3f3; /* Light gray */
-    border-top: 6px solid #1e3a8a; /* Primary blue color */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-}
-
-/* Spin animation */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 /* Responsive */
 @media(max-width:992px){
     .filter-box{grid-template-columns:repeat(2,1fr);}
@@ -251,24 +222,3 @@ tbody tr:hover{
 
 @endsection
 
-
-@push('scripts')
-<script>
-
-document.addEventListener("DOMContentLoaded", function(){
-
-    /* Search */
-    document.getElementById("searchInput").addEventListener("keyup", function() {
-        let value = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#studentTable tr");
-
-        rows.forEach(row=>{
-            row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
-        });
-    });
-
-});
-
-
-</script>
-@endpush

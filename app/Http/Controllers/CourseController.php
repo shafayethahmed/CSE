@@ -13,7 +13,7 @@ class CourseController extends Controller
                 $query->where('course_code','like',"%$value%")
                 ->orWhere('course_title','like',"%$value%");
              }
-           $courses = $query->orderBy('id', 'desc')->paginate(1)->withQueryString();
+           $courses = $query->orderBy('id', 'desc')->paginate(10)->withQueryString();
           return view('courses.index',compact('courses'));  //Index Page Display.
       }
      
@@ -50,16 +50,33 @@ class CourseController extends Controller
     } 
 
     //Edit form display for Course:
-    public function edit(){
-        // return view('courses.edit);
-        return view('Course Edit Ui Designed Need the Backedn Implementation.'); //Need to assign the Student Edit Form.
-         
+    public function edit(Course $course){
+        return view('courses.edit',compact('course')); 
     }
 
     // Course update.
-    public function update(){
-        //Update Process logic need to implement here.
-    }
+        public function update(Request $request, Course $course)
+        {
+            // Validation first (important)
+            $validated = $request->validate([
+                'course_code'   => 'required|string',
+                'course_title'  => 'required|string',
+                'course_credit' => 'required|in:1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0',
+                'semester'      => 'required|in:1-1,1-2,2-1,2-2,3-1,3-2,4-1,4-2',
+                'course_type'   => 'required|in:theory,lab,project',
+            ]);
+
+            try {
+                // Update only selected course
+                $course->update($validated);
+
+                return redirect()->route('courses.index')
+                    ->with('success', 'Course Updated Successfully');
+            } catch (\Throwable $th) {
+                return redirect()->route('courses.index')
+                    ->with('error', 'Something went wrong while updating.');
+            }
+        }
     
     //Curriculam Display: 
     public function viewcurriculam(){

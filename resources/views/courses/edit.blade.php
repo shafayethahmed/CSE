@@ -1,17 +1,6 @@
-@php
-// Mock course data for testing
-$course = (object)[
-    'id' => 1,
-    'course_code' => 'CSE-101',
-    'course_title' => 'Data Structures',
-    'credit' => 3.0,
-    'semester' => '2-1',
-];
-@endphp
+
 @extends('layout.sidebar')
-
 @section('title','Edit Course')
-
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -125,7 +114,7 @@ $course = (object)[
 
         <div class="form-section">
             {{-- <form action="{{ route('courses.update', $course->id) }}" method="POST"> --}}
-            <form action="#" method="POST">
+            <form action="{{ route("courses.update",$course->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -133,12 +122,12 @@ $course = (object)[
                 <div class="form-row">
                     <div>
                         <label class="form-label">Course Code</label>
-                        <input type="text"
+                         <input type="text"
                                name="course_code"
                                class="form-control"
-                               placeholder="e.g. CSE-101"
-                               maxlength="20"
-                               value="{{ old('course_code', $course->course_code) }}"
+                               value="{{ old('course_code',$course->course_code) }}"
+                               pattern="[A-Za-z]{3}-[0-9]{4}"
+                               title="Enter format like CSE-1011"
                                required>
                     </div>
 
@@ -159,13 +148,13 @@ $course = (object)[
                     <div>
                         <label class="form-label">Credit Hours</label>
                         <input type="number"
-                               name="credit"
+                               name="course_credit"
                                step="0.5"
                                min="1"
-                               max="4"
+                               max="5"
                                class="form-control"
                                placeholder="e.g. 3.0"
-                               value="{{ old('credit', $course->credit) }}"
+                               value="{{ old('credit', $course->course_credit) }}"
                                required>
                     </div>
 
@@ -183,6 +172,20 @@ $course = (object)[
                             <option value="4-2" {{ $course->semester == '4-2' ? 'selected' : '' }}>4th Year - 2nd Semester</option>
                         </select>
                     </div>
+                </div>
+
+                 {{-- Row 3 --}}
+                <div class="form-row">
+                    <div>
+                        <label class="form-label">Course Type</label>
+                        <select name="course_type" class="form-select" required>
+                                <option value="">Select Type</option>
+                                <option value="theory" {{ $course->course_type == 'theory' ? 'selected' : '' }}>Theory</option>
+                                <option value="lab" {{ $course->course_type== 'lab' ? 'selected' : '' }}>Lab</option>
+                                <option value="project" {{ $course->course_type == 'project' ? 'selected' : '' }}>Project</option>
+                        </select>
+                     </div>
+                        
                 </div>
 
                 {{-- Buttons --}}

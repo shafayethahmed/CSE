@@ -286,6 +286,15 @@ setTimeout(() => {
     document.querySelectorAll('.toast-msg').forEach(t => t.remove());
 }, 3000);
 
+
+//Add Course Script: 
+function addCourse(){
+    window.location.href = "{{ route('courses.create') }}";
+}
+//Edit Course Script: 
+ function editCourse(courseId){
+    window.location.href = "{{ route('courses.edit',':id') }}".replace(':id',courseId);
+ }
 </script>
 @endpush
 

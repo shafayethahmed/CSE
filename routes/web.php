@@ -53,7 +53,8 @@ Route::get('/courses/',[CourseController::class, 'index'])->name('courses.index'
 Route::get('courses/course-create',[CourseController::class ,'create'])->name('courses.create');
 Route::post('/courses/store',[CourseController::class, 'store'])->name('courses.store');
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
-Route::put('/course/{course}/update',[CourseController::class, 'update'])->name('courses.update');
+Route::put('/courses/{course}/update',[CourseController::class, 'update'])->name('courses.update');
+Route::delete('/courses/{course}/delete',[CourseController::class, 'destroy'])->name('courses.destroy');
 Route::get('/courses/course-curriculam',[CourseController::class, 'viewcurriculam'])->name('courses.curriculum');
 Route::get('/courses/course-teacher',[CourseController::class, 'viewCourseTeacher'])->name('courses.teacher');
 Route::get('/courses/course-teacher/assign',[CourseController::class, 'viewAssignCourseTeacher'])->name('assign-course-teacher.create');

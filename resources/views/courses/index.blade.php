@@ -231,7 +231,11 @@ tbody tr:hover{
                         <td>{{ $course->semester }}</td>
                         <td class="actions">
                             <button class="btn-edit" onclick="editCourse({{ $course->id }})">Edit</button>
-                            <button class="btn-delete" onclick="deleteCourse({{ $course->id }})">Delete</button>
+                            <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                 @empty

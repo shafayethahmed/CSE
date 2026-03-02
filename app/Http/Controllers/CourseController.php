@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Constraint\Count;
+
 class CourseController extends Controller
 {
       public function index(Request $request){
@@ -78,6 +80,16 @@ class CourseController extends Controller
             }
         }
     
+    // Course Delete :
+     public function destroy( Course $course){
+        try{
+            $course->delete();
+            return redirect()->route('courses.index')->with('success','Course Deleted Successfully!');
+        }catch( \Exception $e){
+          return redirect()->route('courses.index')->with('error','Something went wrong while deleteing.');
+        }
+     }
+
     //Curriculam Display: 
     public function viewcurriculam(){
         return view('courses.course-curriculam');

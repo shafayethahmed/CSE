@@ -157,6 +157,12 @@
 .fa-user{
     color: blue;
 }
+.dashboard-footer{
+    text-align:center;
+    font-size:11px;
+    color:#6b7280;
+    border-top:1px solid #e5e7eb;
+}
 
 /* MOBILE */
 @media(max-width:768px){
@@ -269,6 +275,10 @@
 <!-- MAIN -->
 <div class="main" id="main">
     @yield('content')
+    <!-- Footer -->
+    <div class="dashboard-footer">
+        © {{ date('Y') }} Department of CSE, RTM-AKTU | Developed by SHIFAT | Batch: CSE-2
+    </div>
 </div>
 
 @stack('scripts')

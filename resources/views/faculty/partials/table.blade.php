@@ -10,6 +10,7 @@
             <th>Faculty-ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone</th>
             <th>Designation</th>
             <th>Status</th>
             @if (in_array(Auth::user()->role,$facultyActionPrivillageRole))
@@ -24,6 +25,7 @@
             <td>{{ $faculty->faculty_id}}</td>
             <td>{{ $faculty->name }}</td>
             <td>{{ $faculty->email }}</td>
+            <td>{{ $faculty->mobile }}</td>
             <td>{{str_replace('-',' ', ucwords($faculty->designation))}}</td>
             <td>{{ ucwords($faculty->faculty_status) }}</td>
              @if (in_array(Auth::user()->role,$facultyActionPrivillageRole))

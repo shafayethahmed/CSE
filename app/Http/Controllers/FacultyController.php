@@ -74,6 +74,7 @@ class FacultyController extends Controller
         $validated = $request->validate([
             'user_name' => 'required|string|max:255',
             'user_email' => 'required|email|unique:faculties,email',
+            'user_mobile' => 'required|regex:/^01[3-9]\d{8}$/|unique:faculties,mobile',
             'designation' => 'required|string|max:100',
             'credit_limit' => 'required|integer|min:18|max:30',
             'bachelor_degree' => 'nullable|string|max:255',
@@ -106,6 +107,7 @@ class FacultyController extends Controller
             'faculty_id' => $facultyId,
             'name' => $validated['user_name'],
             'email' => $validated['user_email'],
+            'mobile' => $validated['user_mobile'],
             'designation' => $validated['designation'] ?? 'faculty',
             'credit_limit' => $validated['credit_limit'],
             'bachelor_degree' => $validated['bachelor_degree'],

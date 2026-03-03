@@ -26,7 +26,7 @@ class UserController extends Controller
         $users->where('role',$request->role);
     }
 
-$users = $users->latest()->paginate(15)->withQueryString();
+$users = $users->latest()->paginate(10)->withQueryString();
 
     if($request->ajax()){
         return view('users.partials.table', compact('users'))->render();

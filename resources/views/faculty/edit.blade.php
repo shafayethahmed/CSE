@@ -167,7 +167,7 @@ $assignedCourses = [
                 </div>
                 <div class="info-box">
                     <label>Phone Number</label>
-                    <input type="text" name="phone" value="{{ $faculty->phone }}">
+                    <input type="text" name="phone" value="{{ $faculty->mobile }}">
                 </div>
                 <div class="info-box">
                     <label>Total Credit Limit</label>

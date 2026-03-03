@@ -18,6 +18,7 @@ class Faculty extends Authenticatable
         'faculty_id',
         'name',
         'email',
+        'mobile',
         'designation',
         'credit_limit',
         'bachelor_degree',

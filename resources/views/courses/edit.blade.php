@@ -145,17 +145,14 @@
 
                 {{-- Row 2 --}}
                 <div class="form-row">
-                    <div>
+                     <div>
                         <label class="form-label">Credit Hours</label>
-                        <input type="number"
-                               name="course_credit"
-                               step="0.5"
-                               min="1"
-                               max="5"
-                               class="form-control"
-                               placeholder="e.g. 3.0"
-                               value="{{ old('credit', $course->course_credit) }}"
-                               required>
+                          <select name="course_credit" class="form-select" required>
+                            <option value="">{{ old('course_credit',$course->course_credit) }}</option>
+                            @foreach(['1.0','1.5','2.0','2.5','3.0','3.5','4.0','4.5','5.0'] as $cre)
+                            <option value="{{ $cre }}" {{ old('course_credit')==$cre ? 'selected' : '' }}>{{ $cre }}</option>
+                        @endforeach
+                        </select>
                     </div>
 
                     <div>

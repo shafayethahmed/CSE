@@ -4,11 +4,19 @@
 
 @push('styles')
 <style>
+
 /* Wrapper */
 .page-wrapper{
-    margin-top: 20px;
-    max-width: 900px;
-    margin: 5 auto;
+    max-width: 1000px;
+    margin: 25px auto;
+}
+
+/* Card */
+.card-box{
+    background:#ffffff;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    padding:18px;
 }
 
 /* Header */
@@ -16,148 +24,99 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
+    margin-bottom:15px;
 }
 
 .page-header h2{
-    font-size:18px;
+    font-size:17px;
     font-weight:600;
-    color:#1f2937;
+    color:#000;
+    margin:0;
 }
 
-/* Primary Button */
-.btn-primary{
-    background: var(--primary);
-    border:none;
-    padding:7px 14px;
-    color:white;
+/* Dark Info Box */
+.header-info{
+    background:#111;              /* dark */
+    color:#fff;                   /* white text */
+    padding:6px 14px;
     border-radius:6px;
-    cursor:pointer;
-    font-weight:600;
     font-size:12px;
-    transition:.25s;
-}
-.btn-primary:hover{
-    background:#1e40af;
+    font-weight:500;
+    display:flex;
+    gap:15px;
 }
 
-/* Filters */
+/* Filter */
 .filter-box{
-    background:#fff;
-    padding:14px;
-    border-radius:10px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.04);
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
     gap:10px;
 }
 
-.filter-box input,
 .filter-box select{
-    padding:7px 9px;
-    border-radius:6px;
-    border:1px solid #d1d5db;
-    font-size:12px;
-    transition:.2s;
+    padding:6px 10px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    font-size:13px;
+    color:#000;
 }
 
-.filter-box input:focus,
 .filter-box select:focus{
-    border-color: var(--primary);
+    border-color:#000;
     outline:none;
 }
 
 /* Table */
-.table-box{
-    background:#fff;
-    padding:8px;
-    border-radius:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+.table-responsive{
+    overflow-x:auto;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    font-size:11px;
+    font-size:14px;
 }
 
 thead{
-    background:#d9d5ebe1;
+    background:rgba(2, 2, 2, 0.747);
+    border-bottom:1px solid #ddd;
 }
 
 th{
-    font-size:12px;
+    padding:10px;
+    text-align:center;
     font-weight:600;
-    color:#000000;
-    padding:9px 8px;
-    text-align: center;
+    font-size:13px;
+    color:white;
 }
 
 td{
-    padding:6px 6px;
-    text-align: center;
-    font-size:13px;
+    padding:10px;
+    text-align:center;
+    color:#000;
 }
 
 tbody tr{
-    border-bottom:1px solid #eef2f7;
-    transition:.2s;
+    border-bottom:1px solid #eee;
 }
 
 tbody tr:hover{
-    background:#f9fafb;
+    background:#f5f5f5;
 }
 
-/* Actions */
-.actions{
-    white-space:nowrap;
-}
-
-.actions button{
-    border:none;
-    padding:2px 6px;
-    border-radius:5px;
-    font-size:11px;
-    margin-right:3px;
-    cursor:pointer;
-    font-weight:500;
-    transition:.2s;
-}
-
-/* Button colors */
-.btn-view{
-    background:#e0f2fe;
-    color:#0369a1;
-}
-.btn-view:hover{
-    background:#bae6fd;
-}
-
-.btn-edit{
-    background:#fef9c3;
-    color:#854d0e;
-}
-.btn-edit:hover{
-    background:#fde68a;
-}
-
-.btn-delete{
-    background:#fee2e2;
-    color:#b91c1c;
-}
-.btn-delete:hover{
-    background:#fecaca;
-}
-/* Responsive */
-@media(max-width:992px){
-    .filter-box{grid-template-columns:repeat(2,1fr);}
+.empty-row{
+    padding:18px;
+    text-align:center;
+    color:#000;
 }
 
 @media(max-width:600px){
-    .filter-box{grid-template-columns:1fr;}
     .page-header{
         flex-direction:column;
         align-items:flex-start;
-        gap:10px;
+        gap:8px;
     }
 }
 
@@ -169,56 +128,65 @@ tbody tr:hover{
 
 <div class="page-wrapper">
 
-    <!-- Header -->
-    <div class="page-header">
-        <h2>Course Curriculam</h2>
-    </div>
+    <div class="card-box">
 
-    <form method="get" action="">
-    <div class="filter-box">
-        <select name="semester" onchange="this.form.submit()">
-            <option value="1-1" {{ request('semester') == '1-1' ? 'selected' : '' }}>1-1</option>
-            <option value="1-2" {{ request('semester') == '1-2' ? 'selected' : '' }}>1-2</option>
-            <option value="2-1" {{ request('semester') == '2-1' ? 'selected' : '' }}>2-1</option>
-            <option value="2-2" {{ request('semester') == '2-2' ? 'selected' : '' }}>2-2</option>
-            <option value="3-1" {{ request('semester') == '3-1' ? 'selected' : '' }}>3-1</option>
-            <option value="3-2" {{ request('semester') == '3-2' ? 'selected' : '' }}>3-2</option>
-            <option value="4-1" {{ request('semester') == '4-1' ? 'selected' : '' }}>4-1</option>
-            <option value="4-2" {{ request('semester') == '4-2' ? 'selected' : '' }}>4-2</option>
-        </select>
-        <div style="overflow: hidden; margin-top: 10px;">
-            <small style="float:right;">
-                Total Credit: {{ $semesterWiseCourseCredit ?? 'N/A' }}
-            </small>
+        <!-- Header -->
+        <div class="page-header">
+            <h2>Course Curriculum</h2>
+
+            <div class="header-info">
+                <span>Semester: {{ request('semester') ?? '1-1' }}</span>
+                <span>Total Credit: {{ $semesterWiseCourseCredit ?? 0 }}</span>
+            </div>
         </div>
-    </div>
-</form>
 
-      
-    <!-- Table -->
-    <div class="table-box">
-        <table>
-            <thead>
-                <tr>
-                    <th>Course Code</th>
-                    <th>Course Title</th>
-                    <th>Course Credit</th>
-                </tr>
-            </thead>
+        <!-- Filter -->
+        <form method="get">
+            <div class="filter-box">
 
-            <tbody id="studentTable">
-                @foreach ( $semesterWiseCourse as $sem)
-                <tr>
-                    <td>{{ $sem->course_code }}</td>
-                    <td>{{ $sem->course_title }}</td>
-                    <td>{{ $sem->course_credit }}</td>
-                </tr>
-                 @endforeach
-            </tbody>
-        </table>
+                <select name="semester" onchange="this.form.submit()">
+                    @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'] as $sem)
+                        <option value="{{ $sem }}"
+                            {{ request('semester','1-1') == $sem ? 'selected' : '' }}>
+                            {{ $sem }}
+                        </option>
+                    @endforeach
+                </select>
+
+            </div>
+        </form>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Title</th>
+                        <th>Credit</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse ($semesterWiseCourse as $sem)
+                        <tr>
+                            <td>{{ $sem->course_code }}</td>
+                            <td>{{ $sem->course_title }}</td>
+                            <td>{{ $sem->course_credit }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" class="empty-row">
+                                No courses found.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 </div>
 
 @endsection
-

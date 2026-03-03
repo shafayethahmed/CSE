@@ -220,7 +220,11 @@ tbody tr:hover{
                     <td>{{ $course->course_code }}</td>
                     <td>{{ $course->course_title }}</td>
                     <td>{{ $course->course_credit }}</td>
-                    <td>{{ ucWords($course->course_type) }}</td>
+                    @if ($course->course_type === 'project')
+                         <td>Thesis/Practicum/Project/Internship</td>
+                    @else
+                        <td>{{ ucWords($course->course_type) }}</td>
+                    @endif
                     <td>{{ $course->semester }}</td>
                     <td class="actions">
                         <button class="btn-edit" onclick="editCourse({{ $course->id }})"><i class="fa fa-edit"></i></button>

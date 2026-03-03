@@ -1,15 +1,14 @@
-
 @extends('layout.sidebar')
 @section('title','Edit Course')
+
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-/* Reuse same styles as Add Course */
 .content-form-wrapper {
     margin-top: 20px;
     max-width: 900px;
-    margin: 5 auto;
+    margin: 20px auto;   /* FIXED */
     padding: 15px;
 }
 
@@ -40,8 +39,8 @@
 
 .form-control,
 .form-select {
-    height: 30px;
-    max-width: 100%;
+    height: 35px;
+    width: 100%;
     border-radius: 8px;
     font-size: 14px;
     border: 1px solid #d1d5db;
@@ -59,7 +58,7 @@
 .form-row {
     display: flex;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .form-row > div {
@@ -82,8 +81,8 @@
 }
 
 .btn {
-    height: 30px;
-    padding: 0 10px;
+    height: 35px;
+    padding: 0 15px;
     font-size: 14px;
     border-radius: 8px;
 }
@@ -97,11 +96,11 @@
 .btn-secondary {
      background: white;
      color: black;
-     border: none;
-     text-align: center;
+     border: 1px solid #d1d5db;
 }
 </style>
 @endpush
+
 
 @section('content')
 <div class="content-form-wrapper">
@@ -113,8 +112,19 @@
         </div>
 
         <div class="form-section">
-            {{-- <form action="{{ route('courses.update', $course->id) }}" method="POST"> --}}
-            <form action="{{ route("courses.update",$course->id) }}" method="POST">
+
+            {{-- Show Validation Errors --}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul style="margin-bottom:0;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('courses.update',$course->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -122,7 +132,7 @@
                 <div class="form-row">
                     <div>
                         <label class="form-label">Course Code</label>
-                         <input type="text"
+                        <input type="text"
                                name="course_code"
                                class="form-control"
                                value="{{ old('course_code',$course->course_code) }}"
@@ -136,22 +146,24 @@
                         <input type="text"
                                name="course_title"
                                class="form-control"
-                               placeholder="e.g. Data Structure"
                                maxlength="100"
-                               value="{{ old('course_title', $course->course_title) }}"
+                               value="{{ old('course_title',$course->course_title) }}"
                                required>
                     </div>
                 </div>
 
                 {{-- Row 2 --}}
                 <div class="form-row">
-                     <div>
+                    <div>
                         <label class="form-label">Credit Hours</label>
-                          <select name="course_credit" class="form-select" required>
-                            <option value="">{{ old('course_credit',$course->course_credit) }}</option>
+                        <select name="course_credit" class="form-select" required>
+                            <option value="">Select Credit</option>
                             @foreach(['1.0','1.5','2.0','2.5','3.0','3.5','4.0','4.5','5.0'] as $cre)
-                            <option value="{{ $cre }}" {{ old('course_credit')==$cre ? 'selected' : '' }}>{{ $cre }}</option>
-                        @endforeach
+                                <option value="{{ $cre }}"
+                                    {{ old('course_credit',$course->course_credit) == $cre ? 'selected' : '' }}>
+                                    {{ $cre }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -159,30 +171,39 @@
                         <label class="form-label">Semester</label>
                         <select name="semester" class="form-select" required>
                             <option value="">Select Semester</option>
-                            <option value="1-1" {{ $course->semester == '1-1' ? 'selected' : '' }}>1st Year - 1st Semester</option>
-                            <option value="1-2" {{ $course->semester == '1-2' ? 'selected' : '' }}>1st Year - 2nd Semester</option>
-                            <option value="2-1" {{ $course->semester == '2-1' ? 'selected' : '' }}>2nd Year - 1st Semester</option>
-                            <option value="2-2" {{ $course->semester == '2-2' ? 'selected' : '' }}>2nd Year - 2nd Semester</option>
-                            <option value="3-1" {{ $course->semester == '3-1' ? 'selected' : '' }}>3rd Year - 1st Semester</option>
-                            <option value="3-2" {{ $course->semester == '3-2' ? 'selected' : '' }}>3rd Year - 2nd Semester</option>
-                            <option value="4-1" {{ $course->semester == '4-1' ? 'selected' : '' }}>4th Year - 1st Semester</option>
-                            <option value="4-2" {{ $course->semester == '4-2' ? 'selected' : '' }}>4th Year - 2nd Semester</option>
+                            @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'] as $sem)
+                                <option value="{{ $sem }}"
+                                    {{ old('semester',$course->semester) == $sem ? 'selected' : '' }}>
+                                    {{ $sem }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
 
-                 {{-- Row 3 --}}
+                {{-- Row 3 --}}
                 <div class="form-row">
                     <div>
                         <label class="form-label">Course Type</label>
-                        <select name="course_type" class="form-select" required>
-                                <option value="">Select Type</option>
-                                <option value="theory" {{ $course->course_type == 'theory' ? 'selected' : '' }}>Theory</option>
-                                <option value="sessional" {{ $course->course_type== 'sessional' ? 'selected' : '' }}>Sessional</option>
-                                <option value="project" {{ $course->course_type == 'project' ? 'selected' : '' }}>Project</option>
-                        </select>
-                     </div>
-                        
+                       <select name="course_type" class="form-select" required>
+                        <option value="">Select Type</option>
+
+                        <option value="theory"
+                            {{ old('course_type',$course->course_type)=='theory'?'selected':'' }}>
+                            Theory
+                        </option>
+
+                        <option value="sessional"
+                            {{ old('course_type',$course->course_type)=='sessional'?'selected':'' }}>
+                            Sessional
+                        </option>
+
+                        <option value="project"
+                            {{ old('course_type',$course->course_type)=='project'?'selected':'' }}>
+                            Thesis/Project/Practicum/Internship
+                        </option>
+                    </select>
+                    </div>
                 </div>
 
                 {{-- Buttons --}}
@@ -198,7 +219,6 @@
 
             </form>
         </div>
-
     </div>
 </div>
 @endsection

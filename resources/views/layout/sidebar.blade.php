@@ -215,8 +215,8 @@
         <i class="fas fa-chevron-down"></i>
     </button>
     <div class="dropdown-container" style="{{ $studentsActive || $alumniActive ? 'display:block;' : '' }}">
-        <a href="{{ route('students.index') }}" class="{{ request()->routeIs('students.index') ? 'active' : '' }}">General Students</a>
-        <a href="{{ route('alumni.index') }}" class="{{ request()->routeIs('alumni.index') ? 'active' : '' }}">Alumni Students</a>
+        <a href="{{ route('students.index') }}" class="{{ request()->routeIs('students.index') ? 'active' : '' }}">➤ General Students</a>
+        <a href="{{ route('alumni.index') }}" class="{{ request()->routeIs('alumni.index') ? 'active' : '' }}">➤ Alumni Students</a>
     </div>
 
     <!-- Faculty & Notices -->
@@ -237,9 +237,9 @@
         <i class="fas fa-chevron-down"></i>
     </button>
     <div class="dropdown-container" style="{{ $coursesActive ? 'display:block;' : '' }}">
-        <a href="{{ route('courses.index') }}" class="{{ request()->routeIs('courses.index') ? 'active' : '' }}">Course</a>
-        <a href="{{ route('courses.curriculum') }}" class="{{ request()->routeIs('courses.curriculum') ? 'active' : '' }}"> Course Curriculum</a>
-        <a href="{{ route('courses.teacher') }}" class="{{ request()->routeIs('courses.teacher') ? 'active' : '' }}">Course Teacher</a>
+        <a href="{{ route('courses.index') }}" class="{{ request()->routeIs('courses.index') ? 'active' : '' }}">➤ Course</a>
+        <a href="{{ route('courses.curriculum') }}" class="{{ request()->routeIs('courses.curriculum') ? 'active' : '' }}">➤ Course Curriculum</a>
+        <a href="{{ route('courses.teacher') }}" class="{{ request()->routeIs('courses.teacher') ? 'active' : '' }}">➤ Course Teacher</a>
     </div>
 
     <!-- Batches -->
@@ -251,7 +251,7 @@
         <i class="fas fa-chevron-down"></i>
     </button>
     <div class="dropdown-container" style="{{ $batchesActive ? 'display:block;' : '' }}">
-        <a href="{{ route('batches.supervisor') }}" class="{{ request()->routeIs('batches.supervisor') ? 'active' : '' }}">Supervisor</a>
+        <a href="{{ route('batches.supervisor') }}" class="{{ request()->routeIs('batches.supervisor') ? 'active' : '' }}">➤ Supervisor</a>
     </div>
 
     <div class="menu-section">Administration</div>

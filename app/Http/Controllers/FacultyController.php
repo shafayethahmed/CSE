@@ -140,9 +140,8 @@ class FacultyController extends Controller
     }
 
     //Information View Form for Student
-    public function show(){
-        //Information about Student Profile.
-      
+    public function show(Faculty $faculty){
+         return view('faculty.show',compact('faculty'));
     }
     
     //Student profile update.

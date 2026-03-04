@@ -134,27 +134,27 @@
         <div class="info-grid">
             <div class="info-box">
                 <label>Faculty ID</label>
-                <span>F101</span>
+                <span>{{ $faculty->faculty_id }}</span>
             </div>
             <div class="info-box">
                 <label>Name</label>
-                <span>Dr. Rahim Uddin</span>
+                <span>{{ $faculty->name }}</span>
             </div>
             <div class="info-box">
                 <label>Email</label>
-                <span>rahim@university.edu</span>
+                <span>{{ $faculty->email }}</span>
             </div>
             <div class="info-box">
                 <label>Phone Number</label>
-                <span>+880 1234 567890</span>
+                <span>{{ $faculty->mobile }}</span>
+            </div>
+             <div class="info-box">
+                <label>Designation</label>
+                <span>{{ ucWords($faculty->designation) }}</span>
             </div>
             <div class="info-box">
                 <label>Total Credit Limit</label>
-                <span>18</span>
-            </div>
-             <div class="info-box">
-                <label>Total Credit Taken</label>
-                <span>17</span>
+                <span>{{ $faculty->credit_limit }}</span>
             </div>
             <div class="info-box">
                 <label>Status</label>
@@ -171,22 +171,19 @@
                 <tr>
                     <th>Degree</th>
                     <th>University</th>
-                    <th>Department</th>
                     <th>CGPA</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>BSc in CSE</td>
-                    <td>SUST</td>
-                    <td>CSE</td>
-                    <td>3.75</td>
+                    <td>{{ ucWords($faculty->bachelor_degree) }}</td>
+                    <td>{{ ucWords($faculty->bachelor_university) }}</td>
+                    <td>{{ ucWords($faculty->bachelor_cgpa) }}</td>
                 </tr>
                 <tr>
-                    <td>MSc in CSE</td>
-                    <td>SUST</td>
-                    <td>CSE</td>
-                    <td>3.90</td>
+                    <td>{{ ucWords($faculty->master_degree) ?? 'N/A'}}</td>
+                    <td>{{ ucWords($faculty->master_university) ?? 'N/A'}}</td>
+                    <td>{{ ucWords($faculty->master_cgpa) ?? 'N/A' }}</td>
                 </tr>
             </tbody>
         </table>

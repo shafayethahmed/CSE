@@ -16,4 +16,15 @@ class Course extends Model
            'course_type',
 
     ];
+
+
+   public function faculties()
+{
+    return $this->belongsToMany(
+        Faculty::class,
+        'faculty_course_taught',   // pivot table name
+        'course_id',               // foreign key of this model
+        'faculty_id'               // foreign key of related model
+    );
+}
 }

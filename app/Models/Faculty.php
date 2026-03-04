@@ -55,4 +55,14 @@ class Faculty extends Authenticatable
    {
     return 'faculty_id';
    }
+
+  public function courses()
+{
+    return $this->belongsToMany(
+        Course::class,
+        'faculty_course_taught',
+        'faculty_id',
+        'course_id'
+    );
+}
 }

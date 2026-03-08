@@ -1,3 +1,33 @@
+@php
+$semesterWiseCourses = [
+    (object)[
+        'course_code' => 'CSE101',
+        'course_title' => 'Introduction to Programming',
+        'course_credit' => 3
+    ],
+    (object)[
+        'course_code' => 'CSE102',
+        'course_title' => 'Data Structures',
+        'course_credit' => 4
+    ],
+    (object)[
+        'course_code' => 'CSE103',
+        'course_title' => 'Computer Organization',
+        'course_credit' => 3
+    ],
+    (object)[
+        'course_code' => 'CSE104',
+        'course_title' => 'Discrete Mathematics',
+        'course_credit' => 3
+    ],
+    (object)[
+        'course_code' => 'CSE105',
+        'course_title' => 'Database Systems',
+        'course_credit' => 3
+    ],
+];
+@endphp
+
 @extends('layout.sidebar')
 
 @section('title','Courses')
@@ -139,6 +169,12 @@ tbody tr:hover{
                 <span>Total Credit: {{ $semesterWiseCourseCredit ?? 0 }}</span>
             </div>
         </div>
+        <!-- Add Offered Course Button -->
+        <div style="margin-bottom: 15px;">
+            <button class="btn-primary-custom" onclick="window.location.href='{{ route('courses.offered.create') }}'">
+                + Add Offered Course
+            </button>
+        </div>
 
         <!-- Filter -->
         <form method="get">
@@ -168,7 +204,7 @@ tbody tr:hover{
                 </thead>
 
                 <tbody>
-                    @forelse ($semesterWiseCourse as $sem)
+                    @forelse ($semesterWiseCourses as $sem)
                         <tr>
                             <td>{{ $sem->course_code }}</td>
                             <td>{{ $sem->course_title }}</td>

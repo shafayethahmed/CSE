@@ -238,7 +238,7 @@
     </button>
     <div class="dropdown-container" style="{{ $coursesActive ? 'display:block;' : '' }}">
         <a href="{{ route('courses.index') }}" class="{{ request()->routeIs('courses.index') ? 'active' : '' }}">➤ Course</a>
-        <a href="#" class="{{ request()->routeIs('courses.curriculum') ? 'active' : '' }}">➤ Course Curriculum</a>
+        <a href="{{ route('courses.offered-curriculum') }}" class="{{ request()->routeIs('courses.offered-curriculum') ? 'active' : '' }}">➤ Offered Curriculum</a>
         <a href="#" class="{{ request()->routeIs('courses.teacher') ? 'active' : '' }}">➤ Course Teacher</a>
     </div>
 

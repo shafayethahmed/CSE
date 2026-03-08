@@ -8,6 +8,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FacultyAuthController;
+use App\Http\Controllers\offeredCoursesController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
@@ -55,9 +56,11 @@ Route::post('/courses/store',[CourseController::class, 'store'])->name('courses.
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
 Route::put('/courses/{course}/update',[CourseController::class, 'update'])->name('courses.update');
 Route::delete('/courses/{course}/delete',[CourseController::class, 'destroy'])->name('courses.destroy');
-Route::get('/courses/course-curriculam',[CourseController::class, 'viewcurriculam'])->name('courses.curriculum');
-Route::get('/courses/course-teacher',[CourseController::class, 'viewCourseTeacher'])->name('courses.teacher');
-Route::get('/courses/course-teacher/assign',[CourseController::class, 'viewAssignCourseTeacher'])->name('assign-course-teacher.create');
+
+// Offered Course : 
+Route::get('courses/offered', [offeredCoursesController::class,'index'])->name('courses.offered-curriculum');
+Route::get('courses/offred/course-offer',[offeredCoursesController::class, 'show'])->name('courses.offered.create');
+Route::post('courses/offered', [offeredCoursesController::class,'store'])->name('courses.offered.store');
 
 /* Batches */
 Route::get('/batches/supervisor', function () {

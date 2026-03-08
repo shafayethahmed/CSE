@@ -88,8 +88,7 @@ class CourseController extends Controller
      }
 
 
-
-    
+ 
     //Course Teacher Info:
       public function viewCourseTeacher(){
         return view('courses.course-teacher');

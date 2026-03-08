@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class offeredCoursesController extends Controller
@@ -12,5 +13,8 @@ class offeredCoursesController extends Controller
     }
 
     //Offer Course Create :
-
+    public function create(){
+        $courses = Course::all();
+        return view('courses.offered-course-attachment',compact('courses'));
+    }
 }

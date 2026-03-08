@@ -59,7 +59,7 @@ Route::delete('/courses/{course}/delete',[CourseController::class, 'destroy'])->
 
 // Offered Course : 
 Route::get('courses/offered', [offeredCoursesController::class,'index'])->name('courses.offered-curriculum');
-Route::get('courses/offred/course-offer',[offeredCoursesController::class, 'show'])->name('courses.offered.create');
+Route::get('courses/offred/course-offer',[offeredCoursesController::class, 'create'])->name('courses.offered.create');
 Route::post('courses/offered', [offeredCoursesController::class,'store'])->name('courses.offered.store');
 
 /* Batches */

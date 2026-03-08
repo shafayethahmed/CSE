@@ -152,19 +152,7 @@
 
             <!-- Dynamic course checkboxes -->
             <div class="courses-list" id="coursesList">
-                @php
-                    $mockCourses = [
-                        (object)['course_code'=>'CSE101','course_title'=>'Intro to Programming'],
-                        (object)['course_code'=>'CSE102','course_title'=>'Data Structures'],
-                        (object)['course_code'=>'CSE103','course_title'=>'Algorithms'],
-                        (object)['course_code'=>'CSE104','course_title'=>'Database Systems'],
-                        (object)['course_code'=>'CSE105','course_title'=>'Computer Networks'],
-                        (object)['course_code'=>'CSE106','course_title'=>'Operating Systems'],
-                        (object)['course_code'=>'CSE107','course_title'=>'Software Engineering'],
-                    ];
-                @endphp
-
-                @foreach($mockCourses as $course)
+                @foreach($courses as $course)
                     <label>
                         <input type="checkbox" name="courses[]" value="{{ $course->course_code }}">
                         <span>{{ $course->course_code }} - {{ $course->course_title }}</span>
@@ -193,7 +181,7 @@ searchInput.addEventListener('input', function(){
     });
 });
 
-// Optional: dynamically reload courses on semester change (mock)
+// reload courses on semester change 
 const semesterSelect = document.getElementById('semesterSelect');
 semesterSelect.addEventListener('change', function(){
     // In a real system, you can fetch courses via AJAX

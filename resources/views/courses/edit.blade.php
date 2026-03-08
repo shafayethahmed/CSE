@@ -166,19 +166,6 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <div>
-                        <label class="form-label">Semester</label>
-                        <select name="semester" class="form-select" required>
-                            <option value="">Select Semester</option>
-                            @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'] as $sem)
-                                <option value="{{ $sem }}"
-                                    {{ old('semester',$course->semester) == $sem ? 'selected' : '' }}>
-                                    {{ $sem }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
 
                 {{-- Row 3 --}}

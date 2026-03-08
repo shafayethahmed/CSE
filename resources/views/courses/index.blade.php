@@ -209,7 +209,6 @@ tbody tr:hover{
                     <th>Course Title</th>
                     <th>Course Credit</th>
                     <th>Course Type</th>
-                    <th>Offered Semester</th>
                     <th width="140">Action</th>
                 </tr>
             </thead>
@@ -225,7 +224,6 @@ tbody tr:hover{
                     @else
                         <td>{{ ucWords($course->course_type) }}</td>
                     @endif
-                    <td>{{ $course->semester }}</td>
                     <td class="actions">
                         <button class="btn-edit" onclick="editCourse({{ $course->id }})"><i class="fa fa-edit"></i></button>
                         <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="d-inline">

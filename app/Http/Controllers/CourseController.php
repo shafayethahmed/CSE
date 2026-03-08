@@ -30,7 +30,6 @@ class CourseController extends Controller
         $validated= $request->validate([
             'course_code' => 'required|string|unique:courses,course_code',          'course_title' => 'required|string',
           'course_credit' => 'required|in:1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0',
-          'semester' => 'required|in:1-1,1-2,2-1,2-2,3-1,3-2,4-1,4-2',
            'course_type'   => 'required|in:theory,sessional,project',
         ]);
         
@@ -41,7 +40,6 @@ class CourseController extends Controller
             'course_code' => strtoupper($validated['course_code']),
             'course_title' => $validated['course_title'],
             'course_credit' => $validated['course_credit'],
-            'semester' => $validated['semester'],
             'course_type'   => $validated['course_type'],
             ]);
 
@@ -64,7 +62,6 @@ class CourseController extends Controller
                 'course_code'   => 'required|string',
                 'course_title'  => 'required|string',
                 'course_credit' => 'required|in:1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0',
-                'semester'      => 'required|in:1-1,1-2,2-1,2-2,3-1,3-2,4-1,4-2',
                 'course_type'   => 'required|in:theory,lab,project',
             ]);
 
@@ -90,24 +87,6 @@ class CourseController extends Controller
         }
      }
 
-    //Curriculam Display: 
-public function viewcurriculam(Request $request)
-{
-    $semester = $request->semester ?? '1-1';
-    
-    $semesterWiseCourse = Course::where('semester', $semester)->get();
-    
-    // Debug: Show individual credits
-    $credits = $semesterWiseCourse->pluck('course_credit')->toArray();
-    logger("Credits for {$semester}: " . implode(', ', $credits));
-    
-    $semesterWiseCourseCredit = $semesterWiseCourse->sum('course_credit');
-    
-    return view('courses.course-curriculam', compact(
-        'semesterWiseCourse', 
-        'semesterWiseCourseCredit'
-    ));
-}
 
 
     

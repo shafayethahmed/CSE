@@ -133,7 +133,7 @@
                                name="course_code"
                                class="form-control"
                                placeholder="e.g. CSE-1011"
-                               pattern="[A-Za-z]{3}-[0-9]{4}"
+                               pattern="[A-Za-z]{3} [0-9]{4}"
                                title="Enter format like CSE-1011"
                                required>
                     </div>

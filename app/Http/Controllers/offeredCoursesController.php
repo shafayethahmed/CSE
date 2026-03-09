@@ -11,9 +11,25 @@ use PHPUnit\Framework\Constraint\Count;
 class offeredCoursesController extends Controller
 {
     //Offer course page handler: 
-    public function index(){
-        return view('courses.offered-course-curriculam');
+   public function index(Request $request)
+{    
+    // default semester
+    $offeredSemester = $request->filterSemester ?? '1-1';
+
+    $query = OfferedCourses::query();
+    $query->where('semester', $offeredSemester);
+
+    // Credit Sum
+    $totalCredit = (clone $query)->sum('course_credit');
+
+    $offeredCourses = $query->paginate(10)->withQueryString();
+
+    if ($request->ajax()) {
+        return view('courses.partial.offered-course', compact('offeredCourses','totalCredit','offeredSemester'))->render();
     }
+
+    return view('courses.offered-course-curriculam', compact('offeredCourses','totalCredit','offeredSemester'));
+}
 
     //Offer Course Create :
     public function create(){

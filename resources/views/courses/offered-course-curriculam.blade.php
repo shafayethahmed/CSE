@@ -1,36 +1,5 @@
-@php
-$semesterWiseCourses = [
-    (object)[
-        'course_code' => 'CSE101',
-        'course_title' => 'Introduction to Programming',
-        'course_credit' => 3
-    ],
-    (object)[
-        'course_code' => 'CSE102',
-        'course_title' => 'Data Structures',
-        'course_credit' => 4
-    ],
-    (object)[
-        'course_code' => 'CSE103',
-        'course_title' => 'Computer Organization',
-        'course_credit' => 3
-    ],
-    (object)[
-        'course_code' => 'CSE104',
-        'course_title' => 'Discrete Mathematics',
-        'course_credit' => 3
-    ],
-    (object)[
-        'course_code' => 'CSE105',
-        'course_title' => 'Database Systems',
-        'course_credit' => 3
-    ],
-];
-@endphp
-
 @extends('layout.sidebar')
-
-@section('title','Courses')
+@section('title','Offered Course')
 
 @push('styles')
 <style>
@@ -162,12 +131,7 @@ tbody tr:hover{
 
         <!-- Header -->
         <div class="page-header">
-            <h2>Course Curriculum</h2>
-
-            <div class="header-info">
-                <span>Semester: {{ request('semester') ?? '1-1' }}</span>
-                <span>Total Credit: {{ $semesterWiseCourseCredit ?? 0 }}</span>
-            </div>
+            <h2>Offered Courses</h2>
         </div>
         <!-- Add Offered Course Button -->
         <div style="margin-bottom: 15px;">
@@ -180,7 +144,7 @@ tbody tr:hover{
         <form method="get">
             <div class="filter-box">
 
-                <select name="semester" onchange="this.form.submit()">
+                <select name="semester" id="filterSemester">
                     @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'] as $sem)
                         <option value="{{ $sem }}"
                             {{ request('semester','1-1') == $sem ? 'selected' : '' }}>
@@ -193,36 +157,41 @@ tbody tr:hover{
         </form>
 
         <!-- Table -->
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Course Code</th>
-                        <th>Course Title</th>
-                        <th>Credit</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @forelse ($semesterWiseCourses as $sem)
-                        <tr>
-                            <td>{{ $sem->course_code }}</td>
-                            <td>{{ $sem->course_title }}</td>
-                            <td>{{ $sem->course_credit }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="empty-row">
-                                No courses found.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        <div class="table-responsive" >
+            <div id="offerCourseTable">
+                     @include('courses.partial.offered-course',['offeredCourses' => $offeredCourses]);
+            </div>
         </div>
-
     </div>
-
 </div>
-
 @endsection
+
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     {{-- Ajax part for fatch the data  --}}
+     <script>
+        $(document).ready(function(){
+        //  Ajax part start from here:
+          
+        //   Filtering facth start from here:
+          function fetchOfferedCourseData(){
+                let filterSemester = $('#filterSemester').val();
+            $.ajax({
+                url : "{{ route('courses.offered-curriculum') }}",
+                type : "GET",
+                data : {filterSemester : filterSemester},
+                 success:function(data){
+                    $("#offerCourseTable").html(data);
+                 },
+                 error:function(){
+                    alert("fething Error");
+                 }
+            });
+          }
+
+          //onchange value Filtering:
+          $("#filterSemester").on('change',fetchOfferedCourseData);   
+        });
+     </script>
+       
+@endpush

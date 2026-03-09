@@ -24,22 +24,26 @@ class offeredCoursesController extends Controller
 
     //Store Function For Offered Course Prevent :
     public function store(Request $request){
-    // print_r($request->courses);
-    //    print($request->semester);
-       $courseInformation = $request->courses; //Reciving Coure ID.
-     foreach($courseInformation as $cid){   //Searching By Course Id.
-           //Try Block For Course Attachment: 
-           try{
-               $course = Course::find($cid);
-               //Insertion the data to the offered Course:
-              
-               OfferedCourses::insert([
-                   //Course-code,course title,offered-semester,Course_credit.
-               ]);
-              
-           } catch( \Exception $e){
-                return redirect()->route('courses.offered-curriculum')->with('error','Offered Course Assign Failed!');
-           }
-      }
-   }
+     $data = []; //For preventing null error!
+      if(!$request->courses){
+            return redirect()->back()->with('error','Please select at least one course');
+        }
+    foreach ($request->courses as $cid) {
+        $course = Course::find($cid);
+        //Multiple Condition Run 1 time.
+        $data[] = [
+            'course_code' => $course->course_code,
+            'course_title' => $course->course_title,
+            'course_credit' => $course->course_credit,
+            'semester' => $request->semester
+        ];
+        }
+        try{
+             OfferedCourses::insert($data);   //inserting the course.
+             return redirect()->route('courses.offered-curriculum')->with('success','Offered Course Inserted');
+        } catch(\Exception $e){
+            return redirect()->back()->with('error','Internal Error!');
+        }
+        
+    }
 }

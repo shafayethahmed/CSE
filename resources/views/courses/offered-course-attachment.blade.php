@@ -154,7 +154,7 @@
             <div class="courses-list" id="coursesList">
                 @foreach($courses as $course)
                     <label>
-                        <input type="checkbox" name="courses[]" value="{{ $course->course_code }}">
+                        <input type="checkbox" name="courses[]" value="{{ $course->id }}">
                         <span>{{ $course->course_code }} - {{ $course->course_title }}</span>
                     </label>
                 @endforeach

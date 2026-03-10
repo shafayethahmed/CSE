@@ -62,6 +62,7 @@ Route::get('courses/offered', [offeredCoursesController::class,'index'])->name('
 Route::get('courses/offred/course-offer',[offeredCoursesController::class, 'create'])->name('courses.offered.create');
 Route::post('courses/offered', [offeredCoursesController::class,'store'])->name('courses.offered.store');
 Route::get('courses/offered/courses' , [offeredCoursesController::class, 'alreadyOfferedCourses' ])->name('courses.offered-curriculum.assigned');
+Route::delete('/offered-course/delete/{id}', [offeredCoursesController::class, 'deleteExistedCourse']);
 /* Batches */
 Route::get('/batches/supervisor', function () {
     return view('supervisor.index');

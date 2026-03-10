@@ -211,7 +211,8 @@
             <div class="search-box">
                 <input type="text" id="courseSearchInput" placeholder="Search course code or title...">
             </div>
-
+            {{-- Taking The CSRF token --}}
+            <meta name="csrf-token" content="{{ csrf_token() }}">
             <!-- Dynamic course checkboxes -->
             <div class="courses-list" id="coursesList">
                 @foreach($courses as $course)
@@ -288,7 +289,7 @@ $(document).ready(function(){
                             <label>
                                 <span>
                                     ${course.course_code} - ${course.course_title}
-                                    <a href="/offered-course/delete/${course.id}">✖</a>
+                                   <a href="#" class="deleteCourse" data-course-id="${course.id}">❌</a>
                                 </span>
                             </label>
                         `;
@@ -307,10 +308,40 @@ $(document).ready(function(){
 
         });
 
-    }
+    } 
+    
+    //Function for deleting the courses that already existed: 
+    $(document).on("click",".deleteCourse",function(e){
+       e.preventDefault();
+       
+       //Taking the course id:
+       let CourseID = $(this).data("course-id");
+
+       //ensutring the confirmation: 
+       if(!confirm("Are you sure to delete this course ?")){
+         return;
+       }
+
+       //ajax call for delting the course-id: 
+       $.ajax({
+            url : "/offered-course/delete/" + CourseID,
+            type : "DELETE",
+            headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success:function(response){
+                alert(response.message);
+                // Recall the function for fetching the data of other courses:
+                fetchAssignedCourses();
+            },
+            error:function(xhr){
+              alert("Course Delete Failed!");
+            },
+       });
+    });
 
     $("#semesterSelect").on('change', fetchAssignedCourses);
-    fetchAssignedCourses();
+    fetchAssignedCourses(); 
+
+
 
 });
 </script>

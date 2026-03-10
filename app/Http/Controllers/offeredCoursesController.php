@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\OfferedCourses;
 use Exception;
 use Illuminate\Http\Request;
+use Nette\Utils\Json;
 use PHPUnit\Framework\Constraint\Count;
 
 class offeredCoursesController extends Controller
@@ -71,10 +72,24 @@ class offeredCoursesController extends Controller
                 return response()->json([
                     'courses' => $assignedCourses,
                 ]);
-            // if($request->filled('filterSemesterValue')){
-            //     $query = OfferedCourses::query();
-            //     $semester = $request-
-            // }
+        }
+
+    //Delete course from existance Data: 
+        public function deleteExistedCourse($id){
+            //Reciving the id:
+            try{
+                $course = OfferedCourses::findOrFail($id);
+                $course->delete();
+                return response()->json([
+                    'status' => true,
+                   'message'=> "Course Removed",
+                ],200);
+            } catch(\Exception $e){
+                return response()->json([
+                     'status' => false,
+                     'message'=> "Course Remove Failed.",
+                ],500);
+            }
         }
 
 

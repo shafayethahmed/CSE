@@ -136,7 +136,7 @@ tbody tr:hover{
         <!-- Add Offered Course Button -->
         <div style="margin-bottom: 15px;">
             <button class="btn-primary-custom" onclick="window.location.href='{{ route('courses.offered.create') }}'">
-                + Add Offered Course
+                + Edit Offered Course
             </button>
         </div>
 

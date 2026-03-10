@@ -119,6 +119,59 @@
 .submit-btn:hover{
     background:#1e40af;
 }
+.course-compact-list {
+  max-width: 900px; /* Fits small spaces */
+  font-size: 13px;
+  line-height: 1.3;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.course-compact-list label {
+  display: block;
+  padding: 4px 6px;
+  margin: 1px 0;
+  border: 1px solid #e0e0e0;
+  background: #fafafa;
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap; /* Prevents wrapping for tight fit */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.course-compact-list label:hover {
+  background: #f0f0f0;
+}
+
+.course-compact-list span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #444;
+}
+
+.course-compact-list a {
+  color: #d00;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+
+.course-compact-list a:hover {
+  background: #fee;
+}
+
+@media (max-width: 480px) {
+  .course-compact-list {
+    font-size: 12px;
+    max-width: 100%;
+  }
+}
+
+
 </style>
 @endpush
 
@@ -144,7 +197,16 @@
                     @endforeach
                 </select>
             </div>
+            
+            {{-- Courses That already assigned to the system --}}
+             <h4 style="margin-top: 10px;"><i>Offered Courses</i></h4>
+           <div class="course-compact-list">
+                    {{-- Returned Json will show here  --}}
+            </div>
+            
+            <hr>
 
+            <h4 style="margin-top: 20px;"><i>Assign New Courses</i></h4>
             <!-- Search box -->
             <div class="search-box">
                 <input type="text" id="courseSearchInput" placeholder="Search course code or title...">
@@ -167,7 +229,10 @@
 @endsection
 
 @push('scripts')
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+       
+
 // Search filter for courses
 const searchInput = document.getElementById('courseSearchInput');
 const coursesList = document.getElementById('coursesList');
@@ -181,13 +246,72 @@ searchInput.addEventListener('input', function(){
     });
 });
 
-// reload courses on semester change 
-const semesterSelect = document.getElementById('semesterSelect');
-semesterSelect.addEventListener('change', function(){
-    // In a real system, you can fetch courses via AJAX
-    // For now we just reset the search input
-    searchInput.value = '';
-    courseItems.forEach(item => item.style.display='flex');
+// // reload courses on semester change 
+// const semesterSelect = document.getElementById('semesterSelect');
+// semesterSelect.addEventListener('change', function(){
+//     // In a real system, you can fetch courses via AJAX
+//     // For now we just reset the search input
+//     searchInput.value = '';
+//     courseItems.forEach(item => item.style.display='flex');
+// });
+
+
+// function confirmDelete(id) {
+//     if (confirm('Delete this course?')) {
+//         // Add your delete logic here, e.g., fetch(`/courses/${id}`, {method: 'DELETE'})
+//         window.location.reload(); // Or handle via AJAX
+//     }
+// }
+
+//   Jquery part Start From here: 
+$(document).ready(function(){
+
+    function fetchAssignedCourses(){  //function for diplayed already assigned course.
+
+        let filterSemesterValue = $("#semesterSelect").val();
+
+        $.ajax({
+            url: "{{ route('courses.offered-curriculum.assigned') }}",
+            type : "GET",
+            data : { filterSemesterValue : filterSemesterValue },
+
+            success: function(response){
+
+                let courseList = $(".course-compact-list");
+                courseList.html(""); // clear previous list
+
+                if(response.courses.length > 0){
+
+                    response.courses.forEach(function(course){
+
+                        let html = `
+                            <label>
+                                <span>
+                                    ${course.course_code} - ${course.course_title}
+                                    <a href="/offered-course/delete/${course.id}">✖</a>
+                                </span>
+                            </label>
+                        `;
+
+                        courseList.append(html);
+
+                    });
+
+                }else{
+
+                    courseList.html(`<p style="color:#999">No courses assigned</p>`);
+
+                }
+
+            }
+
+        });
+
+    }
+
+    $("#semesterSelect").on('change', fetchAssignedCourses);
+    fetchAssignedCourses();
+
 });
 </script>
 @endpush

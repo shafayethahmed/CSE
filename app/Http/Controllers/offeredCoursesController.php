@@ -18,7 +18,7 @@ class offeredCoursesController extends Controller
 
     $query = OfferedCourses::query();
     $query->where('semester', $offeredSemester);
-
+    
     // Credit Sum
     $totalCredit = (clone $query)->sum('course_credit');
 
@@ -62,4 +62,20 @@ class offeredCoursesController extends Controller
         }
         
     }
+
+    // Function for diplay already assigned courses to the semester:
+        public function alreadyOfferedCourses(Request $request){
+                $semester = $request->filterSemesterValue ?? '1-1';
+                $assignedCourses = OfferedCourses::where('semester',$semester)->get();
+                // Return the courses 
+                return response()->json([
+                    'courses' => $assignedCourses,
+                ]);
+            // if($request->filled('filterSemesterValue')){
+            //     $query = OfferedCourses::query();
+            //     $semester = $request-
+            // }
+        }
+
+
 }

@@ -143,6 +143,43 @@ $teachers = [
                                value="{{ $course->course_code }}"
                                readonly>
                     </div>
+
+                    <div>
+                        <label class="form-label">Course Title</label>
+                        <input type="text"
+                               class="form-control static-field"
+                               value="{{ $course->course_title }}"
+                               readonly>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div>
+                        <label class="form-label">Credit Hours</label>
+                        <input type="text"
+                               class="form-control static-field"
+                               value="{{ $course->credit }}"
+                               readonly>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Semester</label>
+                        <input type="text"
+                               class="form-control static-field"
+                               value="{{ $course->semester }}"
+                               readonly>
+                    </div>
+                </div>
+
+                {{-- Assign Teacher --}}
+                <div class="form-row">
+                     <div>
+                        <label class="form-label">Currently Assigned</label>
+                        <input type="text"
+                               class="form-control static-field"
+                               value="Shfayeth Ahmed"
+                               readonly>
+                    </div>
                     <div>
                         <label class="form-label">Select Teacher* <small>(In Case Of Change)</small></label>
                         <select name="teacher_id" class="form-select" required>
@@ -156,8 +193,8 @@ $teachers = [
 
                         </select>
                     </div>
-                   
                 </div>
+
 
                 {{-- Buttons --}}
                 <div class="form-actions">

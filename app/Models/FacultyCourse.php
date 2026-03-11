@@ -11,4 +11,14 @@ class FacultyCourse extends Model
         'course_id',
         'faculty_id',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class,'course_id');
+    }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class,'faculty_id');
+    }
 }

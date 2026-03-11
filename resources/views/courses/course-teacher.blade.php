@@ -3,12 +3,17 @@
 @section('title','Courses')
 
 @push('styles')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
+
 /* Wrapper */
 .page-wrapper{
-    margin-top: 20px;
-    max-width: 900px;
-    margin: 5 auto;
+    margin-top:20px;
+    max-width:900px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 /* Header */
@@ -25,20 +30,58 @@
     color:#1f2937;
 }
 
-/* Primary Button */
-.btn-primary{
-    background: var(--primary);
+/* Header Buttons */
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.header-btn{
     border:none;
-    padding:7px 14px;
-    color:white;
+    padding:6px 10px;
     border-radius:6px;
     cursor:pointer;
-    font-weight:600;
     font-size:12px;
-    transition:.25s;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:5px;
 }
-.btn-primary:hover{
-    background:#1e40af;
+
+/* Add Button */
+.btn-add{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.btn-add:hover{
+    background:#bbf7d0;
+}
+
+/* Fetch Button */
+.btn-fetch{
+    background:#e0f2fe;
+    color:#0369a1;
+}
+
+.btn-fetch:hover{
+    background:#bae6fd;
+}
+
+/* Loading Spinner */
+.loading-spinner{
+    display:none;
+    width:18px;
+    height:18px;
+    border:3px solid #f3f3f3;
+    border-top:3px solid #2563eb;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
 }
 
 /* Filters */
@@ -49,7 +92,7 @@
     margin-bottom:18px;
     box-shadow:0 8px 20px rgba(0,0,0,0.04);
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:repeat(2,1fr);
     gap:10px;
 }
 
@@ -59,19 +102,18 @@
     border-radius:6px;
     border:1px solid #d1d5db;
     font-size:12px;
-    transition:.2s;
 }
 
 .filter-box input:focus,
 .filter-box select:focus{
-    border-color: var(--primary);
+    border-color:var(--primary);
     outline:none;
 }
 
 /* Table */
 .table-box{
     background:#fff;
-    padding:8px;
+    padding:10px;
     border-radius:10px;
     box-shadow:0 10px 25px rgba(0,0,0,0.05);
 }
@@ -79,7 +121,7 @@
 table{
     width:100%;
     border-collapse:collapse;
-    font-size:11px;
+    font-size:13px;
 }
 
 thead{
@@ -87,109 +129,46 @@ thead{
 }
 
 th{
-    font-size:12px;
+    font-size:13px;
     font-weight:600;
-    color:#000000;
+    color:#000;
     padding:9px 8px;
-    text-align: center;
+    text-align:center;
 }
 
 td{
-    padding:6px 6px;
-    text-align: center;
+    padding:8px 6px;
+    text-align:center;
 }
 
 tbody tr{
     border-bottom:1px solid #eef2f7;
-    transition:.2s;
 }
 
 tbody tr:hover{
     background:#f9fafb;
 }
 
-/* Actions */
-.actions{
-    white-space:nowrap;
-}
-
-.actions button{
+/* Edit Button */
+.icon-btn{
     border:none;
-    padding:2px 6px;
-    border-radius:5px;
-    font-size:11px;
-    margin-right:3px;
+    width:28px;
+    height:28px;
+    border-radius:6px;
     cursor:pointer;
-    font-weight:500;
-    transition:.2s;
-}
-
-/* Button colors */
-.btn-view{
-    background:#e0f2fe;
-    color:#0369a1;
-}
-.btn-view:hover{
-    background:#bae6fd;
+    font-size:12px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .btn-edit{
     background:#fef9c3;
     color:#854d0e;
 }
+
 .btn-edit:hover{
     background:#fde68a;
-}
-
-.btn-delete{
-    background:#fee2e2;
-    color:#b91c1c;
-}
-.btn-delete:hover{
-    background:#fecaca;
-}
-/* Overlay covering the whole screen */
-#spinnerOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    display: none; /* hidden by default */
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-/* Spinner design */
-.spinner {
-    border: 6px solid #f3f3f3; /* Light gray */
-    border-top: 6px solid #1e3a8a; /* Primary blue color */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-}
-
-/* Spin animation */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media(max-width:992px){
-    .filter-box{grid-template-columns:repeat(2,1fr);}
-}
-
-@media(max-width:600px){
-    .filter-box{grid-template-columns:1fr;}
-    .page-header{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:10px;
-    }
 }
 
 </style>
@@ -202,44 +181,77 @@ tbody tr:hover{
 
     <!-- Header -->
     <div class="page-header">
+
         <h2>Course Management</h2>
+
+        <div class="header-actions">
+
+            <!-- Add Button -->
+            <button class="header-btn btn-add" onclick="goAssignPage()">
+                <i class="fa-solid fa-plus"></i> Add
+            </button>
+
+            <!-- Fetch Button -->
+            <button class="header-btn btn-fetch" onclick="fetchCourses()">
+                <i class="fa-solid fa-rotate"></i> Fetch
+            </button>
+
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="loadingSpinner"></div>
+
+        </div>
+
     </div>
 
     <!-- Filters -->
     <div class="filter-box">
         <input type="text" id="searchInput" placeholder="Search by Course Code or Title...">
+
         <select>
             <option>Instructor Status</option>
-            <option>Null </option>
+            <option>Null</option>
             <option>Assigned</option>
         </select>
     </div>
 
     <!-- Table -->
     <div class="table-box">
+
         <table>
+
             <thead>
                 <tr>
                     <th>SL</th>
                     <th>Course Code</th>
                     <th>Course Title</th>
                     <th>Instructor</th>
-                    <th width="140">Action</th>
+                    <th width="90">Action</th>
                 </tr>
             </thead>
 
             <tbody id="studentTable">
+                  
+                 @forelse ($facultyCourses as $fc  )
+                 {{-- Doing the backend part for information about intructor --}}
+
                 <tr>
-                    <td>1</td>
-                    <td>CSE-4201</td>
-                    <td>Data Structure</td>
-                    <td>Samiul Alim</td>
-                    <td class="actions">
-                        <button class="btn-edit" onclick=" assignCourseTeacher()">Edit</button>
+                    <td>{{ $fc->id }}</td>
+                    <td>{{ $fc->course->course_code ?? "NULL"}}</td>
+                    <td>{{ $fc->course->course_title ?? "NULL" }}</td>
+                    <td>{{ $fc->faculty->name ?? "NULL" }}</td>
+                    <td>
+                        <button class="icon-btn btn-edit" onclick="goAssignPage()" title="Edit">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
                     </td>
                 </tr>
+                 @empty
+                     
+                 @endforelse
             </tbody>
+
         </table>
+
     </div>
 
 </div>
@@ -248,26 +260,49 @@ tbody tr:hover{
 
 
 @push('scripts')
+
 <script>
 
 document.addEventListener("DOMContentLoaded", function(){
 
     /* Search */
-    document.getElementById("searchInput").addEventListener("keyup", function() {
+    document.getElementById("searchInput").addEventListener("keyup", function(){
+
         let value = this.value.toLowerCase();
         let rows = document.querySelectorAll("#studentTable tr");
 
         rows.forEach(row=>{
             row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
         });
+
     });
 
 });
 
-function assignCourseTeacher() {
+
+/* Redirect to Assign Page */
+function goAssignPage(){
     window.location.href = "{{ route('assign-course-teacher.create') }}";
 }
 
 
+/* Fetch with loading */
+function fetchCourses(){
+
+    let spinner = document.getElementById("loadingSpinner");
+
+    spinner.style.display="block";
+
+    setTimeout(function(){
+
+        spinner.style.display="none";
+
+        alert("Courses fetched successfully!");
+
+    },1500);
+
+}
+
 </script>
+
 @endpush

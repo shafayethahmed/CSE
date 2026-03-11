@@ -63,6 +63,13 @@ Route::get('courses/offred/course-offer',[offeredCoursesController::class, 'crea
 Route::post('courses/offered', [offeredCoursesController::class,'store'])->name('courses.offered.store');
 Route::get('courses/offered/courses' , [offeredCoursesController::class, 'alreadyOfferedCourses' ])->name('courses.offered-curriculum.assigned');
 Route::delete('/offered-course/delete/{id}', [offeredCoursesController::class, 'deleteExistedCourse']);
+
+// Course Teacher Assign Section: 
+
+
+
+
+
 /* Batches */
 Route::get('/batches/supervisor', function () {
     return view('supervisor.index');

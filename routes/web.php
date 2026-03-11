@@ -9,6 +9,7 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FacultyAuthController;
 use App\Http\Controllers\offeredCoursesController;
+use App\Http\Controllers\FacultyCourseController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
@@ -65,8 +66,8 @@ Route::get('courses/offered/courses' , [offeredCoursesController::class, 'alread
 Route::delete('/offered-course/delete/{id}', [offeredCoursesController::class, 'deleteExistedCourse']);
 
 // Course Teacher Assign Section: 
-
-
+Route::get('courses/faculty-taught', [FacultyCourseController::class, 'index'])->name('courses.faculty-taught');
+Route::get('courses/faculty/assign', [FacultyCourseController::class, 'create'])->name('assign-course-teacher.create');
 
 
 

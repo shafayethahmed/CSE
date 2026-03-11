@@ -239,7 +239,7 @@
     <div class="dropdown-container" style="{{ $coursesActive ? 'display:block;' : '' }}">
         <a href="{{ route('courses.index') }}" class="{{ request()->routeIs('courses.index') ? 'active' : '' }}">➤ Course</a>
         <a href="{{ route('courses.offered-curriculum') }}" class="{{ request()->routeIs('courses.offered-curriculum') ? 'active' : '' }}">➤  Course Offer</a>
-        <a href="#" class="{{ request()->routeIs('courses.teacher') ? 'active' : '' }}">➤ Course Teacher</a>
+        <a href="{{ route('courses.faculty-taught') }}" class="{{ request()->routeIs('courses.faculty-taught') ? 'active' : '' }}">➤ Course Teacher</a>
     </div>
 
     <!-- Batches -->

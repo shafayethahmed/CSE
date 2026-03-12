@@ -1,25 +1,5 @@
-@php
-// Mock course data
-$course = (object)[
-    'id' => 1,
-    'course_code' => 'CSE-101',
-    'course_title' => 'Data Structures',
-    'credit' => 3.0,
-    'semester' => '2-1',
-];
-
-// Mock teacher list (dynamic later)
-$teachers = [
-    (object)['id' => 1, 'name' => 'Dr. Rahman'],
-    (object)['id' => 2, 'name' => 'Prof. Ahmed'],
-    (object)['id' => 3, 'name' => 'Md. Karim'],
-];
-@endphp
-
 @extends('layout.sidebar')
-
 @section('title','Assign Course Teacher')
-
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -136,21 +116,29 @@ $teachers = [
 
                 {{-- Static Course Info --}}
                 <div class="form-row">
-                    <div>
-                        <label class="form-label">Course Code</label>
-                        <input type="text"
-                               class="form-control static-field"
-                               value="{{ $course->course_code }}"
-                               readonly>
+                    {{-- Diplaying the courses information --}}
+                  <div>
+                        <label class="form-label">Select Course</label>
+                        <select name="course_id" class="form-select" required>
+                            <option value="">Choose Course</option>
+
+                            @foreach($courses as $course)
+                                <option value="{{ $course->id }}">
+                                    {{ $course->course_code }} - {{ $course->course_title}}
+                                </option>
+                            @endforeach
+
+                        </select>
                     </div>
+
                     <div>
                         <label class="form-label">Select Teacher* <small>(In Case Of Change)</small></label>
                         <select name="teacher_id" class="form-select" required>
-                            <option value="">Choose Teacher</option>
+                            <option value="">Choose Faculty</option>
 
-                            @foreach($teachers as $teacher)
-                                <option value="{{ $teacher->id }}">
-                                    {{ $teacher->name }}
+                            @foreach($faculty as $faculty)
+                                <option value="{{ $faculty->id }}">
+                                    {{ $faculty->name }}
                                 </option>
                             @endforeach
 

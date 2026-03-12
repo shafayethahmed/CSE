@@ -32,6 +32,7 @@ class FacultyCourseController extends Controller
     public function create(){
         //Fetching The Faculty List:
         $faculty = Faculty::all();
-        return view('courses.course-teacher-assign',compact('faculty'));
+        $courses = Course::all();
+        return view('courses.course-teacher-assign',compact('faculty','courses'));
     }
 }

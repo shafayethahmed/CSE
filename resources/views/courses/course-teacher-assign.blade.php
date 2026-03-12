@@ -111,7 +111,7 @@
         <div class="form-section">
 
             {{-- FORM --}}
-            <form action="#" method="POST">
+            <form action="{{ route('assign-course-teacher.store') }}" method="POST">
                 @csrf
 
                 {{-- Static Course Info --}}
@@ -129,11 +129,18 @@
                             @endforeach
 
                         </select>
+
+                        {{-- Field-level error --}}
+                        @if(session('error'))
+                            <div class="alert alert-danger" style="margin:5px; color:red;">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     </div>
 
                     <div>
-                        <label class="form-label">Select Teacher* <small>(In Case Of Change)</small></label>
-                        <select name="teacher_id" class="form-select" required>
+                        <label class="form-label">Select Teacher</label>
+                        <select name="faculty_id" class="form-select" required>
                             <option value="">Choose Faculty</option>
 
                             @foreach($faculty as $faculty)
@@ -146,6 +153,7 @@
                     </div>
                    
                 </div>
+               
 
                 {{-- Buttons --}}
                 <div class="form-actions">

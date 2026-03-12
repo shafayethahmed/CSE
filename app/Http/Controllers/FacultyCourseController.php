@@ -53,4 +53,12 @@ class FacultyCourseController extends Controller
             }
             return redirect()->route('courses.faculty-taught')->with('success',$addedCount .' New Course Fetched.');
         }
+
+   //function for diplaying isnidividual course teacher form edit: 
+   public function edit($id)
+    {    
+         $facultyCourse = FacultyCourse::with(['course', 'faculty'])->findOrFail($id);
+         $faculties = Faculty::all();
+         return view('courses.course-teacher-edit', compact('facultyCourse','faculties'));
+    }
 }

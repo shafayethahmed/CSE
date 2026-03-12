@@ -214,6 +214,11 @@ tbody tr:hover{
            {{ session('success') }}
        </div>
     @endif
+        @if(session('error'))
+        <div class="alert alert-danger" id="SessionAlert" style="margin:5px; color:red;">
+           {{ session('success') }}
+       </div>
+    @endif
     <div class="table-box">
 
         <table>
@@ -239,9 +244,11 @@ tbody tr:hover{
                     <td>{{ $fc->course->course_title ?? "NULL" }}</td>
                     <td>{{ $fc->faculty->name ?? "NULL" }}</td>
                     <td>
-                        <button class="icon-btn btn-edit" onclick="goAssignPage()" title="Edit">
+                        <form action="{{ route('courses.course-teacher.edit',$fc->id)}}" method="get">
+                        <button class="icon-btn btn-edit" onclick="this.form.submit()" title="Edit">
                             <i class="fa-solid fa-pen"></i>
                         </button>
+                        </form>
                     </td>
                 </tr>
                  @empty

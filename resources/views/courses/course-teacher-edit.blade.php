@@ -1,25 +1,6 @@
-@php
-// Mock course data
-$course = (object)[
-    'id' => 1,
-    'course_code' => 'CSE-101',
-    'course_title' => 'Data Structures',
-    'credit' => 3.0,
-    'semester' => '2-1',
-];
-
-// Mock teacher list (dynamic later)
-$teachers = [
-    (object)['id' => 1, 'name' => 'Dr. Rahman'],
-    (object)['id' => 2, 'name' => 'Prof. Ahmed'],
-    (object)['id' => 3, 'name' => 'Md. Karim'],
-];
-@endphp
 
 @extends('layout.sidebar')
-
-@section('title','Assign Course Teacher')
-
+@section('title','Edit Course Teacher')
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -140,7 +121,7 @@ $teachers = [
                         <label class="form-label">Course Code</label>
                         <input type="text"
                                class="form-control static-field"
-                               value="{{ $course->course_code }}"
+                               value="{{ $facultyCourse->course->course_code }}"
                                readonly>
                     </div>
 
@@ -148,7 +129,7 @@ $teachers = [
                         <label class="form-label">Course Title</label>
                         <input type="text"
                                class="form-control static-field"
-                               value="{{ $course->course_title }}"
+                               value="{{ $facultyCourse->course->course_title }}"
                                readonly>
                     </div>
                 </div>
@@ -158,17 +139,17 @@ $teachers = [
                         <label class="form-label">Credit Hours</label>
                         <input type="text"
                                class="form-control static-field"
-                               value="{{ $course->credit }}"
+                               value="{{ $facultyCourse->course->course_credit }}"
+                               readonly>
+                    </div>
+                     <div>
+                        <label class="form-label">Course Type</label>
+                        <input type="text"
+                               class="form-control static-field"
+                               value="{{ ucWords($facultyCourse->course->course_type) }}"
                                readonly>
                     </div>
 
-                    <div>
-                        <label class="form-label">Semester</label>
-                        <input type="text"
-                               class="form-control static-field"
-                               value="{{ $course->semester }}"
-                               readonly>
-                    </div>
                 </div>
 
                 {{-- Assign Teacher --}}
@@ -177,7 +158,7 @@ $teachers = [
                         <label class="form-label">Currently Assigned</label>
                         <input type="text"
                                class="form-control static-field"
-                               value="Shfayeth Ahmed"
+                               value="{{ $facultyCourse->faculty->name ?? "N/A"  }}"
                                readonly>
                     </div>
                     <div>
@@ -185,9 +166,9 @@ $teachers = [
                         <select name="teacher_id" class="form-select" required>
                             <option value="">Choose Teacher</option>
 
-                            @foreach($teachers as $teacher)
-                                <option value="{{ $teacher->id }}">
-                                    {{ $teacher->name }}
+                            @foreach($faculties as $faculty)
+                                <option value="{{ $faculty->id }}">
+                                    {{ $faculty->name }}
                                 </option>
                             @endforeach
 

@@ -1,6 +1,6 @@
 @extends('layout.sidebar')
 
-@section('title','Courses')
+@section('title','Course Teacher')
 
 @push('styles')
 
@@ -182,7 +182,7 @@ tbody tr:hover{
     <!-- Header -->
     <div class="page-header">
 
-        <h2>Course Management</h2>
+        <h2>Course Teacher</h2>
 
         <div class="header-actions">
 
@@ -206,14 +206,14 @@ tbody tr:hover{
     <!-- Filters -->
     <div class="filter-box">
         <input type="text" id="searchInput" placeholder="Search by Course Code or Title...">
-
-        <select>
-            <option>Instructor Status</option>
-            <option>Null</option>
-            <option>Assigned</option>
+    <form action="{{ route('courses.faculty-taught') }}" method="get">
+        <select  name="status" onchange="this.form.submit()">
+            <option value="#">Instructor Status</option>
+            <option value="null">Null</option>
+            <option value="assigned">Assigned</option>
         </select>
     </div>
-
+   </form>
     <!-- Table -->
     <div class="table-box">
 
@@ -229,7 +229,7 @@ tbody tr:hover{
                 </tr>
             </thead>
 
-            <tbody id="studentTable">
+            <tbody id="courseFacultyTable">
                   
                  @forelse ($facultyCourses as $fc  )
                  {{-- Doing the backend part for information about intructor --}}
@@ -246,7 +246,11 @@ tbody tr:hover{
                     </td>
                 </tr>
                  @empty
-                     
+                      <tr>
+                        <td colspan="7" style="text-align:center; color:#9ca3af;">
+                            Course Not Found!
+                        </td>
+                    </tr>
                  @endforelse
             </tbody>
 
@@ -269,14 +273,13 @@ document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("searchInput").addEventListener("keyup", function(){
 
         let value = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#studentTable tr");
+        let rows = document.querySelectorAll("#courseFacultyTable tr");
 
         rows.forEach(row=>{
             row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
         });
 
     });
-
 });
 
 
@@ -302,7 +305,7 @@ function fetchCourses(){
     },1500);
 
 }
-
+ 
 </script>
 
 @endpush

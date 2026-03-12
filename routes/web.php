@@ -68,8 +68,7 @@ Route::delete('/offered-course/delete/{id}', [offeredCoursesController::class, '
 // Course Teacher Assign Section: 
 Route::get('courses/faculty-taught', [FacultyCourseController::class, 'index'])->name('courses.faculty-taught');
 Route::get('courses/faculty/assign', [FacultyCourseController::class, 'create'])->name('assign-course-teacher.create');
-Route::post('courses/faculty/create', [FacultyCourseController::class, 'store'])->name('assign-course-teacher.store');
-
+Route::get('courses/course-teacher/fetch',[FacultyCourseController::class, 'fetchLatestCourses'])->name('course.course-teacher.fetch');
 
 
 /* Batches */

@@ -185,12 +185,6 @@ tbody tr:hover{
         <h2>Course Teacher</h2>
 
         <div class="header-actions">
-
-            <!-- Add Button -->
-            <button class="header-btn btn-add" onclick="goAssignPage()">
-                <i class="fa-solid fa-plus"></i> Add
-            </button>
-
             <!-- Fetch Button -->
             <button class="header-btn btn-fetch" onclick="fetchCourses()">
                 <i class="fa-solid fa-rotate"></i> Fetch
@@ -215,6 +209,11 @@ tbody tr:hover{
     </div>
    </form>
     <!-- Table -->
+    @if(session('success'))
+        <div class="alert alert-success" id="SessionAlert" style="margin:5px; color:green;">
+           {{ session('success') }}
+       </div>
+    @endif
     <div class="table-box">
 
         <table>
@@ -282,29 +281,21 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 });
 
-
-/* Redirect to Assign Page */
-function goAssignPage(){
-    window.location.href = "{{ route('assign-course-teacher.create') }}";
-}
-
-
 /* Fetch with loading */
 function fetchCourses(){
-
     let spinner = document.getElementById("loadingSpinner");
-
     spinner.style.display="block";
-
     setTimeout(function(){
-
+        window.location.href = "{{ route('course.course-teacher.fetch') }}";
         spinner.style.display="none";
-
-        alert("Courses fetched successfully!");
-
     },1500);
 
 }
+
+// Alert Portion Hide the alert: 
+setTimeout(function(){
+  document.getElementById("SessionAlert").style.display="none";
+},5000);
  
 </script>
 

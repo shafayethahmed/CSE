@@ -70,7 +70,7 @@ Route::get('courses/faculty-taught', [FacultyCourseController::class, 'index'])-
 Route::get('courses/faculty/assign', [FacultyCourseController::class, 'create'])->name('assign-course-teacher.create');
 Route::get('courses/course-teacher/fetch',[FacultyCourseController::class, 'fetchLatestCourses'])->name('course.course-teacher.fetch');
 Route::get('courses/course-teacher/{id}/edit',[FacultyCourseController::class, 'edit'])->name('courses.course-teacher.edit');
-
+Route::post('courses/course-teacher/{id}',[FacultyCourseController::class, 'update'])->name('courses.faculty-course.update');
 /* Batches */
 Route::get('/batches/supervisor', function () {
     return view('supervisor.index');

@@ -61,4 +61,30 @@ class FacultyCourseController extends Controller
          $faculties = Faculty::all();
          return view('courses.course-teacher-edit', compact('facultyCourse','faculties'));
     }
+
+    //Function for Update The Faculty Coure Taught: 
+    public function update(Request $request, $id)
+{
+    try {
+
+        $request->validate([
+            'course_id'  => 'required|exists:courses,id',
+            'faculty_id' => 'required|exists:faculties,id',
+        ],[
+            'course_id.exists'  => 'Course Not Found!',
+            'faculty_id.exists' => 'Faculty Not Found!',
+        ]);
+
+        $facultyCourse = FacultyCourse::findOrFail($id);
+
+        $facultyCourse->faculty_id = $request->faculty_id;
+        $facultyCourse->save();
+
+        return redirect()->route('courses.faculty-taught')
+        ->with('success','Course Teacher updated successfully');
+
+    } catch(\Exception $e){
+        return redirect()->back()->with('error',$e->getMessage());
+    }
+}
 }

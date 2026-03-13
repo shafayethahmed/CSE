@@ -108,13 +108,16 @@
             <i class="fas fa-user-tie me-2"></i>
             Assign Teacher to Course
         </div>
-
         <div class="form-section">
-
+          <div class="alert alert-danger" style="color: red;margin: 10px;" id="alertmsg">
+              @if (session('error'))
+                   {{ session('error') }}
+              @endif
+          </div>
             {{-- FORM --}}
-            <form action="#" method="POST">
+            <form action="{{ route('courses.faculty-course.update',$facultyCourse->id) }}" method="POST">
                 @csrf
-
+                 <input type="hidden" name="course_id" value="{{ $facultyCourse->course->id}}">
                 {{-- Static Course Info --}}
                 <div class="form-row">
                     <div>
@@ -163,7 +166,7 @@
                     </div>
                     <div>
                         <label class="form-label">Select Teacher* <small>(In Case Of Change)</small></label>
-                        <select name="teacher_id" class="form-select" required>
+                        <select name="faculty_id" class="form-select" required>
                             <option value="">Choose Teacher</option>
 
                             @foreach($faculties as $faculty)
@@ -198,3 +201,10 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script>
+        setTimeout(() => {
+            document.getElementById("alertmsg").style.display="none";
+        }, 5000);
+    </script>
+@endpush

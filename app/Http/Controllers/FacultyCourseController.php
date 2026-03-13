@@ -63,7 +63,7 @@ class FacultyCourseController extends Controller
     }
 
     //Function for Update The Faculty Coure Taught: 
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
 {
     try {
 
@@ -76,6 +76,18 @@ class FacultyCourseController extends Controller
         ]);
 
         $facultyCourse = FacultyCourse::findOrFail($id);
+        
+        // Checking Credit Limit
+        $faculty = Faculty::find($request->faculty_id);
+
+        $currentCredits = $faculty->courses->sum('course_credit');
+
+        $course = Course::find($request->course_id);
+        $courseCredit = $course->course_credit;
+
+        if (($currentCredits + $courseCredit) > $faculty->credit_limit) {
+            return redirect()->back()->with('error','Faculty Credit Limit Exceeded! Cannot assign this course.');
+        }
 
         $facultyCourse->faculty_id = $request->faculty_id;
         $facultyCourse->save();

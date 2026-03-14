@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+//User used here as var name
 class FacultyController extends Controller
 {
        public function index(Request $request)
@@ -49,7 +50,7 @@ class FacultyController extends Controller
     $search = $request->searchval;
 
     // Search user
-    $user = User::where('email', $search)->first();
+    $user = Faculty::where('email', $search)->first();
 
     // Check user exists
     if (!$user) {

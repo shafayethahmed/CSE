@@ -70,7 +70,7 @@
 .table th, .table td {
     padding: 2px 5px;
     border: 1px solid #e5e7eb;
-    text-align: left;
+    text-align: center;
 }
 
 .table th {
@@ -201,21 +201,13 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ( $facultyCourseTaken as $fct)
                 <tr>
-                    <td>CSE-101</td>
-                    <td>Data Structure</td>
-                    <td>3.0</td>
+                    <td>{{ $fct->course_code }}</td>
+                    <td>{{ $fct->course_title }}</td>
+                    <td>{{ $fct->course_credit }}</td>
                 </tr>
-                <tr>
-                    <td>CSE-202</td>
-                    <td>Algorithms</td>
-                    <td>3.0</td>
-                </tr>
-                <tr>
-                    <td>CSE-305</td>
-                    <td>Database Systems</td>
-                    <td>3.0</td>
-                </tr>
+                 @endforeach
             </tbody>
         </table>
 

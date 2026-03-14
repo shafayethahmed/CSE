@@ -141,7 +141,8 @@ class FacultyController extends Controller
 
     //Information View Form for Student
     public function show(Faculty $faculty){
-         return view('faculty.show',compact('faculty'));
+        $facultyCourseTaken = $faculty->courses;
+         return view('faculty.show',compact('faculty','facultyCourseTaken'));
     }
     
     //Student profile update.

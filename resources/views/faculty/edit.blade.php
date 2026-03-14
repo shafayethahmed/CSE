@@ -1,15 +1,3 @@
-@php
-// Mock Faculty Data
-
-// Mock Assigned Courses
-$assignedCourses = [
-    (object)[ 'code' => 'CSE-101', 'title' => 'Data Structure', 'credit' => 3.0 ],
-    (object)[ 'code' => 'CSE-202', 'title' => 'Algorithms', 'credit' => 3.0 ],
-    (object)[ 'code' => 'CSE-305', 'title' => 'Database Systems', 'credit' => 3.0 ]
-];
-// Checking the Faculty Page Access Role:
-// $accessRoleForFacultyEditPage = ['super-admin','staff','department-head'];
-@endphp
 {{-- Encrypted Page For Dedicated Role --}}
 @if (Auth::user()->role)
 @extends('layout.sidebar')
@@ -215,30 +203,6 @@ $assignedCourses = [
                 </tbody>
             </table>
         </div>
-
-        {{-- Assigned Courses (read-only, optional editable later) --}}
-        <div class="section">
-            <h6><i class="fas fa-book"></i> Assigned Courses</h6>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Course Code</th>
-                        <th>Course Title</th>
-                        <th>Credit Hours</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($assignedCourses as $course)
-                    <tr>
-                        <td>{{ $course->code }}</td>
-                        <td>{{ $course->title }}</td>
-                        <td>{{ $course->credit }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
         <div class="actions">
             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Faculty</button>
             <button type="button" class="btn btn-secondary" onclick="window.history.back();"><i class="fas fa-arrow-left"></i> Back</button>

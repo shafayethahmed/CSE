@@ -15,7 +15,9 @@ class NoticeController extends Controller
         return view('notices.create');
     }
 
-    
+    public function show(Notice $notice){
+        return view('notices.show',compact('notice'));
+    }
 
     public function store(Request $request){
         //Storing the Notice: 
@@ -40,7 +42,7 @@ class NoticeController extends Controller
           return redirect()->route('notices.index')->with('success','Notice Created & Published Successfully.');
       } catch(\Exception $e){
     return redirect()->back()->withErrors([
-        'wrong' =>  'Notice Create Process Failed!',
+        'wrong' =>  $e->getMessage(),
     ]);
 }
     }

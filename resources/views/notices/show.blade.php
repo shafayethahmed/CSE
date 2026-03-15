@@ -1,21 +1,3 @@
-@php
-// MOCK for testing (remove later)
-$notice = (object)[
-    'notice_no' => 'RTM-AKTU/CSE/2026/012',
-    'publish_date' => '2026-02-20',
-    'title' => 'Notice for Make-Up Examination',
-    'body' => 'This is to inform all concerned that the Make-Up Examinations for the Summer 2025 Semester Final Examinations will commence on 27th February 2026.
-
-Students who were unable to attend the final examinations are advised to submit a duly signed Make-Up Examination Form along with required fees before the deadline.
-
-All students must collect their Admit Cards before the commencement of the examination.
-
-N.B: No student will be allowed to sit for the Make-Up Examination without an Admit Card.',
-    'publisher_name' => 'Abu Syeed Muhammed Abdullah',
-    'designation' => 'Associate Professor & Controller of Examinations'
-];
-@endphp
-
 @extends('layout.sidebar')
 
 @section('title', $notice->title)
@@ -26,19 +8,20 @@ N.B: No student will be allowed to sit for the Make-Up Examination without an Ad
 .notice-wrapper {
     padding: 15px;
     font-family: "Times New Roman", serif;
+    font-size: 14px;
 }
 
 /* ===== A4 PAPER ===== */
 .notice-paper {
-    width: 210mm; /* exact A4 width */
-    min-height: 297mm; /* exact A4 height */
+    width: 210mm;
+    min-height: 297mm;
     background: #fff;
     margin: 0 auto;
     padding: 20mm 25mm;
     color: #000;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    position: relative;
     box-sizing: border-box;
+    position: relative;
 }
 
 /* ===== PRINT ===== */
@@ -77,23 +60,31 @@ N.B: No student will be allowed to sit for the Make-Up Examination without an Ad
     font-weight: bold;
 }
 
+.notice-header-text h4 {
+    margin: 2px 0;
+    font-size: 15px;
+    font-style: italic;
+    text-align: center;
+}
+
 .notice-header-text p {
     margin: 2px 0;
-    font-size: 13px;
+    font-size: 12px;
+    text-align: center;
 }
 
 /* ===== NOTICE INFO ===== */
 .notice-info {
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 20px;
 }
 
 /* ===== TITLE ===== */
 .notice-title {
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     text-decoration: underline;
     margin-bottom: 20px;
@@ -101,8 +92,8 @@ N.B: No student will be allowed to sit for the Make-Up Examination without an Ad
 
 /* ===== BODY ===== */
 .notice-body {
-    font-size: 15px;
-    line-height: 1.85;
+    font-size: 14px;
+    line-height: 1.8;
     text-align: justify;
 }
 
@@ -124,8 +115,16 @@ N.B: No student will be allowed to sit for the Make-Up Examination without an Ad
     margin-top: 80px;
     border-top: 2px solid #000;
     padding-top: 8px;
-    font-size: 12px;
+    font-size: 11px;
     text-align: center;
+}
+
+/* ===== SMALL SYSTEM NOTE ===== */
+.notice-system-note {
+    margin-top: 5px;
+    font-size: 10px;
+    text-align: center;
+    font-style: italic;
 }
 
 /* ===== BUTTONS ===== */
@@ -176,19 +175,19 @@ function downloadPDF() {
             <img src="{{ asset('images/RTM-Logo.jpg') }}">
             <div class="notice-header-text">
                 <h3>RTM Al-Kabir Technical University (RTM-AKTU)</h3>
-                <h4 style="text-align: center;" ><i >Department Of Computer Science & Engineering</i></h4>
-                <p style="text-align: center;">E-mail: info@rtm-aktu.edu.bd</p>
-                <p style="text-align: center;">Web: www.rtm-aktu.edu.bd</p>
+                <h4>Department Of Computer Science & Engineering</h4>
+                <p>E-mail: info@rtm-aktu.edu.bd</p>
+                <p>Web: www.rtm-aktu.edu.bd</p>
             </div>
         </div>
 
         {{-- NOTICE NUMBER + DATE --}}
         <div class="notice-info">
             <div>
-                <strong>Notice No:</strong> {{ $notice->notice_no }}
+                <strong>Notice No:</strong> RM-AKTU/{{ $notice->notice_id }}
             </div>
             <div>
-                <strong>Date:</strong> {{ \Carbon\Carbon::parse($notice->publish_date)->format('d F Y') }}
+                <strong>Date:</strong> {{ \Carbon\Carbon::parse($notice->created_date)->format('d F Y') }}
             </div>
         </div>
 
@@ -205,14 +204,20 @@ function downloadPDF() {
         {{-- SIGNATURE --}}
         <div class="notice-signature">
             <p><strong>Published By</strong></p>
-            <p>{{ $notice->publisher_name }}</p>
+            <p>{{ $notice->published_by }}</p>
             <p>{{ $notice->designation }}</p>
+            <p>RTM Al Kabir Technical University</p>
         </div>
 
         {{-- FOOTER --}}
         <div class="notice-footer">
             Sylhet: TB Gate, East Shahid Eidgah, Sylhet-3100, Bangladesh |
             Dhaka Liaison Office: 581, Shewrapara, Mirpur, Dhaka 1216
+        </div>
+
+        {{-- SYSTEM NOTE --}}
+        <div class="notice-system-note">
+            This notice was created and printed by the RTM-AKTU CSE Management System.
         </div>
 
     </div>

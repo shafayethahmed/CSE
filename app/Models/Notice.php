@@ -12,8 +12,8 @@ class Notice extends Model
             'title',
             'body',
             'published_by',
-            'designation'
+            'designation',
+            'created_at',
         ];
-    
-
+        
 }

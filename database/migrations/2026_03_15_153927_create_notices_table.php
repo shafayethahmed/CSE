@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('notice_id')->default('N/A');
             $table->string('title',100);
-            $table->string('body');
+            $table->mediumText('body');
             $table->string('published_by',30);
             $table->string('designation',20);
             $table->timestamps();

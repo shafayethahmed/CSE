@@ -125,7 +125,7 @@ textarea.form-control{
         <div class="notice-body">
 
             @error('wrong')
-                <div class="text-danger mb-2">
+                <div class="text-danger mb-2" style="color: red">
                     {{ $message }}
                 </div>
             @enderror

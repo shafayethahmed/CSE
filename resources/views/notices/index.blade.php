@@ -23,7 +23,7 @@
 .notice-table {
     background: #fff;
     border-radius: 10px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #050b18;
 }
 
 .notice-table table {
@@ -32,17 +32,19 @@
 }
 
 .notice-table th {
-    background: #f9fafb;
+    background: #02182e;
     font-size: 13px;
     padding: 10px;
-    text-align: left;
+    text-align: center;
     font-weight: 600;
+    color: white;
 }
 
 .notice-table td {
     font-size: 13px;
     padding: 10px;
     border-top: 1px solid #f1f5f9;
+    text-align: center;
 }
 
 /* Button */
@@ -78,24 +80,6 @@
 
 @section('content')
 
-@php
-// MOCK DATA for testing
-$notices = [
-(object)[
-'id'=>1,
-'title'=>'Make-Up Examination Notice',
-'publisher'=>'Controller of Examination',
-'date'=>'2026-02-19'
-],
-(object)[
-'id'=>2,
-'title'=>'Semester Final Routine',
-'publisher'=>'Academic Office',
-'date'=>'2026-02-10'
-],
-];
-@endphp
-
 <div class="notice-page">
 <div class="notice-header">
     <h5 class="fw-bold">Notice Management</h5>
@@ -111,7 +95,7 @@ $notices = [
     <table>
         <thead>
             <tr>
-                <th>#</th>
+                <th>SL</th>
                 <th>Notice Title</th>
                 <th>Published By</th>
                 <th>Date</th>
@@ -120,15 +104,15 @@ $notices = [
         </thead>
 
         <tbody>
-            @foreach($notices as $key => $notice)
+            @foreach($notices as  $notice)
             <tr>
-                <td>{{ $key + 1 }}</td>
-                <td>{{ $notice->title }}</td>
-                <td>{{ $notice->publisher }}</td>
-                <td>{{ $notice->date }}</td>
+                <td>{{ $notice->notice_id}}</td>
+                <td>{{ ucwords($notice->title) }}</td>
+                <td>{{ $notice->published_by }}</td>
+                <td>{{ $notice->created_at }}</td>
 
                 <td>
-                    <a href="#" class="action-btn text-primary">
+                    <a href="{{ route('notices.show',$notice->id) }}" class="action-btn text-primary">
                         <i class="fas fa-eye"></i>
                     </a>
 

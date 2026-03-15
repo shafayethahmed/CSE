@@ -4,133 +4,222 @@
 
 @push('styles')
 <style>
-/* ===== CONTAINER ===== */
-.container {
-    max-width: 700px;
-    margin: 10px auto;
-    padding: 20px;
+
+/* PAGE WRAPPER */
+.notice-wrapper{
+    max-width:920px;
+    margin:20px auto;
 }
 
-/* ===== CARD STYLING ===== */
-.card {
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    overflow: hidden;
-    border: none;
+/* CARD */
+.notice-card{
+    background:#e2c7b1d8;
+    border-radius:10px;
+    border:1px solid #e6e6e6;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+    overflow:hidden;
 }
 
-.card-header {
-    background-color: #f8f9fa;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #333;
-    padding: 10px 15px;
-    border-bottom: 1px solid #e0e0e0;
+/* HEADER */
+.notice-header{
+    padding:14px 18px;
+    font-size:16px;
+    font-weight:600;
+    background:#010b1a;
+    color: white;
+    border-bottom:1px solid #eee;
 }
 
-/* ===== CARD BODY ===== */
-.card-body {
-    padding: 15px 10px;
-    background-color: #fff;
+/* BODY */
+.notice-body{
+    padding:20px;
 }
 
-/* ===== FORM ELEMENTS ===== */
-.form-label {
-    font-weight: 500;
-    margin-bottom: 6px;
+/* FORM GROUP */
+.form-group{
+    margin-bottom:16px;
 }
 
-.form-control {
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    padding: 10px 12px;
-    font-size: 14px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+.form-label{
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
 }
 
-.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+/* INPUT */
+.form-control{
+    height:36px;
+    border-radius:6px;
+    font-size:14px;
+    border:1px solid #dcdcdc;
 }
 
-/* ===== TEXTAREA ===== */
-textarea.form-control {
-    resize: vertical;
+textarea.form-control{
+    height:auto;
+    resize:vertical;
 }
 
-/* ===== BUTTON ===== */
-button.btn-primary {
-    background-color: #0d6efd;
-    border: none;
-    border-radius: 8px;
-    padding: 5px 10px;
-    font-size: 12px;
-    font-weight: 500;
-    transition: background-color 0.2s, transform 0.2s;
+/* INPUT FOCUS */
+.form-control:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 2px rgba(37,99,235,0.15);
 }
 
-button.btn-primary:hover {
-    background-color: #0b5ed7;
-    transform: translateY(-1px);
+/* ERROR */
+.text-danger{
+    font-size:12px;
+    margin-top:3px;
 }
 
-/* ===== ROW SPACING ===== */
-.row > .col-md-6 {
-    margin-bottom: 15px;
+/* BUTTON AREA */
+.form-actions{
+    margin-top:20px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 576px) {
-    .card-body {
-        padding: 20px 15px;
+/* BUTTONS */
+.btn{
+    font-size:13px;
+    border-radius:6px;
+    padding:6px 14px;
+}
+
+.btn-primary{
+    background:#2563eb;
+    border:none;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+.btn-secondary{
+    background:#f1f1f1;
+    border:1px solid #ddd;
+    text-decoration: none;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+    .row{
+        flex-direction:column;
     }
 }
+
 </style>
 @endpush
 
+
 @section('content')
 
-<div class="container">
+<div class="notice-wrapper">
 
-    <div class="card shadow-sm">
-        <div class="card-header fw-bold">
-            Create New Notice
+    <div class="notice-card">
+
+        <div class="notice-header">
+            Create Notice
         </div>
 
-        <div class="card-body">
+        <div class="notice-body">
+
+            @error('wrong')
+                <div class="text-danger mb-2">
+                    {{ $message }}
+                </div>
+            @enderror
 
             <form action="{{ route('notices.store') }}" method="POST">
                 @csrf
 
-                <div class="mb-3">
-                    <label class="form-label">Notice Title</label>
-                    <input type="text" name="title" class="form-control" required>
+                {{-- TITLE --}}
+                <div class="form-group">
+                    <label class="form-label">
+                        Notice Title <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="text"
+                           name="title"
+                           class="form-control"
+                           value="{{ old('title') }}"
+                           placeholder="Enter notice title">
+
+                    @error('title')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Notice Body</label>
-                    <textarea name="body" rows="8"  cols="50" class="form-control" required></textarea>
+                {{-- BODY --}}
+                <div class="form-group">
+                    <label class="form-label">
+                        Notice Description <span class="text-danger">*</span>
+                    </label>
+
+                    <textarea name="body"
+                    rows="8"  cols="50"
+                              class="form-control"
+                              placeholder="Write the notice details...">{{ old('body') }}</textarea>
+
+                    @error('body')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="form-label">Published By</label>
-                        <input type="text" name="publisher_name" class="form-control" required>
+                {{-- ROW --}}
+                <div class="row d-flex gap-3">
+
+                    <div class="form-group col">
+                        <label class="form-label">
+                            Published By <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="publisher_name"
+                               class="form-control"
+                               value="{{ old('publisher_name') }}"
+                               placeholder="Publisher name">
+
+                        @error('publisher_name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
-                    <div class="col-md-6">
-                        <label class="form-label">Designation</label>
-                        <input type="text" name="designation" class="form-control" required>
+                    <div class="form-group col">
+                        <label class="form-label">
+                            Designation <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="designation"
+                               class="form-control"
+                               value="{{ old('designation') }}"
+                               placeholder="Publisher designation">
+
+                        @error('designation')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-3">
-                    Save Notice
-                </button>
+                {{-- ACTION BUTTONS --}}
+                <div class="form-actions">
+
+                    <a href="{{ route('notices.index') }}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        Create Notice
+                    </button>
+
+                </div>
 
             </form>
 
         </div>
+
     </div>
 
 </div>

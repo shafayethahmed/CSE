@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('notices', function (Blueprint $table) {
             $table->id();
+            $table->string('notice_id')->default('N/A');
             $table->string('title',100);
             $table->string('body');
-            $table->string('publidhed_by',30);
+            $table->string('published_by',30);
             $table->string('designation',20);
             $table->timestamps();
         });

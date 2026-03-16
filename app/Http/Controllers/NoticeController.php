@@ -56,6 +56,62 @@ class NoticeController extends Controller
     return redirect()->back()->withErrors([
         'wrong' =>  $e->getMessage(),
     ]);
-}
+  }
     }
+
+ //Edit function:
+ public function edit(Notice $notice){
+    //return Individul notice Information: 
+        return view('notices.edit',compact('notice'));
+ }
+
+ //Update Function for Notice Update:
+   public function update(Request $request, Notice $notice)
+{
+    $validated = $request->validate([
+        'title' => 'required|string',
+        'body' => 'required|string',
+        'publisher_name' => 'required|string',
+        'designation' => 'required|string',
+    ]);
+
+    try{
+
+        $notice->update([
+            'title' => trim($validated['title']),
+            'body' => trim($validated['body']),
+            'published_by' => trim($validated['publisher_name']),
+            'designation' => trim($validated['designation']),
+        ]);
+
+        return redirect()
+                ->route('notices.index')
+                ->with('success','Notice Updated Successfully.');
+
+    }catch(\Exception $e){
+
+        return redirect()
+                ->back()
+                ->withErrors(['wrong' => $e->getMessage()])
+                ->withInput();
+    }
+}
+
+public function destroy(Notice $notice)
+{
+    try{
+
+        $notice->delete();
+
+        return redirect()
+                ->route('notices.index')
+                ->with('success','Notice Deleted Successfully.');
+
+    }catch(\Exception $e){
+
+        return redirect()
+                ->back()
+                ->withErrors(['wrong' => 'Something Error!']);
+    }
+}
 }

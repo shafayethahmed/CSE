@@ -12,6 +12,7 @@ use App\Http\Controllers\offeredCoursesController;
 use App\Http\Controllers\FacultyCourseController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\TestStatus\Notice;
 
 // Route::get('/login', function () {
 //     return view('welcome');
@@ -48,7 +49,6 @@ Route::resource('faculty', FacultyController::class);
 
 /* Notices */
 Route::resource('notices', NoticeController::class);
-
 
 /* Courses */
 Route::get('/courses/',[CourseController::class, 'index'])->name('courses.index');

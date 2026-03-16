@@ -1,20 +1,4 @@
-@php
-// MOCK for testing (remove later)
-$notice = (object)[
-    'notice_no' => 'RTM-AKTU/CSE/2026/012',
-    'publish_date' => '2026-02-20',
-    'title' => 'Notice for Make-Up Examination',
-    'body' => 'This is to inform all concerned that the Make-Up Examinations for the Summer 2025 Semester Final Examinations will commence on 27th February 2026.
 
-Students who were unable to attend the final examinations are advised to submit a duly signed Make-Up Examination Form along with required fees before the deadline.
-
-All students must collect their Admit Cards before the commencement of the examination.
-
-N.B: No student will be allowed to sit for the Make-Up Examination without an Admit Card.',
-    'publisher_name' => 'Abu Syeed Muhammed Abdullah',
-    'designation' => 'Associate Professor & Controller of Examinations'
-];
-@endphp
 @extends('layout.sidebar')
 
 @section('title','Edit Notice')
@@ -118,7 +102,7 @@ button.btn-secondary:hover {
 
         <div class="card-body">
 
-            <form action="#" method="POST">
+            <form action="{{ route('notices.update',$notice->id) }}" method="POST">
                 {{-- {{ route('notices.update', $notice->id) }} this route need to include --}}
                 @csrf
                 @method('PUT')
@@ -136,7 +120,7 @@ button.btn-secondary:hover {
                 <div class="row">
                     <div class="col-md-6">
                         <label class="form-label">Published By</label>
-                        <input type="text" name="publisher_name" class="form-control" value="{{ old('publisher_name', $notice->publisher_name) }}" required>
+                        <input type="text" name="publisher_name" class="form-control" value="{{ old('publisher_name', $notice->published_by) }}" required>
                     </div>
 
                     <div class="col-md-6">

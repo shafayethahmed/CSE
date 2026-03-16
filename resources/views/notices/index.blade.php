@@ -166,6 +166,19 @@
         <i class="fas fa-plus"></i> Create Notice
     </a>
 </div>
+{{-- Section Message for Error/Success --}}
+<div id="alertmsg">
+    @error('wrong')
+    <div class="text-danger mb-2" style="color: red">
+        {{ $message }}
+    </div>
+    @enderror
+    @session('success')
+    <div class="text-success mb-2" style="color: green">
+         {{ session('success') }}
+    </div>
+    @endsession
+</div>
 
 {{-- FILTER --}}
 <div class="filter-box">
@@ -226,6 +239,9 @@ $(document).ready(function(){
 
 });
 
+setTimeout(() => {
+    $('#alertmsg').hide();
+}, 5000);
 </script>
 
 @endpush

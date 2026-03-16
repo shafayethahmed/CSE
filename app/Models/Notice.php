@@ -14,6 +14,7 @@ class Notice extends Model
             'published_by',
             'designation',
             'created_at',
+            'updated_at'
         ];
         
 }

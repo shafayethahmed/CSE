@@ -184,7 +184,7 @@ function downloadPDF() {
         {{-- NOTICE NUMBER + DATE --}}
         <div class="notice-info">
             <div>
-                <strong>Notice No:</strong> RM-AKTU/{{ $notice->notice_id }}
+                <strong>Notice No:</strong> RTM-AKTU/{{ $notice->notice_id }}
             </div>
             <div>
                 <strong>Date:</strong> {{ \Carbon\Carbon::parse($notice->created_date)->format('d F Y') }}
@@ -217,7 +217,7 @@ function downloadPDF() {
 
         {{-- SYSTEM NOTE --}}
         <div class="notice-system-note">
-            This notice was created and printed by the RTM-AKTU CSE Management System.
+            This notice was created by the RTM-AKTU CSE Management System.
         </div>
 
     </div>

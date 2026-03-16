@@ -3,12 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notice;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 
 class NoticeController extends Controller
 {
-    public function index(){
-        $notices = Notice::all();
+    public function index(Request $request){
+        $query = Notice::query();
+        if($request->noticesearch){
+          $query->where(function ($q) use ($request){
+            $q->where('title','like','%'.$request->noticesearch.'%')
+            ->orWhere('notice_id','like','%'.$request->noticesearch.'%');
+          });
+        }
+         $notices = $query->paginate(10)->withQueryString();
+        //Ajax Reuqest baack: 
+        if($request->ajax()){
+            return view('notices.partials.table',compact('notices'))->render();
+        }
         return view('notices.index',compact('notices'));
     }
     public function create(){

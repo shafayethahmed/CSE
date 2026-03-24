@@ -179,13 +179,13 @@ if(request()->isMethod('post')){
 
         {{-- Faculty Search --}}
         <form method="GET">
-            <label class="label">Search Faculty (ID or Email)</label>
+            <label class="label">Search Faculty Email</label>
 
             <div class="row-flex">
                 <input type="text" name="search"
                        value="{{ request('search') }}"
                        class="form-control"
-                       placeholder="Enter Faculty ID or Email">
+                       placeholder="Enter Faculty Email">
 
                 <button class="btn btn-primary btn-sm">
                     Search

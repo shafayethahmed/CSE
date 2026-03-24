@@ -98,7 +98,15 @@
 <div class="card-box">
 
 <h5>Assign Batch Teacher</h5>
-
+@if ($errors->any())
+    <div class="alert alert-danger mb-2">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 {{-- MESSAGE --}}
 <div id="messageBox" class="alert d-none"></div>
 
@@ -130,6 +138,10 @@
 
 <script>
 $(document).ready(function(){
+setTimeout(() => {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => alert.style.display = 'none');
+}, 5000);
 
     $("#facultyemail").on('submit', function(e){
         e.preventDefault();

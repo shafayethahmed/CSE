@@ -87,29 +87,45 @@
                 {{ session('success') }}
             </div>
         @endif
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Faculty</th>
-                    <th>Email</th>
-                    <th>Semester</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
+        {{-- Error --}}
+        @if ($errors->any())
+            <div class="alert alert-danger mb-2">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+      <table class="table">
+    <thead>
+        <tr>
+            <th>Faculty</th>
+            <th>Email</th>
+            <th>Semester</th>
+            <th>Action</th>
+        </tr>
+    </thead>
 
-            <tbody>
-                @foreach($batchSupervisor as $row)
-                <tr>
-                    <td>{{ $row->faculty->name }}</td>
-                    <td>{{ $row->faculty->email }}</td>
-                    <td>{{ $row->semester }}</td>
-                     <td class="actions">
-                        <button class="btn-delete" onclick="deleteSupervisor(this)">Delete</button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <tbody>
+        @foreach($batchSupervisor as $row)
+        <tr>
+            <td>{{ $row->faculty->name }}</td>
+            <td>{{ $row->faculty->email }}</td>
+            <td>{{ $row->semester }}</td>
+            <td>
+                {{-- Delete Form --}}
+                <form action="{{ route('batch-supervisor.destroy', $row->id) }}" method="POST"
+                      onsubmit="return confirm('Are you sure you want to delete this supervisor?');">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
     </div>
 
@@ -117,6 +133,9 @@
 @endsection
 @push('scripts')
      <script>
+        function deleteSupervisor(){
+            alert('this is the');
+        }
       setTimeout(() => {
     // Select all elements with class 'alert'
             const alerts = document.querySelectorAll('.alert');

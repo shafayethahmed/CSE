@@ -55,4 +55,16 @@ class SuporvisorController extends Controller
             return redirect()->back()->withErrors(['error' => 'Something went wrong while assigning the supervisor. Please try again.'])->withInput();
        }
    }
+
+  public function destroy($supervisorid)
+    {
+        try {
+            $supervisor = Supervisor::findOrFail($supervisorid); // find the record
+            $supervisor->delete();
+
+            return redirect()->back()->with('success', 'Supervisor deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Something went wrong while deleting.']);
+        }
+    }
 }

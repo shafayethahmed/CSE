@@ -77,6 +77,7 @@ Route::post('courses/course-teacher/{id}',[FacultyCourseController::class, 'upda
 Route::get('/batches/supervisor', [SuporvisorController::class, 'index'])->name('supervisor.index');
 Route::get('/faculty-search', [SuporvisorController::class, 'searchFaculty'])->name('batch-supervisor.faculty.search');
 Route::post('/batch-supervisor-store',[SuporvisorController::class, 'store'])->name('batch-supervisor.store');
+Route::delete('/batch-supervisor/{supervisorid}',[SuporvisorController::class, 'destroy'])->name('batch-supervisor.destroy');
 /* Batches */
 
 Route::get('/batch/assign-supervisor',function(){

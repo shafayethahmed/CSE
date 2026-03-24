@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('batch_supervisor', function (Blueprint $table) {
             $table->id();
             $table->foreignId('faculty_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->enum('semester',['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'])->default('N/A');
+            $table->enum('semester',['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'])->unique();
             $table->timestamps();
         });
     }

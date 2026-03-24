@@ -10,6 +10,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FacultyAuthController;
 use App\Http\Controllers\offeredCoursesController;
 use App\Http\Controllers\FacultyCourseController;
+use App\Http\Controllers\SuporvisorController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\TestStatus\Notice;
@@ -71,10 +72,13 @@ Route::get('courses/faculty/assign', [FacultyCourseController::class, 'create'])
 Route::get('courses/course-teacher/fetch',[FacultyCourseController::class, 'fetchLatestCourses'])->name('course.course-teacher.fetch');
 Route::get('courses/course-teacher/{id}/edit',[FacultyCourseController::class, 'edit'])->name('courses.course-teacher.edit');
 Route::post('courses/course-teacher/{id}',[FacultyCourseController::class, 'update'])->name('courses.faculty-course.update');
+
+// Batche Supervisor:
+Route::get('/batches/supervisor', [SuporvisorController::class, 'index'])->name('supervisor.index');
+Route::get('/faculty-search', [SuporvisorController::class, 'searchFaculty'])->name('batch-supervisor.faculty.search');
+Route::post('/batch-supervisor-store',[SuporvisorController::class, 'store'])->name('batch-supervisor.store');
 /* Batches */
-Route::get('/batches/supervisor', function () {
-    return view('supervisor.index');
-})->name('batches.supervisor');
+
 Route::get('/batch/assign-supervisor',function(){
    return view('supervisor.create');
 })->name('supervisor.assign');

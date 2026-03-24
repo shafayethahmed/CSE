@@ -71,25 +71,6 @@
 @endpush
 
 @section('content')
-
-@php
-// Mock Data
-$batchTeachers = [
-    (object)[
-        'faculty' => 'Dr. Rahim Uddin',
-        'email' => 'rahim@university.edu',
-        'batch' => 'CSE-22',
-        'semester' => '4-1'
-    ],
-    (object)[
-        'faculty' => 'Farhana Akter',
-        'email' => 'farhana@gmail.com',
-        'batch' => 'CSE-23',
-        'semester' => '3-2'
-    ]
-];
-@endphp
-
 <div class="wrapper">
 
     <div class="card-box">
@@ -101,7 +82,11 @@ $batchTeachers = [
                 + Assign Supervisor
             </a>
         </div>
-
+        @if(session('success'))
+            <div class="alert alert-success mb-1" style="color: green;">
+                {{ session('success') }}
+            </div>
+        @endif
         <table class="table">
             <thead>
                 <tr>
@@ -113,10 +98,10 @@ $batchTeachers = [
             </thead>
 
             <tbody>
-                @foreach($batchTeachers as $row)
+                @foreach($batchSupervisor as $row)
                 <tr>
-                    <td>{{ $row->faculty }}</td>
-                    <td>{{ $row->email }}</td>
+                    <td>{{ $row->faculty->name }}</td>
+                    <td>{{ $row->faculty->email }}</td>
                     <td>{{ $row->semester }}</td>
                      <td class="actions">
                         <button class="btn-delete" onclick="deleteSupervisor(this)">Delete</button>
@@ -129,5 +114,15 @@ $batchTeachers = [
     </div>
 
 </div>
-
 @endsection
+@push('scripts')
+     <script>
+      setTimeout(() => {
+    // Select all elements with class 'alert'
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.display = 'none';
+            });
+        }, 3000);
+     </script>
+@endpush

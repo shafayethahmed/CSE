@@ -251,7 +251,7 @@
         <i class="fas fa-chevron-down"></i>
     </button>
     <div class="dropdown-container" style="{{ $batchesActive ? 'display:block;' : '' }}">
-        <a href="{{ route('batches.supervisor') }}" class="{{ request()->routeIs('batches.supervisor') ? 'active' : '' }}">➤ Supervisor</a>
+        <a href="{{ route('supervisor.index') }}" class="{{ request()->routeIs('supervisor.index') ? 'active' : '' }}">➤ Supervisor</a>
     </div>
 
     <div class="menu-section">Administration</div>

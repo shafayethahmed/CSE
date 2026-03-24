@@ -1,35 +1,3 @@
-@php
-/* ---------------- MOCK FACULTY DATABASE ---------------- */
-$allFaculty = [
-    (object)[
-        'id'=>1,
-        'name'=>'Dr. Rahim Uddin',
-        'email'=>'rahim@university.edu'
-    ],
-    (object)[
-        'id'=>2,
-        'name'=>'Farhana Akter',
-        'email'=>'farhana@university.edu'
-    ],
-];
-
-/* ------------ MOCK SEARCH LOGIC ------------ */
-$faculty = null;
-
-if(request('search')){
-    foreach($allFaculty as $f){
-        if($f->email == request('search') || $f->id == request('search')){
-            $faculty = $f;
-        }
-    }
-}
-
-/* ------------ MOCK SUBMIT ------------ */
-if(request()->isMethod('post')){
-    session()->flash('success','Semester assigned successfully (Mock)');
-}
-@endphp
-
 @extends('layout.sidebar')
 
 @section('title','Assign Batch Teacher')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -64,9 +65,51 @@ class StudentController extends Controller
     }
     
     //Student profile update.
-    public function update(){
-        //Update Process logic need to implement here.
-    }
+    public function update(Request $request, Student $student)
+        {
+            try {
+                // Validation
+                $validated = $request->validate([
+                    'academicId' => [
+                        'required',
+                        'string',
+                        'max:20',
+                        Rule::unique('students','academicId')->ignore($student->id),
+                    ],
+
+                    'name' => 'required|string|max:255',
+                    'session' => 'required|in:summer,spring',
+                    'admissionYear' => 'required|digits:4',
+                    'semester' => 'required|in:1-1,1-2,2-1,2-2,3-1,3-2,4-1,4-2',
+                    'email' => [
+                        'required',
+                        'email',
+                        'max:255',
+                        Rule::unique('students','email')->ignore($student->id),
+                    ],
+                    'mobile' => [
+                        'required',
+                        'string',
+                        'max:15',
+                        Rule::unique('students','mobile')->ignore($student->id),
+                    ],
+                    'dob' => 'required|date',
+                    'address' => 'required|string',
+                ]);
+
+                //  Update Data
+                $student->update($validated);
+                // Redirect Success
+                return redirect()->route('students.index')
+                    ->with('success', 'Student Updated Successfully.');
+
+            } catch (\Exception $e) {
+                // Redirect with error
+                return redirect()->back()
+                    ->with('error', 'Failed to update student!')
+                    ->withInput();
+            }
+        }
 
 
 }

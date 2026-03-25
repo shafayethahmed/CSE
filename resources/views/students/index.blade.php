@@ -8,7 +8,7 @@
 .page-wrapper{
     margin-top: 20px;
     max-width: 900px;
-    margin: 5 auto;
+    margin: 5px auto; /* FIXED */
 }
 
 /* Header */
@@ -83,13 +83,14 @@ table{
 }
 
 thead{
-    background:#d9d5ebe1;
+     background:#061164e1;
+
 }
 
 th{
     font-size:12px;
     font-weight:600;
-    color:#000000;
+    color: white;
     padding:9px 8px;
     text-align: center;
 }
@@ -148,6 +149,7 @@ tbody tr:hover{
 .btn-delete:hover{
     background:#fecaca;
 }
+
 /* Overlay covering the whole screen */
 #spinnerOverlay {
     position: fixed;
@@ -156,7 +158,7 @@ tbody tr:hover{
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 0.7);
-    display: none; /* hidden by default */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
@@ -164,8 +166,8 @@ tbody tr:hover{
 
 /* Spinner design */
 .spinner {
-    border: 6px solid #f3f3f3; /* Light gray */
-    border-top: 6px solid #1e3a8a; /* Primary blue color */
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #1e3a8a;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -180,11 +182,15 @@ tbody tr:hover{
 
 /* Responsive */
 @media(max-width:992px){
-    .filter-box{grid-template-columns:repeat(2,1fr);}
+    .filter-box{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
 @media(max-width:600px){
-    .filter-box{grid-template-columns:1fr;}
+    .filter-box{
+        grid-template-columns:1fr;
+    }
     .page-header{
         flex-direction:column;
         align-items:flex-start;

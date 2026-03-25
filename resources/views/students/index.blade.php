@@ -264,7 +264,9 @@ tbody tr:hover{
                         <a href="{{ route('students.show',$student->id) }}">
                                 <button class="btn-view" >View</button>
                         </a>
-                        <button class="btn-edit" onclick="editStudent()">Edit</button>
+                        <a href="{{ route('students.edit',$student->id) }}">
+                            <button class="btn-edit">Edit</button>
+                        </a>
                         <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
                     </td>
                 </tr>

@@ -53,8 +53,8 @@ class StudentController extends Controller
     } 
 
     //Edit form display for student:
-    public function edit(){
-        return view(''); //Need to assign the Student Edit Form.
+    public function edit(Student $student){
+        return view('students.edit',compact('student')); //Need to assign the Student Edit Form.
     }
 
     //Information View Form for Student

@@ -144,12 +144,12 @@ input:focus, select:focus{
         <!-- Academic Info -->
         <div class="form-group">
             <label>Academic ID</label>
-            <input type="text" value="2024-001" readonly>
+            <input type="text" value="{{ $student->academicId }}" >
         </div>
 
         <div class="form-group">
             <label>Student Name</label>
-            <input type="text" value="John Doe">
+            <input type="text" value="{{ $student->name }}">
         </div>
 
         <div class="form-group">
@@ -173,7 +173,8 @@ input:focus, select:focus{
         <div class="form-group">
             <label>Semester</label>
             <select>
-                <option selected>1-1</option>
+                <option selected>{{ $student->semester }}</option>
+                <option value="">1-1</option>
                 <option>1-2</option>
                 <option>2-1</option>
                 <option>2-2</option>
@@ -181,37 +182,29 @@ input:focus, select:focus{
                 <option>3-2</option>
                 <option>4-1</option>
                 <option>4-2</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Status</label>
-            <select>
-                <option>Passed</option>
-                <option selected>Ongoing</option>
-                <option>On Hold</option>
+                <option value="Passed">Passed</option>
             </select>
         </div>
 
         <!-- Personal Info -->
         <div class="form-group">
             <label>Email</label>
-            <input type="email" value="john@example.com">
+            <input type="email" value="{{ $student->email }}">
         </div>
 
         <div class="form-group">
             <label>Mobile</label>
-            <input type="tel" value="0123456789">
+            <input type="tel" value="{{ $student->mobile }}">
         </div>
 
         <div class="form-group">
             <label>Date of Birth</label>
-            <input type="date" value="2005-03-15">
+            <input type="date" value="{{ $student->dob }}">
         </div>
 
           <div class="form-group">
             <label>Address</label>
-            <input type="address" value="Sylhet,Bangladesh">
+            <input type="address" value="{{ $student->address }}">
         </div>
 
         <!-- Action Buttons -->

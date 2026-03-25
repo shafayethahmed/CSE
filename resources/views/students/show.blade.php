@@ -159,20 +159,29 @@
         <div class="profile-summary">
             <div>
                 <div class="label">Academic ID</div>
-                <div class="value">2024-001</div>
+                <div class="value">{{$student->academicId }}</div>
             </div>
             <div>
                 <div class="label">Name</div>
-                <div class="value">John Doe</div>
+                <div class="value">{{$student->name }}</div>
             </div>
             <div>
                 <div class="label">Department</div>
                 <div class="value">CSE</div>
             </div>
             <div>
-                <div class="label">Status</div>
-                <div class="value"><span class="status-badge status-ongoing">Ongoing</span></div>
-            </div>
+               <div class="label">Status</div>
+
+                @if ($student->semester === "Passed")
+                    <div class="value">
+                        <span class="status-badge status-ongoing">Ex-Student</span>
+                    </div>
+                @else
+                    <div class="value">
+                        <span class="status-badge status-ongoing">Ongoing</span>
+                    </div>
+                @endif
+            </div> 
         </div>
 
         <!-- Academic Info Section -->
@@ -181,15 +190,15 @@
             <div class="profile-details">
                 <div class="detail-box">
                     <div class="detail-label">Session</div>
-                    <div class="detail-value">Spring</div>
+                    <div class="detail-value">{{$student->session }}</div>
                 </div>
                 <div class="detail-box">
                     <div class="detail-label">Semester</div>
-                    <div class="detail-value">1-1</div>
+                    <div class="detail-value">{{$student->semester }}</div>
                 </div>
                 <div class="detail-box">
                     <div class="detail-label">Admission Year</div>
-                    <div class="detail-value">2024</div>
+                    <div class="detail-value">{{$student->admissionYear }}</div>
                 </div>
             </div>
         </div>
@@ -200,19 +209,19 @@
             <div class="profile-details">
                 <div class="detail-box">
                     <div class="detail-label">Email</div>
-                    <div class="detail-value">john@example.com</div>
+                    <div class="detail-value">{{$student->email }}</div>
                 </div>
                 <div class="detail-box">
                     <div class="detail-label">Mobile</div>
-                    <div class="detail-value">0123456789</div>
+                    <div class="detail-value">{{$student->mobile }}</div>
                 </div>
                 <div class="detail-box">
                     <div class="detail-label">Date of Birth</div>
-                    <div class="detail-value">15 March 2005</div>
+                    <div class="detail-value">{{$student->dob}}</div>
                 </div>
                 <div class="detail-box">
                     <div class="detail-label">Address</div>
-                    <div class="detail-value">Sylhet,Bangladesh.</div>
+                    <div class="detail-value">{{$student->address}}</div>
                 </div>
             </div>
         </div>

@@ -253,31 +253,24 @@ tbody tr:hover{
             </thead>
 
             <tbody id="studentTable">
-                <tr>
-                    <td>2024-001</td>
-                    <td>John Doe</td>
-                    <td>1-1</td>
-                    <td>john@example.com</td>
-                    <td>01700000000</td>
+                @forelse ($students as $student)
+                    <tr>
+                    <td>{{  $student->academicId }}</td>
+                    <td>{{  $student->name }}</td>
+                    <td>{{  $student->semester }}</td>
+                    <td>{{  $student->email }}</td>
+                    <td>{{  $student->mobile }}</td>
                     <td class="actions">
-                        <button class="btn-view" onclick="viewStudent()">View</button>
+                        <a href="{{ route('students.show',$student->id) }}">
+                                <button class="btn-view" >View</button>
+                        </a>
                         <button class="btn-edit" onclick="editStudent()">Edit</button>
                         <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
                     </td>
                 </tr>
-
-                <tr>
-                    <td>0992220005101006</td>
-                    <td>Shafayeth Ahmed Chowdhury</td>
-                    <td>4-2</td>
-                    <td>sacchy1234@gmail.com</td>
-                    <td>01329490229</td>
-                    <td class="actions">
-                        <button class="btn-view" onclick="viewStudent()">View</button>
-                        <button class="btn-edit" onclick="editStudent()">Edit</button>
-                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
-                    </td>
-                </tr>
+                @empty
+                    <tr colspan="5">No Student Found!</tr>
+                @endforelse
             </tbody>
         </table>
     </div>

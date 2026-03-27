@@ -10,15 +10,45 @@ use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
-      public function index(){
-        $students = Student::all();
-        return view('students.index',compact('students'));  //Index Page Display.
-      }
-     
-     //student Create Form: 
-     public function create(){
-        return view('students.create');//Need to assign the Student Create Form.
-     }
+public function index(Request $request){
+    $query = Student::query();
+    // Search use id and name
+    if ($request->filled('searchInput')) {
+        $query->where(function($q) use ($request){
+            $q->where('academicId', 'like', '%' . $request->searchInput . '%')
+              ->orWhere('name', 'like', '%' . $request->searchInput . '%');
+        });
+    }
+    //  Filters
+    if ($request->filled('sessionSelect')) {
+        $query->where('session', $request->sessionSelect);
+    }
+
+    if ($request->filled('semesterSelect')) {
+        $query->where('semester', $request->semesterSelect);
+    }
+
+    if ($request->filled('admityear')) {
+        $query->where('admissionYear', $request->admityear);
+    }
+
+    // Pagination
+    $students = $query->paginate(10)->withQueryString();
+
+    // ⚡ AJAX response
+    if ($request->ajax()) {
+        return view('students.partials.table', compact('students'))->render();
+    }
+
+    return view('students.index', compact('students'));
+}
+
+//create Form: 
+  public function create(){
+    return view('students.create');
+  }
+
+
 
     //Storing the Student Information: 
     public function store(Request $request){

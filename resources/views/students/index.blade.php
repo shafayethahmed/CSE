@@ -212,101 +212,96 @@ tbody tr:hover{
         <h2>Student Management</h2>
         <button class="btn btn-primary" onclick="addStudent()">+ Add Student</button>
     </div>
-    
-    <!-- Spinner overlay -->
-    <div id="spinnerOverlay">
-        <div class="spinner"></div>
-    </div>
 
     <!-- Filters -->
     <div class="filter-box">
         <input type="text" id="searchInput" placeholder="Search by Name or ID">
 
-        <select>
-            <option>All Sessions</option>
-            <option>Spring</option>
-            <option>Summer</option>
+        <select id="sessionSelect">
+            <option value="">All Sessions</option>
+            <option value="spring">Spring</option>
+            <option value="summer">Summer</option>
         </select>
 
-        <select>
-            <option>All Semesters</option>
-            <option>1-1</option><option>1-2</option>
-            <option>2-1</option><option>2-2</option>
-            <option>3-1</option><option>3-2</option>
-            <option>4-1</option><option>4-2</option>
+        <select id="semesterSelect">
+            <option value="">All Semesters</option>
+            <option value="1-1">1-1</option>
+            <option value="1-2">1-2</option>
+            <option value="2-1">2-1</option>
+            <option value="2-2">2-2</option>
+            <option value="3-1">3-1</option>
+            <option value="3-2">3-2</option>
+            <option value="4-1">4-1</option>
+            <option value="4-2">4-2</option>
         </select>
 
-        <input type="text" placeholder="Admission Year">
+        <input type="text" id="admityear" placeholder="Admission Year">
     </div>
 
     <!-- Table -->
     <div class="table-box">
-        <table>
-            <thead>
-                <tr>
-                    <th>Academic ID</th>
-                    <th>Name</th>
-                    <th>Semester</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th width="140">Action</th>
-                </tr>
-            </thead>
-
-            <tbody id="studentTable">
-                @forelse ($students as $student)
-                    <tr>
-                    <td>{{  $student->academicId }}</td>
-                    <td>{{  $student->name }}</td>
-                    <td>{{  $student->semester }}</td>
-                    <td>{{  $student->email }}</td>
-                    <td>{{  $student->mobile }}</td>
-                    <td class="actions">
-                        <a href="{{ route('students.show',$student->id) }}">
-                                <button class="btn-view" >View</button>
-                        </a>
-                        <a href="{{ route('students.edit',$student->id) }}">
-                            <button class="btn-edit">Edit</button>
-                        </a>
-                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
-                    </td>
-                </tr>
-                @empty
-                     <tr>
-                        <td colspan="6" style="text-align:center; padding:10px;">
-                            <div style="color:#000308; font-size:12px;">
-                                 No Students Found!
-                            </div>
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <div id="studentTable">
+            @include('students.partials.table',['students'=> $students])
+        </div>
     </div>
 
 </div>
 
 @endsection
 
-
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
+$(document).ready(function(){
 
-document.addEventListener("DOMContentLoaded", function(){
+    function fetchStudent(page = 1){
+        let searchInput = $('#searchInput').val();
+        let sessionSelect = $('#sessionSelect').val();
+        let semesterSelect = $('#semesterSelect').val();
+        let admityear = $('#admityear').val(); 
 
-    /* Search */
-    document.getElementById("searchInput").addEventListener("keyup", function() {
-        let value = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#studentTable tr");
-
-        rows.forEach(row=>{
-            row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
+        $.ajax({
+            url: "{{ route('students.index') }}?page=" + page,
+            type: "GET",
+            data: {
+                searchInput: searchInput,
+                sessionSelect: sessionSelect,
+                semesterSelect: semesterSelect,
+                admityear: admityear
+            },
+            success: function(data){
+                $('#studentTable').html(data);
+            },
+            error: function(error){
+                console.log(error);
+            }
         });
+    }
+
+    // 🔥 Debounce for better performance
+    let timeout = null;
+
+    $('#searchInput, #sessionSelect, #semesterSelect, #admityear')
+        .on('keyup change', function(){
+            clearTimeout(timeout);
+            timeout = setTimeout(function(){
+                fetchStudent();
+            }, 400);
+        });
+
+    //  Pagination click (AJAX)
+    $(document).on('click', '.pagination a', function(e){
+        e.preventDefault();
+
+        let page = $(this).attr('href').split('page=')[1];
+        fetchStudent(page);
     });
 
 });
 
-function addStudent() {
+</script>
+<script>
+    function addStudent() {
     // Show spinner
    // document.getElementById('spinnerOverlay').style.display = 'flex';
       // Show spinner for 3 seconds even if redirect is canceled
@@ -329,6 +324,5 @@ function deleteStudent(btn){
 setTimeout(() => {
     document.querySelectorAll('.toast-msg').forEach(t => t.remove());
 }, 3000);
-
 </script>
 @endpush

@@ -150,35 +150,27 @@ tbody tr:hover{
 .btn-delete:hover{
     background:#fecaca;
 }
-
-/* Overlay covering the whole screen */
-#spinnerOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+.toast-msg{
+    background:#1e3a8a;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:8px;
+    margin-bottom:10px;
+    font-size:13px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    animation: slideIn .4s ease;
 }
 
-/* Spinner design */
-.spinner {
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #1e3a8a;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-}
+/* Success */
+.toast-success{ background:#16a34a; }
 
-/* Spin animation */
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* Error */
+.toast-error{ background:#dc2626; }
+
+/* Animation */
+@keyframes slideIn{
+    from{ opacity:0; transform:translateX(50px); }
+    to{ opacity:1; transform:translateX(0); }
 }
 
 /* Responsive */
@@ -202,17 +194,13 @@ tbody tr:hover{
 </style>
 @endpush
 
-
 @section('content')
-
+<div id="toast-container"></div> 
 <div class="page-wrapper">
-
-    <!-- Header -->
     <div class="page-header">
         <h2>Student Management</h2>
         <button class="btn btn-primary" onclick="addStudent()">+ Add Student</button>
     </div>
-
     <!-- Filters -->
     <div class="filter-box">
         <input type="text" id="searchInput" placeholder="Search by Name or ID">
@@ -230,7 +218,7 @@ tbody tr:hover{
             <option value="2-1">2-1</option>
             <option value="2-2">2-2</option>
             <option value="3-1">3-1</option>
-            <option value="3-2">3-2</option>
+            <option value="3-2">3-1</option>
             <option value="4-1">4-1</option>
             <option value="4-2">4-2</option>
         </select>
@@ -248,7 +236,6 @@ tbody tr:hover{
 </div>
 
 @endsection
-
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -278,7 +265,7 @@ $(document).ready(function(){
         });
     }
 
-    // 🔥 Debounce for better performance
+    //  Debounce for better performance
     let timeout = null;
 
     $('#searchInput, #sessionSelect, #semesterSelect, #admityear')
@@ -307,22 +294,16 @@ $(document).ready(function(){
       // Show spinner for 3 seconds even if redirect is canceled
     window.location.href = "{{ route('students.create') }}";
 }
+function showToast(message, type = 'success'){
+    let toast = document.createElement('div');
+    toast.className = 'toast-msg toast-' + type;
+    toast.innerText = message;
 
-function viewStudent(){
-    alert("View Student Details");
-}
+    document.getElementById('toast-container').appendChild(toast);
 
-function editStudent(studentId) {
-    //window.location.href = route('students.edit', { student: studentId });
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
 }
-
-function deleteStudent(btn){
-    if(confirm("Delete this student?")){
-        btn.closest("tr").remove();
-    }
-}
-setTimeout(() => {
-    document.querySelectorAll('.toast-msg').forEach(t => t.remove());
-}, 3000);
 </script>
 @endpush

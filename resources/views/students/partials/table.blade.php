@@ -31,12 +31,19 @@
                         <a href="{{ route('students.edit',$student->id) }}">
                             <button class="btn-edit">Edit</button>
                         </a>
-                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
+                        <form action="{{ route('students.destroy',$student->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-delete"
+                                onclick="return confirm('Are you sure you want to delete this Student?')">
+                                Delete
+                            </button>
+                        </form>           
             </td>
         </tr>
         @empty
         <tr>
-            <td colspan="5">No students found</td>
+            <td colspan="8" style="font-weight: 400;font-size:14px;">No Students Found</td>
         </tr>
         @endforelse
     </tbody>

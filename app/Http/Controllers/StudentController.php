@@ -179,4 +179,17 @@ public function index(Request $request){
         );
     }
   
+    
+
+    //Function for Delete the student: 
+        public function destroy(Student $student){
+            $fullPath = storage_path('app/private/' . $student->path);
+                    if (file_exists($fullPath)) {
+                        unlink($fullPath);
+             }
+             $student->delete();
+             return redirect()->back()->with('success','Student Data & Picture Deleted Successfully!');
+        }
+
+
 }

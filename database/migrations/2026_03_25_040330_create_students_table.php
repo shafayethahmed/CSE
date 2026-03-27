@@ -20,8 +20,10 @@ return new class extends Migration
             $table->enum('session',['spring','summer']);
             $table->year('admissionYear');
             $table->enum('semester',['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2']);
+            $table->enum('status',['ongoing','onhold','graduated'])->default('ongoing');
             $table->string('mobile',15);
             $table->date('dob');
+            $table->string('path')->default('N/A'); //For image Stock.
             $table->text('address');
             $table->timestamps();
             $table->index('academicId');

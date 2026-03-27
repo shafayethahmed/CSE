@@ -157,7 +157,7 @@ input:focus, select:focus {
                 <label>Semester</label>
                 <select name="semester" required>
                     <option value="">Select semester</option>
-                    @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2','passed'] as $sem)
+                    @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'] as $sem)
                         <option value="{{ $sem }}" {{ old('semester', $student->semester) == $sem ? 'selected' : '' }}>{{ $sem }}</option>
                     @endforeach
                 </select>
@@ -189,6 +189,16 @@ input:focus, select:focus {
                 <label>Address</label>
                 <input type="text" name="address"
                        value="{{ old('address', $student->address) }}" required>
+                @error('address')<div class="error">{{ $message }}</div>@enderror
+            </div>
+             <div class="form-group">
+                <label>Status</label>
+                    <select name="status" required>
+                    <option value="">Select Status</option>
+                    @foreach(['ongoing','onhold','graduated'] as $status)
+                        <option value="{{ $status }}" {{ old('status', $student->status) == $sem ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
+                    @endforeach
+                  </select>
                 @error('address')<div class="error">{{ $message }}</div>@enderror
             </div>
 

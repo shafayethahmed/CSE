@@ -5,9 +5,9 @@
 @push('styles')
 <style>
 .page-wrapper {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0px auto 0; /* Add top spacing */
-    padding: 10px;
+    padding: 5px;
 }
 
 /* Card Container */
@@ -157,6 +157,9 @@
 
         <!-- Top Summary -->
         <div class="profile-summary">
+               <div>
+             <img src="{{ url('/student/image/'.$student->id) }}" width="120">              {{-- <div class="value">{{ $student->path }}</div> --}}
+              </div>
             <div>
                 <div class="label">Academic ID</div>
                 <div class="value">{{$student->academicId }}</div>
@@ -166,13 +169,12 @@
                 <div class="value">{{$student->name }}</div>
             </div>
             <div>
-                <div class="label">Department</div>
-                <div class="value">CSE</div>
-            </div>
-            <div>
                <div class="label">Status</div>
+               <div class="value">
+                        <span class="status-badge status-ongoing">{{ ucfirst($student->status) }}</span>
+                </div>
 
-                @if ($student->semester === "Passed")
+                {{-- @if ($student->semester === "Passed")
                     <div class="value">
                         <span class="status-badge status-ongoing">Ex-Student</span>
                     </div>
@@ -180,7 +182,17 @@
                     <div class="value">
                         <span class="status-badge status-ongoing">Ongoing</span>
                     </div>
-                @endif
+                @endif --}}
+                {{-- <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" required>
+                        <option value="">Select status</option>
+                        <option value="ongoing" {{ old('status', $student->status ?? '') == 'ongoing' ? 'selected' : '' }}>Ongoing</option>
+                        <option value="onhold" {{ old('status', $student->status ?? '') == 'onhold' ? 'selected' : '' }}>On Hold</option>
+                        <option value="graduated" {{ old('status', $student->status ?? '') == 'graduated' ? 'selected' : '' }}>Graduated</option>
+                    </select>
+                    @error('status')<div class="error">{{ $message }}</div>@enderror
+                </div> --}}
             </div> 
         </div>
 
@@ -190,7 +202,7 @@
             <div class="profile-details">
                 <div class="detail-box">
                     <div class="detail-label">Session</div>
-                    <div class="detail-value">{{$student->session }}</div>
+                    <div class="detail-value">{{ucfirst($student->session) }}</div>
                 </div>
                 <div class="detail-box">
                     <div class="detail-label">Semester</div>
@@ -199,6 +211,10 @@
                 <div class="detail-box">
                     <div class="detail-label">Admission Year</div>
                     <div class="detail-value">{{$student->admissionYear }}</div>
+                </div>
+                <div class="detail-box">
+                    <div class="detail-label">Batch</div>
+                    <div class="detail-value">Day</div>
                 </div>
             </div>
         </div>
@@ -221,7 +237,7 @@
                 </div>
                 <div class="detail-box">
                     <div class="detail-label">Address</div>
-                    <div class="detail-value">{{$student->address}}</div>
+                    <div class="detail-value">{{ucwords($student->address)}}</div>
                 </div>
             </div>
         </div>

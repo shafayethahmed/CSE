@@ -14,7 +14,9 @@ class Student extends Model
         'session',
         'admissionYear',
         'semester',
+        'status',
         'mobile',
+        'path',
         'dob',
         'address',
     ];

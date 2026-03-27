@@ -98,6 +98,7 @@ th{
 td{
     padding:6px 6px;
     text-align: center;
+    font-size: 12px;
 }
 
 tbody tr{
@@ -271,7 +272,13 @@ tbody tr:hover{
                     </td>
                 </tr>
                 @empty
-                    <tr colspan="5">No Student Found!</tr>
+                     <tr>
+                        <td colspan="6" style="text-align:center; padding:10px;">
+                            <div style="color:#000308; font-size:12px;">
+                                 No Students Found!
+                            </div>
+                        </td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>

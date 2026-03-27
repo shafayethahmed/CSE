@@ -137,7 +137,7 @@ input:focus, select:focus {
             <div class="toast-msg toast-error">{{ session('error') }}</div>
         @endif
 
-        <form action="{{ route('students.store')}}" method="POST">
+        <form action="{{ route('students.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
@@ -200,6 +200,11 @@ input:focus, select:focus {
                 <label>Date of Birth</label>
                 <input type="date" name="dob" value="{{ old('dob') }}" required>
                 @error('dob')<div class="error">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label>Photo</label>
+                <input type="file" name="picture" value="{{ old('path') }}" required>
             </div>
 
             <div class="form-group">

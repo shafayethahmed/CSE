@@ -38,6 +38,7 @@ Route::get('/dashboard', function () { return view('dashboard');})->name('dashbo
 Route::get('/change-password', function () { return view('change-password');})->name('password.change');
 /* Students */
 Route::resource('students',StudentController::class);
+Route::get('/student/image/{id}', [StudentController::class, 'showImage']);
 // Alumni Student 
 Route::get('alumni/',[AlumniController::class, 'index'])->name('alumni.index');
 // Route for Users

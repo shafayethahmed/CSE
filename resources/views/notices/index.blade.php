@@ -1,3 +1,7 @@
+@php
+     $accessRoleForFacultyPage = ['super-admin','staff','user','department-head']
+ @endphp
+    @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title','Notices')
@@ -161,10 +165,11 @@
 
 <div class="notice-header">
     <h5 class="fw-bold">Notice Management</h5>
-
+     @if(in_array(Auth::user()->role, ['super-admin', 'department-head']))
     <a href="{{ route('notices.create') }}" class="btn-create">
         <i class="fas fa-plus"></i> Create Notice
     </a>
+    @endif
 </div>
 {{-- Section Message for Error/Success --}}
 <div id="alertmsg">
@@ -243,5 +248,5 @@ setTimeout(() => {
     $('#alertmsg').hide();
 }, 5000);
 </script>
-
 @endpush
+@endif

@@ -1,3 +1,8 @@
+@php
+     $accessRoleForFacultyPage = ['super-admin','department-head','staff']
+     $role = Auth::user()->role;
+ @endphp
+ @if (in_array($role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title','Create Notice')
@@ -225,3 +230,4 @@ textarea.form-control{
 </div>
 
 @endsection
+@endif

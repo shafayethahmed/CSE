@@ -1,3 +1,7 @@
+@php
+     $accessRoleForFacultyPage = ['super-admin','department-head','staff','user']
+ @endphp
+ @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title', $notice->title)
@@ -224,3 +228,4 @@ function downloadPDF() {
 </div>
 
 @endsection
+@endif

@@ -1,4 +1,7 @@
-
+@php
+     $accessRoleForFacultyPage = ['super-admin','department-head']
+ @endphp
+@if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title','Edit Notice')
@@ -142,3 +145,4 @@ button.btn-secondary:hover {
 </div>
 
 @endsection
+@endif

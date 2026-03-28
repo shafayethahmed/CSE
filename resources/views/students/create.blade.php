@@ -1,3 +1,7 @@
+@php
+     $accessRoleForFacultyPage = ['super-admin','staff','department-head']
+ @endphp
+  @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title','Add Student')
@@ -230,3 +234,4 @@ function goBack(){
 }
 </script>
 @endpush
+@endif

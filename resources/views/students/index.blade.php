@@ -1,3 +1,7 @@
+@php
+     $accessRoleForFacultyPage = ['super-admin','staff','user','department-head']
+ @endphp
+  @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title','Students')
@@ -197,7 +201,9 @@ tbody tr:hover{
 <div class="page-wrapper">
     <div class="page-header">
         <h2>Student Management</h2>
+       @if(in_array(Auth::user()->role, ['super-admin', 'staff', 'department-head']))
         <button class="btn btn-primary" onclick="addStudent()">+ Add Student</button>
+        @endif
     </div>
     <!-- Filters -->
     <div class="filter-box">
@@ -304,3 +310,4 @@ $(document).ready(function(){
 }
 </script>
 @endpush
+@endif

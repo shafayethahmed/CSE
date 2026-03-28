@@ -2,7 +2,7 @@
 <div id="alumnitable">
     <table>
         <thead>
-            <tr>
+            <tr style="text-align: center;">
                 <th>Academic ID</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -15,7 +15,7 @@
 
         <tbody>
             @forelse ($alumni as $alu)
-                <tr>
+                <tr style="text-align: center;">
                     <td>{{ $alu->academicId }}</td>
                     <td>{{ $alu->name }}</td>
                     <td>{{ $alu->email }}</td>

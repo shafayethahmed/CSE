@@ -143,7 +143,20 @@ tbody tr:hover{
     background:#e5e7eb;
     color:#111827;
 }
-
+/* Toast */
+.toast-msg{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:8px 12px;
+    border-radius:6px;
+    color:#fff;
+    z-index:9999;
+    font-size: 12px;
+    animation:slideFade .4s ease forwards;
+}
+.toast-success{ background:#28a745; }
+.toast-error{ background:#dc3545; }
 /* Responsive */
 @media(max-width:992px){
     .filter-box{
@@ -173,11 +186,18 @@ tbody tr:hover{
     <div class="page-header">
         <h2>Alumni Students</h2>
     </div>
-
+ 
     <!-- Filters -->
     <div class="filter-box">
         <input type="text" id="searchInput" placeholder="Search by Name,Id,Email....">
     </div>
+    {{-- Toast --}}
+    @if(session('success'))
+    <div class="toast-msg toast-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+    <div class="toast-msg toast-error">{{ session('error') }}</div>
+    @endif
     <!-- Table -->
     <div class="table-box">
        @include('alumni.partials.table',['alumni'=> $alumni])
@@ -224,5 +244,9 @@ $(document).ready(function(){
     });
 
 });
+
+setTimeout(() => {
+    document.querySelectorAll('.toast-msg').forEach(t => t.remove());
+}, 3000);
 </script>
 @endpush

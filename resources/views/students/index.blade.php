@@ -150,22 +150,20 @@ tbody tr:hover{
 .btn-delete:hover{
     background:#fecaca;
 }
+/* Toast */
 .toast-msg{
-    background:#1e3a8a;
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:8px 12px;
+    border-radius:6px;
     color:#fff;
-    padding:12px 18px;
-    border-radius:8px;
-    margin-bottom:10px;
-    font-size:13px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.1);
-    animation: slideIn .4s ease;
+    z-index:9999;
+    font-size: 12px;
+    animation:slideFade .4s ease forwards;
 }
-
-/* Success */
-.toast-success{ background:#16a34a; }
-
-/* Error */
-.toast-error{ background:#dc2626; }
+.toast-success{ background:#28a745; }
+.toast-error{ background:#dc3545; }
 
 /* Animation */
 @keyframes slideIn{
@@ -225,6 +223,13 @@ tbody tr:hover{
 
         <input type="text" id="admityear" placeholder="Admission Year">
     </div>
+   {{-- Toast --}}
+    @if(session('success'))
+    <div class="toast-msg toast-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+    <div class="toast-msg toast-error">{{ session('error') }}</div>
+    @endif
 
     <!-- Table -->
     <div class="table-box">
@@ -286,6 +291,9 @@ $(document).ready(function(){
 
 });
 
+ setTimeout(() => {
+    document.querySelectorAll('.toast-msg').forEach(t => t.remove());
+}, 3000);
 </script>
 <script>
     function addStudent() {
@@ -293,17 +301,6 @@ $(document).ready(function(){
    // document.getElementById('spinnerOverlay').style.display = 'flex';
       // Show spinner for 3 seconds even if redirect is canceled
     window.location.href = "{{ route('students.create') }}";
-}
-function showToast(message, type = 'success'){
-    let toast = document.createElement('div');
-    toast.className = 'toast-msg toast-' + type;
-    toast.innerText = message;
-
-    document.getElementById('toast-container').appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
 }
 </script>
 @endpush

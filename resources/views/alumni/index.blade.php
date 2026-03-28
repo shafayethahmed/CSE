@@ -6,9 +6,9 @@
 <style>
 /* Wrapper */
 .page-wrapper{
-    margin-top: 20px;
-    max-width: 900px;
-    margin: 5 auto;
+    margin-top: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 /* Header */
@@ -16,91 +16,96 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:18px;
+    margin-bottom:20px;
 }
 
 .page-header h2{
-    font-size:18px;
+    font-size:20px;
     font-weight:600;
-    color:#1f2937;
+    color:#111827;
 }
 
 /* Primary Button */
 .btn-primary{
-    background: var(--primary);
+    background:#111827;
     border:none;
-    padding:7px 14px;
-    color:white;
+    padding:8px 16px;
+    color:#ffffff;
     border-radius:6px;
     cursor:pointer;
-    font-weight:600;
-    font-size:12px;
+    font-weight:500;
+    font-size:13px;
     transition:.25s;
 }
 .btn-primary:hover{
-    background:#1e40af;
+    background:#1f2937;
 }
 
 /* Filters */
 .filter-box{
-    background:#fff;
+    background:#ffffff;
     padding:14px;
     border-radius:10px;
-    margin-bottom:18px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.04);
+    margin-bottom:20px;
+    border:1px solid #e5e7eb;
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    gap:10px;
+    gap:12px;
 }
 
 .filter-box input,
 .filter-box select{
-    padding:7px 9px;
+    padding:7px 10px;
     border-radius:6px;
     border:1px solid #d1d5db;
     font-size:12px;
-    transition:.2s;
+    background:#f9fafb;
 }
 
 .filter-box input:focus,
 .filter-box select:focus{
-    border-color: var(--primary);
+    border-color:#9ca3af;
     outline:none;
 }
 
-/* Table */
+/* Table Box */
 .table-box{
-    background:#fff;
-    padding:8px;
+    background:#ffffff;
     border-radius:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    border:1px solid #e5e7eb;
+    overflow:hidden;
 }
 
+/* Table */
 table{
     width:100%;
     border-collapse:collapse;
-    font-size:11px;
+    font-size:14px;
 }
 
+/* Clean Header */
 thead{
-    background:#d9d5ebe1;
+    background:#eb8471;
+    border-bottom:1px solid #e5e7eb;
 }
 
 th{
-    font-size:12px;
+    font-size:14px;
     font-weight:600;
-    color:#000000;
-    padding:9px 8px;
-    text-align: center;
+    color:black;
+    padding:10px 8px;
+    text-align:center;
 }
 
+/* Body */
 td{
-    padding:6px 6px;
-    text-align: center;
+    padding:9px 6px;
+    text-align:center;
+    color:black;
 }
 
 tbody tr{
-    border-bottom:1px solid #eef2f7;
+    border-bottom:1px solid #f1f5f9;
     transition:.2s;
 }
 
@@ -115,55 +120,48 @@ tbody tr:hover{
 
 .actions button{
     border:none;
-    padding:2px 6px;
+    padding:4px 10px;
     border-radius:5px;
     font-size:11px;
-    margin-right:3px;
     cursor:pointer;
     font-weight:500;
+    background:#f3f4f6;
+    color:#374151;
     transition:.2s;
 }
 
-/* Button colors */
-.btn-view{
-    background:#e0f2fe;
-    color:#0369a1;
-}
-.btn-view:hover{
-    background:#bae6fd;
+.actions button:hover{
+    background:#e5e7eb;
 }
 
-.btn-edit{
-    background:#fef9c3;
-    color:#854d0e;
-}
-.btn-edit:hover{
-    background:#fde68a;
-}
-
+/* Delete Button (subtle, not loud) */
 .btn-delete{
-    background:#fee2e2;
-    color:#b91c1c;
+    background:#f9fafb;
+    color:#6b7280;
 }
 .btn-delete:hover{
-    background:#fecaca;
+    background:#e5e7eb;
+    color:#111827;
 }
 
 /* Responsive */
 @media(max-width:992px){
-    .filter-box{grid-template-columns:repeat(2,1fr);}
+    .filter-box{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
 @media(max-width:600px){
-    .filter-box{grid-template-columns:1fr;}
+    .filter-box{
+        grid-template-columns:1fr;
+    }
     .page-header{
         flex-direction:column;
         align-items:flex-start;
         gap:10px;
     }
 }
-
-</style>
+ </style>
 @endpush
 
 
@@ -178,83 +176,53 @@ tbody tr:hover{
 
     <!-- Filters -->
     <div class="filter-box">
-        <input type="text" id="searchInput" placeholder="Search by Name or ID">
-
-        <select>
-            <option>All Sessions</option>
-            <option>Spring</option>
-            <option>Summer</option>
-        </select>
-        <input type="text" placeholder="Passed Year">
+        <input type="text" id="searchInput" placeholder="Search by Name,Id,Email....">
     </div>
-
     <!-- Table -->
     <div class="table-box">
-        <table>
-            <thead>
-                <tr>
-                    <th>Academic ID</th>
-                    <th>Name</th>
-                    <th>Passed Year</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th width="140">Action</th>
-                </tr>
-            </thead>
-
-            <tbody id="studentTable">
-                <tr>
-                    <td>2024-001</td>
-                    <td>John Doe</td>
-                    <td>Summer-2026</td>
-                    <td>john@example.com</td>
-                    <td>01700000000</td>
-                    <td class="actions">
-                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>0992220005101006</td>
-                    <td>Shafayeth Ahmed Chowdhury</td>
-                    <td>Spring-2026</td>
-                    <td>sacchy1234@gmail.com</td>
-                    <td>01329490229</td>
-                    <td class="actions">
-                        <button class="btn-delete" onclick="deleteStudent(this)">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+       @include('alumni.partials.table',['alumni'=> $alumni])
     </div>
 
 </div>
-
 @endsection
-
-
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+$(document).ready(function(){
 
-document.addEventListener("DOMContentLoaded", function(){
-
-    /* Search */
-    document.getElementById("searchInput").addEventListener("keyup", function() {
-        let value = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#studentTable tr");
-
-        rows.forEach(row=>{
-            row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
+    function alumnidata(page = 1){
+        let searchInput = $('#searchInput').val();
+        $.ajax({
+            url: "{{ route('alumni.index') }}?page=" + page,
+            type: "GET",
+            data: {
+                searchInput: searchInput
+            },
+            success: function(data){
+                $('#alumnitable').html(data);
+            },
+            error: function(){
+                alert('Something went wrong!');
+            }
         });
+    }
+
+    //  Debounce (smooth typing)
+    let delayTimer;
+    $('#searchInput, #passedYear').on('keyup', function(){
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(function(){
+            alumnidata();
+        }, 300);
+    });
+
+    //  AJAX Pagination
+    $(document).on('click', '.pagination a', function(e){
+        e.preventDefault();
+        let page = $(this).attr('href').split('page=')[1];
+        alumnidata(page);
     });
 
 });
-
-function deleteStudent(btn){
-    if(confirm("Delete this student?")){
-        btn.closest("tr").remove();
-    }
-}
-
 </script>
 @endpush

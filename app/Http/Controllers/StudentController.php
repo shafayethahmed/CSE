@@ -35,7 +35,7 @@ public function index(Request $request){
     // Pagination
     $students = $query->paginate(10)->withQueryString();
 
-    // ⚡ AJAX response
+    //  AJAX response
     if ($request->ajax()) {
         return view('students.partials.table', compact('students'))->render();
     }

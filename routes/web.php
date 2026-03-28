@@ -36,11 +36,15 @@ Route::middleware(['checkUserRole','auth'])->group(function(){
 Route::post('logout',[AuthController::class, 'logoutUserOrFaculty'])->name('logout');
 Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
 Route::get('/change-password', function () { return view('change-password');})->name('password.change');
+
 /* Students */
 Route::resource('students',StudentController::class);
 Route::get('/student/image/{id}', [StudentController::class, 'showImage']);
+
 // Alumni Student 
 Route::get('alumni/',[AlumniController::class, 'index'])->name('alumni.index');
+Route::delete('/alumni/{alumni}/delete', [AlumniController::class , 'destroy'])->name('alumni.destroy');
+
 // Route for Users
 Route::resource('users',UserController::class);
 
@@ -79,8 +83,8 @@ Route::get('/batches/supervisor', [SuporvisorController::class, 'index'])->name(
 Route::get('/faculty-search', [SuporvisorController::class, 'searchFaculty'])->name('batch-supervisor.faculty.search');
 Route::post('/batch-supervisor-store',[SuporvisorController::class, 'store'])->name('batch-supervisor.store');
 Route::delete('/batch-supervisor/{supervisorid}',[SuporvisorController::class, 'destroy'])->name('batch-supervisor.destroy');
-/* Batches */
 
+/* Batches */
 Route::get('/batch/assign-supervisor',function(){
    return view('supervisor.create');
 })->name('supervisor.assign');

@@ -85,14 +85,14 @@ table{
 
 /* Clean Header */
 thead{
-    background:#eb8471;
+    background:#010427;
     border-bottom:1px solid #e5e7eb;
 }
 
 th{
     font-size:14px;
     font-weight:600;
-    color:black;
+    color:white;
     padding:10px 8px;
     text-align:center;
 }

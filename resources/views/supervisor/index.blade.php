@@ -1,3 +1,7 @@
+@php
+     $accessRoleForFacultyPage = ['super-admin','staff','user','department-head']
+ @endphp
+    @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title','Batch Teacher List')
@@ -77,10 +81,11 @@
 
         <div class="header">
             <h5>Batch Teacher</h5>
-
+             @if (Auth::user()->role === "super-admin" || Auth::user()->role === "department-head")
             <a href="{{ route('supervisor.assign') }}" class="btn btn-primary btn-sm">
                 + Assign Supervisor
             </a>
+            @endif
         </div>
         @if(session('success'))
             <div class="alert alert-success mb-1" style="color: green;">
@@ -103,7 +108,9 @@
             <th>Faculty</th>
             <th>Email</th>
             <th>Semester</th>
+             @if (Auth::user()->role === "super-admin" || Auth::user()->role === "department-head")
             <th>Action</th>
+            @endif
         </tr>
     </thead>
 
@@ -113,7 +120,8 @@
             <td>{{ $row->faculty->name }}</td>
             <td>{{ $row->faculty->email }}</td>
             <td>{{ $row->semester }}</td>
-            <td>
+            @if (Auth::user()->role === "super-admin" || Auth::user()->role === "department-head")
+                 <td>
                 {{-- Delete Form --}}
                 <form action="{{ route('batch-supervisor.destroy', $row->id) }}" method="POST"
                       onsubmit="return confirm('Are you sure you want to delete this supervisor?');">
@@ -122,6 +130,7 @@
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </td>
+            @endif
         </tr>
         @endforeach
     </tbody>
@@ -145,3 +154,4 @@
         }, 3000);
      </script>
 @endpush
+@endif

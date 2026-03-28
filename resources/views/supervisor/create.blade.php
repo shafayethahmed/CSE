@@ -1,3 +1,7 @@
+@php
+     $accessRoleForFacultyPage = ['super-admin','department-head']
+ @endphp
+    @if (in_array(Auth::user()->role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
 @section('title','Assign Batch Teacher')
@@ -232,3 +236,4 @@ setTimeout(() => {
 });
 </script>
 @endpush
+@endif

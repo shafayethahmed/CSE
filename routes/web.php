@@ -92,7 +92,5 @@ Route::get('/batch/assign-supervisor',function(){
 Route::get('/batches/distribution', function () {
     return 'Batch Distribution';
 })->name('batches.distribution');
-
-
 });
 ?>

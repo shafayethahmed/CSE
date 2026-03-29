@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FacultyAuthController;
@@ -34,7 +35,7 @@ Route::post('faculty/login', [FacultyAuthController::class,'facultyLogin'])->nam
 
 Route::middleware(['checkUserRole','auth'])->group(function(){
 Route::post('logout',[AuthController::class, 'logoutUserOrFaculty'])->name('logout');
-Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
+Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
 Route::get('/change-password', function () { return view('change-password');})->name('password.change');
 
 /* Students */

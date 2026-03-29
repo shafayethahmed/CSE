@@ -1,3 +1,7 @@
+@php
+    $ActionPrivillageRole = ['super-admin','staff','department-head','user'];
+@endphp
+@if (in_array(Auth::user()->role ,$ActionPrivillageRole))
 @extends('layout.sidebar')
 
 @section('title','Course Teacher')
@@ -186,10 +190,11 @@ tbody tr:hover{
 
         <div class="header-actions">
             <!-- Fetch Button -->
+             @if (in_array(Auth::user()->role ,['super-admin','department-head','staff']))
             <button class="header-btn btn-fetch" onclick="fetchCourses()">
                 <i class="fa-solid fa-rotate"></i> Fetch
             </button>
-
+            @endif
             <!-- Loading Spinner -->
             <div class="loading-spinner" id="loadingSpinner"></div>
 
@@ -229,7 +234,9 @@ tbody tr:hover{
                     <th>Course Code</th>
                     <th>Course Title</th>
                     <th>Instructor</th>
+                    @if (in_array(Auth::user()->role ,['super-admin','department-head']))
                     <th width="90">Action</th>
+                    @endif
                 </tr>
             </thead>
 
@@ -243,6 +250,7 @@ tbody tr:hover{
                     <td>{{ $fc->course->course_code ?? "NULL"}}</td>
                     <td>{{ $fc->course->course_title ?? "NULL" }}</td>
                     <td>{{ $fc->faculty->name ?? "NULL" }}</td>
+                     @if (in_array(Auth::user()->role ,['super-admin','department-head','staff']))
                     <td>
                         <form action="{{ route('courses.course-teacher.edit',$fc->id)}}" method="get">
                         <button class="icon-btn btn-edit" onclick="this.form.submit()" title="Edit">
@@ -250,6 +258,7 @@ tbody tr:hover{
                         </button>
                         </form>
                     </td>
+                    @endif
                 </tr>
                  @empty
                       <tr>
@@ -307,3 +316,4 @@ setTimeout(function(){
 </script>
 
 @endpush
+@endif

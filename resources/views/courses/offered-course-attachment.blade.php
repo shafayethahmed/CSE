@@ -1,3 +1,4 @@
+@if (in_array(Auth::user()->role ,['super-admin','department-head','staff']))
 @extends('layout.sidebar')
 
 @section('title','Assign Offered Courses')
@@ -346,3 +347,4 @@ $(document).ready(function(){
 });
 </script>
 @endpush
+@endif

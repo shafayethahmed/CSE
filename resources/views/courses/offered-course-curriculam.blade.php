@@ -1,3 +1,7 @@
+@php
+    $ActionPrivillageRole = ['super-admin','department-head','staff','user'];
+@endphp
+@if (in_array(Auth::user()->role ,$ActionPrivillageRole))
 @extends('layout.sidebar')
 @section('title','Offered Course')
 
@@ -134,12 +138,13 @@ tbody tr:hover{
             <h2>Offered Courses</h2>
         </div>
         <!-- Add Offered Course Button -->
+        @if (in_array(Auth::user()->role ,['super-admin','department-head','staff']))
         <div style="margin-bottom: 15px;">
             <button class="btn-primary-custom" onclick="window.location.href='{{ route('courses.offered.create') }}'">
                 + Edit Offered Course
             </button>
         </div>
-
+        @endif
         <!-- Filter -->
         <form method="get">
             <div class="filter-box">
@@ -195,3 +200,4 @@ tbody tr:hover{
      </script>
        
 @endpush
+@endif

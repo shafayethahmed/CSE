@@ -1,3 +1,7 @@
+@php
+    $ActionPrivillageRole = ['super-admin','staff','department-head','user'];
+@endphp
+@if (in_array(Auth::user()->role ,$ActionPrivillageRole))
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 @extends('layout.sidebar')
 @section('title','Courses')
@@ -209,7 +213,9 @@ tbody tr:hover{
                     <th>Course Title</th>
                     <th>Course Credit</th>
                     <th>Course Type</th>
+                    @if (in_array(Auth::user()->role ,['staff','department-head','super-admin']))
                     <th width="140">Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -224,14 +230,21 @@ tbody tr:hover{
                     @else
                         <td>{{ ucWords($course->course_type) }}</td>
                     @endif
+                    {{-- Actions are ecrypted for specific users --}}
+                     @if (in_array(Auth::user()->role ,['staff','department-head','super-admin']))
                     <td class="actions">
+                        @if (in_array(Auth::user()->role ,['staff','department-head','super-admin']))
                         <button class="btn-edit" onclick="editCourse({{ $course->id }})"><i class="fa fa-edit"></i></button>
+                        @endif
+                        @if (in_array(Auth::user()->role ,['department-head','super-admin']))
                         <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
                         </form>
+                        @endif
                     </td>
+                    @endif
                 </tr>
             @empty
                 <tr>
@@ -295,3 +308,4 @@ function addCourse(){
  }
 </script>
 @endpush>
+@endif

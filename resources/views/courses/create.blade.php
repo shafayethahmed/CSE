@@ -1,3 +1,7 @@
+@php
+    $ActionPrivillageRole = ['super-admin','department-head','staff'];
+@endphp
+@if (in_array(Auth::user()->role ,$ActionPrivillageRole))
 @extends('layout.sidebar')
 
 @section('title','Add Course')
@@ -191,3 +195,4 @@
     </div>
 </div>
 @endsection
+@endif

@@ -261,10 +261,8 @@
         <i class="fas fa-calendar-alt"></i> Meetings <sub style="color: yellow;">Coming Soon</sub>
     </a>
 
-
+    @if (Auth::user()->role === 'super-admin' || Auth::user()->role === 'staff'  )
     <div class="menu-section">Administration</div>
-      @if (Auth::user()->role === 'super-admin' || Auth::user()->role === 'staff'  )
-
     <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
         <i class="fas fa-users"></i> Users & Roles
     </a>

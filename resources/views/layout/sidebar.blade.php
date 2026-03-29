@@ -254,6 +254,14 @@
         <a href="{{ route('supervisor.index') }}" class="{{ request()->routeIs('supervisor.index') ? 'active' : '' }}">➤ Supervisor</a>
     </div>
 
+      <a href="#" class="#">
+        <i class="fas fa-tasks"></i> Routine <sub style="color: yellow;">Coming Soon</sub>
+    </a>
+    <a href="#" class="#">
+        <i class="fas fa-calendar-alt"></i> Meetings <sub style="color: yellow;">Coming Soon</sub>
+    </a>
+
+
     <div class="menu-section">Administration</div>
       @if (Auth::user()->role === 'super-admin' || Auth::user()->role === 'staff'  )
 

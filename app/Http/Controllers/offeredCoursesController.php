@@ -21,15 +21,17 @@ class offeredCoursesController extends Controller
     $query->where('semester', $offeredSemester);
     
     // Credit Sum
-    $totalCredit = (clone $query)->sum('course_credit');
+    // $totalCredit = (clone $query)->sum('course_credit');
 
     $offeredCourses = $query->paginate(10)->withQueryString();
 
     if ($request->ajax()) {
-        return view('courses.partial.offered-course', compact('offeredCourses','totalCredit','offeredSemester'))->render();
+        // return view('courses.partial.offered-course', compact('offeredCourses','totalCredit','offeredSemester'))->render();
+        return view('courses.partial.offered-course', compact('offeredCourses','offeredSemester'))->render();
     }
 
-    return view('courses.offered-course-curriculam', compact('offeredCourses','totalCredit','offeredSemester'));
+    return view('courses.offered-course-curriculam', compact('offeredCourses','offeredSemester'));
+    // return view('courses.offered-course-curriculam', compact('offeredCourses','totalCredit','offeredSemester'));
 }
 
     //Offer Course Create :
@@ -40,40 +42,53 @@ class offeredCoursesController extends Controller
     }
 
     //Store Function For Offered Course Prevent :
-    public function store(Request $request){
-     $data = []; //For preventing null error!
-      if(!$request->courses){
-            return redirect()->back()->with('error','Please select at least one course');
+    public function store(Request $request)
+        {
+            if (!$request->courses) {
+                return redirect()->back()->with('error', 'Please select at least one course');
+            }
+            $data = [];
+            foreach ($request->courses as $cid) {
+                // duplicate check (optional but important)
+                $exists = OfferedCourses::where('course_id', $cid)
+                            ->where('semester', $request->semester)
+                            ->exists();
+                if (!$exists) {
+                    $data[] = [
+                        'course_id' => $cid,
+                        'semester' => $request->semester,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+            }
+            try {
+                if (!empty($data)) {
+                    OfferedCourses::insert($data);
+                }
+                return redirect()->route('courses.offered-curriculum')
+                    ->with('success', 'Offered Course Inserted Successfully');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Internal Error!');
+            }
         }
-    foreach ($request->courses as $cid) {
-        $course = Course::find($cid);
-        //Multiple Condition Run 1 time.
-        $data[] = [
-            'course_code' => $course->course_code,
-            'course_title' => $course->course_title,
-            'course_credit' => $course->course_credit,
-            'semester' => $request->semester
-        ];
-        }
-        try{
-             OfferedCourses::insert($data);   //inserting the course.
-             return redirect()->route('courses.offered-curriculum')->with('success','Offered Course Inserted');
-        } catch(\Exception $e){
-            return redirect()->back()->with('error','Internal Error!');
-        }
-        
-    }
 
     // Function for diplay already assigned courses to the semester:
-        public function alreadyOfferedCourses(Request $request){
+          public function alreadyOfferedCourses(Request $request)
+            {
                 $semester = $request->filterSemesterValue ?? '1-1';
-                $assignedCourses = OfferedCourses::where('semester',$semester)->get();
-                // Return the courses 
+
+                $assignedCourses = OfferedCourses::with('course')
+                    ->where('semester', $semester)
+                    ->get()
+                    ->filter(function ($item) {
+                        return $item->course != null; 
+                    })
+                    ->values(); // reindex
                 return response()->json([
                     'courses' => $assignedCourses,
                 ]);
-        }
-
+            }
     //Delete course from existance Data: 
         public function deleteExistedCourse($id){
             //Reciving the id:

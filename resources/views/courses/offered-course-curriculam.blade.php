@@ -164,7 +164,7 @@ tbody tr:hover{
         <!-- Table -->
         <div class="table-responsive" >
             <div id="offerCourseTable">
-                     @include('courses.partial.offered-course',['offeredCourses' => $offeredCourses]);
+                     @include('courses.partial.offered-course',['offeredCourses' => $offeredCourses])
             </div>
         </div>
     </div>

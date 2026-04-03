@@ -26,4 +26,10 @@ class Course extends Model
         'faculty_id'               // foreign key of related model
     );
 }
+
+public function offeredCourses()
+{
+    return $this->hasMany(OfferedCourses::class, 'course_id');
+}
+
 }

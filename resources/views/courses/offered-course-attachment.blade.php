@@ -289,8 +289,9 @@ $(document).ready(function(){
                         let html = `
                             <label>
                                 <span>
-                                    ${course.course_code} - ${course.course_title}
-                                   <a href="#" class="deleteCourse" data-course-id="${course.id}">❌</a>
+                                    ${course.course?.course_code ?? 'N/A'} -
+                                    ${course.course?.course_title ?? 'No Title'}
+                                    <button type="button" class="deleteCourse" data-course-id="${course.course?.id ?? ''}">❌</button>
                                 </span>
                             </label>
                         `;

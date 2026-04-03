@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('offered_courses', function (Blueprint $table) {
             $table->id();
             $table->enum('semester',['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2']);
-            $table->string('course_code');
-            $table->string('course_title');
-            $table->string('course_credit');
+             // Foreign key to courses.id
+            $table->foreignId('course_id')->constrained('courses')  // connect to courses.id
+          ->onDelete('cascade')  
+          ->onUpdate('cascade'); 
             $table->timestamps();
         });
     }

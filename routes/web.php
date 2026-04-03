@@ -28,11 +28,16 @@ Route::get('/login',function(){
   return view('login');
 })->name('login');
 
+// Faculty Portal All Route: 
+Route::get('/faculty/dashboard', function () {
+    return view('auth-faculty.faculty-dashboard');
+})->name('faculty.dashboard');
+
 
 //Control & Execute logic for general login & faculty login and logout.
 Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
 Route::post('faculty/login', [FacultyAuthController::class,'facultyLogin'])->name('faculty.login');
-
+// Middleware Start from here
 Route::middleware(['checkUserRole','auth'])->group(function(){
 Route::post('logout',[AuthController::class, 'logoutUserOrFaculty'])->name('logout');
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
@@ -94,4 +99,11 @@ Route::get('/batches/distribution', function () {
     return 'Batch Distribution';
 })->name('batches.distribution');
 });
+
+
+
+
+
+
+
 ?>

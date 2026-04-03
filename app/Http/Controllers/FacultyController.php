@@ -50,7 +50,7 @@ class FacultyController extends Controller
     $search = $request->searchval;
 
     // Search user
-    $user = Faculty::where('email', $search)->first();
+    $user = User::where('email', $search)->first();
 
     // Check user exists
     if (!$user) {

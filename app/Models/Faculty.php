@@ -41,15 +41,6 @@ class Faculty extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Automatically hash password when saving
-     */
-    public function setPasswordAttribute($value)
-    {
-        if (!empty($value)) {
-            $this->attributes['password'] = bcrypt($value);
-        }
-    }
    //faculty Need to logged in by faculty Id:
    public function getAuthIdentifierName()
    {

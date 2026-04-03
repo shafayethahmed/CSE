@@ -12,6 +12,7 @@ use App\Http\Controllers\FacultyAuthController;
 use App\Http\Controllers\offeredCoursesController;
 use App\Http\Controllers\FacultyCourseController;
 use App\Http\Controllers\SuporvisorController;
+use App\Http\Controllers\Faculty\FacultyDashboardController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\TestStatus\Notice;
@@ -29,14 +30,16 @@ Route::get('/login',function(){
 })->name('login');
 
 // Faculty Portal All Route: 
-Route::get('/faculty/dashboard', function () {
-    return view('auth-faculty.faculty-dashboard');
-})->name('faculty.dashboard');
+Route::get('/faculty/dashboard', [FacultyDashboardController::class, 'index'])->name('faculty.dashboard');
 
 
 //Control & Execute logic for general login & faculty login and logout.
-Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
-Route::post('faculty/login', [FacultyAuthController::class,'facultyLogin'])->name('faculty.login');
+//Thorttle are activated for both login.
+Route::middleware(['throttle:5,1'])->group(function(){
+    Route::post('general/login', [AuthController::class, 'generalLogin'])->name('general.login');
+    Route::post('faculty/login', [FacultyAuthController::class,'facultyLogin'])->name('faculty.login');
+});
+
 // Middleware Start from here
 Route::middleware(['checkUserRole','auth'])->group(function(){
 Route::post('logout',[AuthController::class, 'logoutUserOrFaculty'])->name('logout');
@@ -99,11 +102,5 @@ Route::get('/batches/distribution', function () {
     return 'Batch Distribution';
 })->name('batches.distribution');
 });
-
-
-
-
-
-
 
 ?>

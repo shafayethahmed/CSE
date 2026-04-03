@@ -10,11 +10,11 @@
 
 <style>
 :root{
-    --primary:#1e3a8a;
+    --primary:#d44f11;
     --dark:#0f172a;
-    --sidebar:#111827;
+    --sidebar:#f7f3e5;
     --hover:#1f2937;
-    --text:#e5e7eb;
+    --text:#051433;
     --muted:#9ca3af;
     --white:#ffffff;
     --active-bg:#1e3a8a;
@@ -183,8 +183,8 @@
 
     <div class="user-box">
         <div class="info">
-            <strong>{{ Auth::user()->name ?? 'Faculty' }}</strong><br>
-            <small style="color:darkblue;">{{ ucwords(Auth::guard('faculty')->user()->role ?? 'Faculty') }}</small>
+            <strong>{{ Auth::guard('faculty')->user()->name ?? 'Faculty' }}</strong><br>
+            <small style="color:darkblue;"><b>{{ ucwords(Auth::guard('faculty')->user()->role ?? 'N/A') }}</b></small>
         </div>
         <i class="fa fa-user fa-lg" aria-hidden="true" style="color:#1e3a8a;"></i>
     </div>
@@ -210,16 +210,16 @@
     </a>
 
     <a href="#" class="{{ request()->routeIs('results.*') ? 'active' : '' }}">
-        <i class="fas fa-clipboard-list"></i> Results
+        <i class="fas fa-clipboard-list"></i> Results<sub style="color: rgba(255, 72, 0, 0.89);">Coming Soon</sub>
     </a>
 
     <a href="#" class="{{ request()->routeIs('routine.*') ? 'active' : '' }}">
-        <i class="fas fa-calendar-alt"></i> Routine
+        <i class="fas fa-calendar-alt"></i> Meeting<sub style="color: rgb(252, 61, 13);">Coming Soon</sub>
     </a>
 
     <form method="POST" action="#">
         @csrf
-        <button style="background:none;border:none;color:white;width:100%;text-align:left;padding:10px 18px;">
+        <button style="background:none;border:none;color:black;width:100%;text-align:left;padding:10px 18px;">
             <i class="fas fa-sign-out-alt"></i> Logout
         </button>
     </form>

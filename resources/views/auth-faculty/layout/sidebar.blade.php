@@ -193,7 +193,7 @@
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
-    <a href="#" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
         <i class="fas fa-chart-line"></i> Dashboard
     </a>
 
@@ -202,10 +202,10 @@
     </a>
 
      <a href="#" class="{{ request()->routeIs('students.*') ? 'active' : '' }}">
-               <i class="fas fa-user-graduate"></i> Students
+               <i class="fas fa-user-graduate"></i> Students</span>
     </a>
 
-    <a href="#" class="{{ request()->routeIs('courses.*') ? 'active' : '' }}">
+    <a href="{{ route('faculty.courses.taught') }}" class="{{ request()->routeIs('faculty.courses.*') ? 'active' : '' }}">
         <i class="fas fa-book"></i> Courses
     </a>
 

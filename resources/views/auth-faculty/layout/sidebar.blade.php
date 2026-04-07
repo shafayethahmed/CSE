@@ -197,7 +197,7 @@
         <i class="fas fa-chart-line"></i> Dashboard
     </a>
 
-    <a href="#" class="{{ request()->routeIs('password.change') ? 'active' : '' }}">
+    <a href="{{ route('faculty.change.password') }}" class="{{ request()->routeIs('faculty.change.*') ? 'active' : '' }}">
         <i class="fas fa-key"></i> Change Password
     </a>
 

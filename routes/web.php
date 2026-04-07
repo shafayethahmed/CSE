@@ -13,6 +13,7 @@ use App\Http\Controllers\offeredCoursesController;
 use App\Http\Controllers\FacultyCourseController;
 use App\Http\Controllers\SuporvisorController;
 use App\Http\Controllers\Faculty\FacultyDashboardController;
+use App\Http\Controllers\Faculty\FacultyPasswordController;
 use App\Http\Controllers\Faculty\LecturerCoursesController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::get('/login',function(){
 // Faculty Portal All Route: 
 Route::prefix('faculty')->name('faculty.')->middleware('auth:faculty')->group(function () {
     Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/change-password', [ FacultyPasswordController::class , 'index'])->name('change.password');
     Route::get('/courses', [LecturerCoursesController::class, 'index'])->name('courses.taught');
 });
 

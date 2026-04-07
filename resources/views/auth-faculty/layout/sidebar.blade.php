@@ -201,6 +201,10 @@
         <i class="fas fa-key"></i> Change Password
     </a>
 
+     <a href="#" class="{{ request()->routeIs('students.*') ? 'active' : '' }}">
+               <i class="fas fa-user-graduate"></i> Students
+    </a>
+
     <a href="#" class="{{ request()->routeIs('courses.*') ? 'active' : '' }}">
         <i class="fas fa-book"></i> Courses
     </a>

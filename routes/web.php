@@ -31,11 +31,13 @@ Route::get('/login',function(){
   return view('login');
 })->name('login');
 
+
 // Faculty Portal All Route: 
 Route::prefix('faculty')->name('faculty.')->middleware('auth:faculty')->group(function () {
     Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard');
     Route::get('/change-password', [ FacultyPasswordController::class , 'index'])->name('change.password');
     Route::get('/courses', [LecturerCoursesController::class, 'index'])->name('courses.taught');
+    Route::post('/logout', [FacultyAuthController::class, 'logout'])->name('logout');
 });
 
 

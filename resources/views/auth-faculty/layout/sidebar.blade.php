@@ -193,7 +193,7 @@
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
-    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+    <a href="{{ route('faculty.dashboard') }}" class="{{ request()->routeIs('faculty.dashboard') ? 'active' : '' }}">
         <i class="fas fa-chart-line"></i> Dashboard
     </a>
 
@@ -209,8 +209,8 @@
         <i class="fas fa-book"></i> Courses
     </a>
 
-    <a href="#" class="{{ request()->routeIs('notices.*') ? 'active' : '' }}">
-        <i class="fas fa-bullhorn"></i> Notices
+    <a href="#" class="{{ request()->routeIs('routine.*') ? 'active' : '' }}">
+        <i class="fas fa-calendar-alt"></i> Routine<sub style="color: rgb(252, 61, 13);">Coming Soon</sub>
     </a>
 
     <a href="#" class="{{ request()->routeIs('results.*') ? 'active' : '' }}">
@@ -221,7 +221,7 @@
         <i class="fas fa-calendar-alt"></i> Meeting<sub style="color: rgb(252, 61, 13);">Coming Soon</sub>
     </a>
 
-    <form method="POST" action="#">
+    <form method="POST" action="{{ route('faculty.logout') }}">
         @csrf
         <button style="background:none;border:none;color:black;width:100%;text-align:left;padding:10px 18px;">
             <i class="fas fa-sign-out-alt"></i> Logout

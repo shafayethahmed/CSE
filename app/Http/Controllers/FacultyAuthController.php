@@ -43,4 +43,20 @@ class FacultyAuthController extends Controller
 
     return redirect()->back()->with('failed', 'Wrong Faculty ID or Password.');
 }
+
+
+//For faculty logout : 
+ public function logout(Request $request){
+          // Logout faculty
+          if (Auth::guard('faculty')->check()) {
+              Auth::guard('faculty')->logout();
+          }
+
+          // Invalidate session and regenerate CSRF token
+          $request->session()->invalidate();
+          $request->session()->regenerateToken();
+          // Redirect to login page
+          return redirect('/login');
+     }
  }
+

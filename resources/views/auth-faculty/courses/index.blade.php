@@ -42,7 +42,7 @@ thead{
 }
 
 th{
-    font-size:10px;
+    font-size:12px;
     font-weight:600;
     color:black;
     padding:9px 10px;

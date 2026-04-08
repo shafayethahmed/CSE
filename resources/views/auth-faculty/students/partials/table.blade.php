@@ -25,14 +25,14 @@
             <td>{{ $student->semester }}</td>
             <td>{{ $student->admissionYear }}</td>
              <td class="actions">
-                        <a href="#">
-                                <button class="btn-view">View</button>
-                        </a>
+                    <a href="{{ route('faculty.students.show', $student->id) }}" class="btn-view">
+                        View
+                    </a>
 
-                        <a href="#">
-                            <button class="btn-edit">Edit</button>
-                        </a>         
-            </td>
+                    <a href="{{ route('faculty.students.edit', $student->id) }}" class="btn-edit">
+                        Edit
+                    </a>
+                </td>
         </tr>
         @empty
         <tr>

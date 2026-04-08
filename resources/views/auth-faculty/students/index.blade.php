@@ -1,3 +1,4 @@
+
 @extends('auth-faculty.layout.sidebar')
 @section('title','Students')
 @push('styles')

@@ -40,6 +40,10 @@ Route::prefix('faculty')->name('faculty.')->middleware('auth:faculty')->group(fu
     Route::get('/students', [FacultyStudentsController::class, 'index'])->name('students');
     Route::get('/courses', [LecturerCoursesController::class, 'index'])->name('courses.taught');
     Route::post('/logout', [FacultyAuthController::class, 'logout'])->name('logout');
+    // Student part 
+    Route::get('/students/{student}', [FacultyStudentsController::class, 'show'])->name('students.show');
+    Route::get('/students/{student}/edit', [FacultyStudentsController::class, 'edit'])->name('students.edit');
+    Route::get('/students/image/{id}', [FacultyStudentsController::class, 'showImage'])->name('students.image');
 });
 
 

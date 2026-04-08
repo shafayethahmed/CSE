@@ -15,6 +15,7 @@ use App\Http\Controllers\SuporvisorController;
 use App\Http\Controllers\Faculty\FacultyDashboardController;
 use App\Http\Controllers\Faculty\FacultyPasswordController;
 use App\Http\Controllers\Faculty\LecturerCoursesController;
+use App\Http\Controllers\Faculty\FacultyStudentsController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\TestStatus\Notice;
@@ -36,6 +37,7 @@ Route::get('/login',function(){
 Route::prefix('faculty')->name('faculty.')->middleware('auth:faculty')->group(function () {
     Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard');
     Route::get('/change-password', [ FacultyPasswordController::class , 'index'])->name('change.password');
+    Route::get('/students', [FacultyStudentsController::class, 'index'])->name('students');
     Route::get('/courses', [LecturerCoursesController::class, 'index'])->name('courses.taught');
     Route::post('/logout', [FacultyAuthController::class, 'logout'])->name('logout');
 });

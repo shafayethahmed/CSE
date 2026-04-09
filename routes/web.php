@@ -44,7 +44,8 @@ Route::prefix('faculty')->name('faculty.')->middleware('auth:faculty')->group(fu
     Route::get('/students/{student}', [FacultyStudentsController::class, 'show'])->name('students.show');
     Route::get('/students/{student}/edit', [FacultyStudentsController::class, 'edit'])->name('students.edit');
     Route::get('/students/image/{id}', [FacultyStudentsController::class, 'showImage'])->name('students.image');
-});
+    Route::put('/students/{student}', [FacultyStudentsController::class, 'update'])->name('students.update');
+  });
 
 
 //Control & Execute logic for general login & faculty login and logout.

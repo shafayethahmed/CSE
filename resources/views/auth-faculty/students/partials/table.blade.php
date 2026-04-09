@@ -9,7 +9,7 @@
             <th>Mobile</th>
             <th>Session</th>
             <th>Semester</th>
-            <th>Year</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -21,9 +21,9 @@
             <td>{{ ucwords($student->name) }}</td>
             <td>{{ $student->email }}</td>
             <td>{{ $student->mobile }}</td>
-            <td>{{ ucfirst($student->session)}}</td>
+            <td>{{ ucfirst($student->session)}}-{{ $student->admissionYear }}</td>
             <td>{{ $student->semester }}</td>
-            <td>{{ $student->admissionYear }}</td>
+            <td style="background-color:rgba(255, 177, 148, 0.815);"><b>{{ ucfirst($student->status) }}</b></td>
              <td class="actions">
                     <a href="{{ route('faculty.students.show', $student->id) }}" class="btn-view">
                         View

@@ -114,7 +114,7 @@ input:focus, select:focus {
             <div class="toast-msg toast-error">{{ session('error') }}</div>
         @endif
 
-        <form action="{{ route('students.update', $student->id)}}" method="POST">
+        <form action="{{ route('faculty.students.update', $student->id)}}" method="POST">
             @csrf
             @method('PUT')
 
@@ -122,20 +122,20 @@ input:focus, select:focus {
                 <label>Academic ID</label>
                 <input type="text" name="academicId"
                        value="{{ old('academicId', $student->academicId) }}"
-                       pattern="^099\d{13}$" required  disabled>
+                       pattern="^099\d{13}$" required  readonly>
                 @error('academicId')<div class="error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
                 <label>Student Name</label>
                 <input type="text" name="name"
-                       value="{{ old('name', $student->name) }}" required disabled>
+                       value="{{ old('name', $student->name) }}" required readonly>
                 @error('name')<div class="error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
                 <label>Session</label>
-                <select name="session" required disabled>
+                <select name="session" required readonly>
                     <option value="">Select session</option>
                     <option value="summer" {{ old('session', $student->session) == 'summer' ? 'selected' : '' }}>Summer</option>
                     <option value="spring" {{ old('session', $student->session) == 'spring' ? 'selected' : '' }}>Spring</option>
@@ -147,12 +147,12 @@ input:focus, select:focus {
                 <label>Admission Year</label>
                 <input type="text" name="admissionYear"
                        value="{{ old('admissionYear', $student->admissionYear) }}"
-                       pattern="[0-9]{4}" required disabled>
+                       pattern="[0-9]{4}" required readonly>
                 @error('admissionYear')<div class="error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
-                <label>Semester <sup style="color: red;">Only Editable</sup></label>
+                <label>Semester <sup style="color: red;">Editable</sup></label>
                 <select name="semester" required>
                     <option value="">Select semester</option>
                     @foreach(['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'] as $sem)
@@ -165,34 +165,34 @@ input:focus, select:focus {
             <div class="form-group">
                 <label>Email</label>
                 <input type="email" name="email"
-                       value="{{ old('email', $student->email) }}" required disabled>
+                       value="{{ old('email', $student->email) }}" required readonly>
                 @error('email')<div class="error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
                 <label>Mobile</label>
                 <input type="tel" name="mobile"
-                       value="{{ old('mobile', $student->mobile) }}" required disabled>
+                       value="{{ old('mobile', $student->mobile) }}" required readonly>
                 @error('mobile')<div class="error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
                 <label>Date of Birth</label>
                 <input type="date" name="dob"
-                       value="{{ old('dob', $student->dob) }}" required disabled>
+                       value="{{ old('dob', $student->dob) }}" required readonly>
                 @error('dob')<div class="error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">
                 <label>Address</label>
                 <input type="text" name="address"
-                       value="{{ old('address', $student->address) }}" required disabled>
+                       value="{{ old('address', $student->address) }}" required readonly>
                 @error('address')<div class="error">{{ $message }}</div>@enderror
             </div>
              <div class="form-group">
-                <label>Status</label>
-                    <select name="status" required disabled>
-                    <option value="">Select Status</option>
+                <label>Status <sup style="color: red;"> Editable</sup></label>
+                    <select name="status" required >
+                    <option value="{{ $student->status }}">{{ ucfirst($student->status) }} -(Selected)</option>
                     @foreach(['ongoing','onhold','graduated'] as $status)
                         <option value="{{ $status }}" {{ old('status', $student->status) == $sem ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
                     @endforeach

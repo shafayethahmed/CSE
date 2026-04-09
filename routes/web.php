@@ -12,6 +12,7 @@ use App\Http\Controllers\FacultyAuthController;
 use App\Http\Controllers\offeredCoursesController;
 use App\Http\Controllers\FacultyCourseController;
 use App\Http\Controllers\SuporvisorController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\Faculty\FacultyDashboardController;
 use App\Http\Controllers\Faculty\FacultyPasswordController;
 use App\Http\Controllers\Faculty\LecturerCoursesController;
@@ -37,6 +38,7 @@ Route::get('/login',function(){
 Route::prefix('faculty')->name('faculty.')->middleware('auth:faculty')->group(function () {
     Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard');
     Route::get('/change-password', [ FacultyPasswordController::class , 'index'])->name('change.password');
+    Route::put('/faculty/change-password', [FacultyPasswordController::class, 'changePassword'])->name('new.password.set');
     Route::get('/students', [FacultyStudentsController::class, 'index'])->name('students');
     Route::get('/courses', [LecturerCoursesController::class, 'index'])->name('courses.taught');
     Route::post('/logout', [FacultyAuthController::class, 'logout'])->name('logout');
@@ -45,8 +47,9 @@ Route::prefix('faculty')->name('faculty.')->middleware('auth:faculty')->group(fu
     Route::get('/students/{student}/edit', [FacultyStudentsController::class, 'edit'])->name('students.edit');
     Route::get('/students/image/{id}', [FacultyStudentsController::class, 'showImage'])->name('students.image');
     Route::put('/students/{student}', [FacultyStudentsController::class, 'update'])->name('students.update');
-  });
 
+  });
+  
 
 //Control & Execute logic for general login & faculty login and logout.
 //Thorttle are activated for both login.
@@ -59,7 +62,8 @@ Route::middleware(['throttle:5,1'])->group(function(){
 Route::middleware(['checkUserRole','auth'])->group(function(){
 Route::post('logout',[AuthController::class, 'logoutUserOrFaculty'])->name('logout');
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
-Route::get('/change-password', function () { return view('change-password');})->name('password.change');
+Route::get('/change-password', [PasswordController::class, 'index'])->name('password.change');
+Route::put('/change-password/new',[PasswordController::class, 'changePassword'])->name('user.new.password.set');
 
 /* Students */
 Route::resource('students',StudentController::class);

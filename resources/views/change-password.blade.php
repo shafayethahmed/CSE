@@ -1,114 +1,50 @@
 @extends('layout.sidebar')
-
 @section('title','Change Password')
-
 @push('styles')
 <style>
-/* Card Container */
+    .card-wrapper{
+        margin-top: 30px;
+    }
 .card {
-    background: #ffffff;
-    padding: 5px 20px;
+    background: #ffd09bb2;
+    padding: 2px 10px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     max-width: 800px;
-    margin: 10px auto;
+    margin: 1px auto;
     display: flex;
     flex-direction: column;
     gap: 2px;
     transition: all 0.3s ease;
 }
-
-.card:hover {
-    box-shadow: 0 14px 40px rgba(0,0,0,0.12);
-}
-
-/* Titles */
-.card h2 {
-    text-align: center;
-    font-weight: 700;
-    color: #1e3a8a;
-    font-size: 20px;
-    margin-bottom: 5px;
-}
-
-.card .subtitle {
-    text-align: center;
-    font-size: 12px;
-    color: #6b7280;
-    margin-bottom: 30px;
-}
-
-/* Form */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-label {
-    font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: #374151;
-}
-
+.card:hover { box-shadow: 0 14px 40px rgba(0,0,0,0.12); }
+.card h2 { text-align: center; font-weight: 700; color: #0a2675; font-size: 20px; margin-bottom: 5px; }
+.card .subtitle { text-align: center; font-size: 12px; color: #6b7280; margin-bottom: 30px; }
+.form-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+label { font-size: 12px; font-weight: 500; margin-bottom: 8px; color: #374151; }
 input {
     padding: 10px 12px;
     border-radius: 12px;
     border: 1px solid #d1d5db;
     background-color: #f9fafb;
     font-size: 13px;
-    outline: none;
-    transition: all 0.2s ease-in-out;
 }
-
 input:focus {
     border-color: #3b82f6;
     background-color: #fff;
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
-
-/* Buttons */
 button.submit-btn {
     padding: 5px 12px;
-    border: none;
     border-radius: 12px;
     background: #020617;
     color: white;
     font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
+button.submit-btn:hover { background: #2563eb; }
 
-button.submit-btn:hover {
-    background: #2563eb;
-    transform: translateY(-2px);
-}
-
-/* Error and Success */
-.error {
-    color: #ef4444;
-    font-size: 12px;
-    margin-top: 5px;
-    display: none;
-}
-
-.success-message {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 14px;
-    color: #10b981;
-    display: none;
-}
-
-/* Responsive */
-@media(max-width: 576px){
-    .card {
-        padding: 25px 20px;
-        margin: 30px 15px;
-    }
-}
+.error { color: #ef4444; font-size: 12px; margin-top: 5px; display: none; }
+.success-message { margin-top: 15px; text-align: center; font-size: 14px; color: #10b981; display: none; }
 </style>
 @endpush
 
@@ -118,35 +54,49 @@ button.submit-btn:hover {
         <h2>Change Password</h2>
         <p class="subtitle">Update your password securely</p>
 
-        <form id="changePasswordForm" method="POST" action="#">
+        {{--  Laravel success --}}
+        @if(session('success'))
+            <div class="success-message" style="display:block;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form id="changePasswordForm" method="POST" action="{{ route('user.new.password.set') }}">
             @csrf
             @method('PUT')
 
             <!-- Current Password -->
             <div class="form-group">
-                <label for="current_password">Current Password</label>
-                <input type="password" name="current_password" id="current_password" placeholder="Enter current password">
+                <label>Current Password</label>
+                <input type="password" name="current_password" id="current_password">
+                
                 <div class="error" id="currentPasswordError">Please enter your current password</div>
+
+                {{-- Laravel error --}}
+                @error('current_password')
+                    <div class="error" style="display:block;">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- New Password -->
             <div class="form-group">
-                <label for="new_password">New Password</label>
-                <input type="password" name="new_password" id="new_password" placeholder="Enter new password">
+                <label>New Password</label>
+                <input type="password" name="new_password" id="new_password">
                 <div class="error" id="newPasswordError">Password must be at least 6 characters</div>
+                @error('new_password')
+                    <div class="error" style="display:block;">{{ $message }}</div>
+                @enderror
             </div>
 
             <!-- Confirm Password -->
             <div class="form-group">
-                <label for="confirm_password">Confirm New Password</label>
-                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm new password">
+                <label>Confirm New Password</label>
+                <input type="password" name="new_password_confirmation" id="confirm_password">
                 <div class="error" id="confirmPasswordError">Passwords do not match</div>
             </div>
 
-            <button type="submit" class="submit-btn">Update Password</button>
-
-            <div class="success-message" id="successMessage">
-                Password updated successfully!
+            <div style="text-align: center;">
+                <button type="submit" class="submit-btn">Update Password</button>
             </div>
         </form>
     </div>

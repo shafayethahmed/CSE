@@ -156,9 +156,13 @@
                 <label>Total Credit Limit</label>
                 <span>{{ $faculty->credit_limit }}</span>
             </div>
+             <div class="info-box">
+                    <label>Total Credit Taken</label>
+                     <span>{{ count($faculty->courses) }}</span>
+                </div>
             <div class="info-box">
                 <label>Status</label>
-                <span style="color: green";><b>Active</b></span>
+                <span style="color: green";><b>{{ ucfirst($faculty->faculty_status)}}</b></span>
             </div>
         </div>
     </div>

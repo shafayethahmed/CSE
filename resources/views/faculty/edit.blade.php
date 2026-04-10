@@ -147,15 +147,19 @@
                 </div>
                 <div class="info-box">
                     <label>Name</label>
-                    <input type="text" name="name" value="{{ $faculty->name }}" required>
+                    <input type="text" name="user_name" value="{{ $faculty->name }}" >
                 </div>
                 <div class="info-box">
                     <label>Email</label>
-                    <input type="email" name="email" value="{{ $faculty->email }}" required>
+                    <input type="email" name="user_email" value="{{ $faculty->email }}" >
                 </div>
                 <div class="info-box">
                     <label>Phone Number</label>
-                    <input type="text" name="phone" value="{{ $faculty->mobile }}">
+                    <input type="text" name="user_mobile" value="{{ $faculty->mobile }}">
+                </div>
+                 <div class="info-box">
+                   <label>Designation</label>
+                    <input type="text" name="designation" value="{{ $faculty->designation }}" >
                 </div>
                 <div class="info-box">
                     <label>Total Credit Limit</label>
@@ -163,13 +167,13 @@
                 </div>
                 <div class="info-box">
                     <label>Total Credit Taken</label>
-                    <input type="number" name="credit_taken" value="{{ $faculty->credit_taken }}" step="1" readonly>
+                    <input type="number" name="credit_taken" value="{{ count($faculty->courses) }}" step="1" readonly>
                 </div>
                 <div class="info-box">
                     <label>Status</label>
                     <select name="status">
-                        <option value="Active" {{ $faculty->status == 'Active' ? 'selected' : '' }}>Active</option>
-                        <option value="Inactive" {{ $faculty->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="active" {{ $faculty->status == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ $faculty->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
                     </select>
                 </div>
             </div>

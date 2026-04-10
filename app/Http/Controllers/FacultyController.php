@@ -147,8 +147,45 @@ class FacultyController extends Controller
     }
     
     //Student profile update.
-    public function update(){
+    public function update(Faculty $faculty,Request $request){
         //Update Process logic need to implement here.
+        try{
+            $validated = $request->validate([
+            'user_name' => 'required|string|max:255',
+            'user_email' => 'required|email|unique:faculties,email,' . $faculty->id,
+            'user_mobile' => 'required|regex:/^01[3-9]\d{8}$/|unique:faculties,mobile,' . $faculty->id,
+            'designation' => 'required|string|max:100',
+            'credit_limit' => 'required|integer|min:18|max:30',
+            'status' => 'required|in:active,inactive',
+            'bachelor_degree' => 'nullable|string|max:255',
+            'bachelor_university' => 'nullable|string|max:255',
+            'bachelor_cgpa' => 'nullable|numeric',
+            'master_degree' => 'nullable|string|max:255',
+            'master_university' => 'nullable|string|max:255',
+            'master_cgpa' => 'nullable|numeric',
+            ]);
+
+           //Updating the faculty: 
+           if($validated){
+                $faculty->update([
+                'name' => $validated['user_name'],
+                'email' => $validated['user_email'],
+                'mobile' => $validated['user_mobile'],
+                'designation' => $validated['designation'] ?? 'faculty',
+                'credit_limit' => $validated['credit_limit'],
+                'faculty_status'=> $validated['status'],
+                'bachelor_degree' => $validated['bachelor_degree'],
+                'bachelor_university' => $validated['bachelor_university'],
+                'bachelor_cgpa' => $validated['bachelor_cgpa'],
+                'master_degree' => $validated['master_degree'],
+                'master_university' => $validated['master_university'],
+                'master_cgpa' => $validated['master_cgpa'],
+                ]);   
+            }
+             return redirect()->route('faculty.index')->with('success','Faculty Update Successful.');
+        }catch(\Exception $e){
+                       return redirect()->route('faculty.index')->with('error', $e->getMessage());
+        }
     }
 
     //Destroy the faculty: 

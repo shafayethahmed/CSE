@@ -1,7 +1,7 @@
 @php
-     $accessRoleForFacultyPage = ['super-admin','department-head','staff']
-     $role = Auth::user()->role;
- @endphp
+    $accessRoleForFacultyPage = ['super-admin', 'department-head', 'staff'];
+    $role = Auth::user()->role;
+@endphp
  @if (in_array($role ,$accessRoleForFacultyPage))
 @extends('layout.sidebar')
 
